@@ -8,7 +8,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-
+import LocalStorageManager from "@/manager/local_storage_manager.ts";
 let container = null;
 let el = null;
 let isDragging = ref(false);
@@ -38,6 +38,7 @@ const d = 'dragging';
 function dragStart(e) {
   e = e || window.event;
   e.preventDefault();
+  console.log("vrevb")
 
   cOffX = e.clientX - el.offsetLeft;
   cOffY = e.clientY - el.offsetTop;
@@ -56,6 +57,7 @@ function dragMove(e) {
   e.preventDefault();
 
   const index = Array.prototype.indexOf.call(el.parentNode.children, el);
+  console.log(index)
   el.style.top = (e.clientY - index * el.offsetHeight - cOffY).toString() + 'px';
   el.style.left = (e.clientX - cOffX).toString() + 'px';
 }
@@ -103,6 +105,11 @@ function dragEnd(e) {
   });
 
   if (closestDropZone) {
+
+    const project = LocalStorageManager.getSavedProjectByName(el.id);
+    project.status = closestDropZone.id;
+    LocalStorageManager.updateSavedProject(project);
+
     closestDropZone.appendChild(el);
     el.style.position = 'relative';
     el.style.paddingTop = '1rem'
