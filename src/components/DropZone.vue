@@ -19,8 +19,8 @@
   font-size: 1rem;
   color: #aaa;
   background-color: #141418;
-
-  min-height: 80.8rem;
+  padding-bottom: 1rem;
+  min-height: 8.8rem;
   width: 18rem;
 
 }

@@ -1,4 +1,5 @@
 import type {Project} from '@/entity/Project';
+import type {SavedProject} from '@/entity/saved_project';
 import {emitter} from "@/event_bus";
 export default class LocalStorageManager {
     public static getItem(key: string): any {
@@ -40,7 +41,7 @@ export default class LocalStorageManager {
         return recentProjects.some(e => e.name === project.name);
     }
 
-    public static unsaveProject(project: Project) {
+    public static unsaveProject(project: Saved) {
         let recentProjects: Project[] = this.getSavedProject();
         if(recentProjects === null) {
             recentProjects = [];

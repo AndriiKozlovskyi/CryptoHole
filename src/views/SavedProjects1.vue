@@ -21,21 +21,20 @@
         </div>
         <div class="relative w-full h-full text-white flex flex-row gap-4 overflow-y-hidden">
           <div class="flex flex-col h-full w-1/4">
-            
-            <DragCon v-for="project in projects" :key="project.name" :name="project.name">
-                <ProjectBar class="relative h-[22.8rem]" :project="project"></ProjectBar>
+              <DragCon class="dragging" v-for="project in projects" :key="project.name" :name="project.name">
+                <ProjectBar class="relative h-[8rem]" :project="project"></ProjectBar>
               </DragCon>
-              <DropZone/>
-              
+            <DropZone id="todo"/>
+
           </div>
           <div class="flex flex-col h-full w-1/4">
-            <DropZone />
+            <DropZone id="progress"/>
           </div>
           <div class="flex flex-col h-full w-1/4">
-            <DropZone />
+            <DropZone id="waiting"/>
           </div>
           <div class="flex flex-col h-full w-1/4">
-            <DropZone />
+            <DropZone id="paid"/>
           </div>
         </div>
         <i class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle" style="font-size: 2rem" />
@@ -46,11 +45,11 @@
 
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
-import ProjectBar from '@/components/ProjectBar1.vue';
+import ProjectBar from '@/components/ProjectBar.vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 import { emitter } from '@/event_bus';
 import DropZone from '@/components/DropZone.vue';
-import DragCon from '@/components/DraggableContainer1.vue';
+import DragCon from '@/components/DraggableContainer.vue';
 
 const projects = ref(LocalStorageManager.getSavedProject());
 

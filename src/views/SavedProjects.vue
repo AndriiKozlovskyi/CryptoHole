@@ -31,7 +31,7 @@
   import LocalStorageManager from '@/manager/local_storage_manager';
   import { emitter } from '@/event_bus';
   import DropZone from '@/components/DropZone.vue';
-  import DragCon from '@/components/DraggableContainer1.vue';
+  import DragCon from '@/components/DraggableContainer.vue';
   
   const projects = ref(LocalStorageManager.getSavedProject());
   const dropZonesCount = 10;

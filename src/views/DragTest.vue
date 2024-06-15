@@ -15,7 +15,7 @@
   </template>
   
   <script setup>
-  import Draggable from '@/components/DraggableContainer1.vue';
+  import Draggable from '@/components/DraggableContainer.vue';
   import DropZone from '@/components/DropZone.vue';
   </script>
   
