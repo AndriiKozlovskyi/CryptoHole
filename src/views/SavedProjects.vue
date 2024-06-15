@@ -5,7 +5,7 @@
           <p class="font-semibold text-2xl self-start text-white">
             Saved Projects
           </p>
-          <div class="relative w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
+          <div class="relative w-full grid grid-cols-3 gap-4 overflow-y-hidden">
             <div v-for="project in projects" :key="project.name">
               <DragCon :name="project.name" :dropZonesCount="dropZonesCount" :elementWidth="elementWidth" :elementHeight="elementHeight">
                 <ProjectBar class="relative h-[22.8rem]" :project="project"></ProjectBar>
@@ -27,7 +27,7 @@
   
   <script setup lang="ts">
   import { onBeforeMount, ref } from 'vue';
-  import ProjectBar from '@/components/ProjectBar1.vue';
+  import ProjectBar from '@/components/ProjectBar.vue';
   import LocalStorageManager from '@/manager/local_storage_manager';
   import { emitter } from '@/event_bus';
   import DropZone from '@/components/DropZone.vue';

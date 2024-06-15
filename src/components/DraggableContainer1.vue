@@ -3,9 +3,6 @@
     <div :id="props.name">
       <slot></slot>
     </div>
-    <div id="drop-zone">
-      Drop here
-    </div>
   </div>
 </template>
 
@@ -14,8 +11,9 @@ import { onMounted, ref } from 'vue';
 
 let container = null;
 let el = null;
-let id = ref("");
 let isDragging = ref(false);
+let cOffX = 0;
+let cOffY = 0;
 
 const props = defineProps({
   name: String
@@ -23,23 +21,15 @@ const props = defineProps({
 
 onMounted(() => {
   el = document.getElementById(props.name);
-  el.style.position = "absolute";
+  el.style.position = "relative";
   el.style.width = "18rem";
-  el.style.height = "22.8rem";
   el.style.zIndex = 1000;
   container = document.getElementById('container');
 
   el.addEventListener('mousedown', dragStart);
-
-  // Set the drop zone dimensions
-  const dropZone = document.getElementById('drop-zone');
-  dropZone.style.width = el.style.width;
-  dropZone.style.height = el.style.height;
 });
 
 const d = 'dragging';
-var cOffX = 0;
-var cOffY = 0;
 
 function dragStart(e) {
   e = e || window.event;
@@ -54,16 +44,19 @@ function dragStart(e) {
   el.classList.add(d);
   container.style.cursor = 'move';
 
-  isDragging.value = true;  // Show drop zone when dragging starts
-};
+  isDragging.value = true;
+}
 
 function dragMove(e) {
   e = e || window.event;
   e.preventDefault();
 
-  el.style.top = (e.clientY - cOffY).toString() + 'px';
+  // console.log(e.clientY + " " +e.clientX  + " " +cOffX + " " + cOffY)
+  const index = Array.prototype.indexOf.call(el.parentNode.children, el);
+  console.log(index)
+  el.style.top = (e.clientY - index * 364.8 - cOffY).toString() + 'px';
   el.style.left = (e.clientX - cOffX).toString() + 'px';
-};
+}
 
 function dragEnd(e) {
   e = e || window.event;
@@ -75,10 +68,9 @@ function dragEnd(e) {
   el.classList.remove(d);
   container.style.cursor = null;
 
-  isDragging.value = false; // Hide drop zone when dragging ends
+  isDragging.value = false;
 
-  // Check if the element intersects with any drop zones and find the closest one
-  const dropZones = document.querySelectorAll('#drop-zone');
+  const dropZones = document.querySelectorAll('.drop-zone');
   const elRect = el.getBoundingClientRect();
 
   let closestDropZone = null;
@@ -110,11 +102,12 @@ function dragEnd(e) {
   });
 
   if (closestDropZone) {
-    const dropZoneRect = closestDropZone.getBoundingClientRect();
-    el.style.left = dropZoneRect.left - container.getBoundingClientRect().left + 'px';
-    el.style.top = dropZoneRect.top - container.getBoundingClientRect().top + 'px';
+    closestDropZone.appendChild(el);
+    el.style.position = 'relative';
+    el.style.left = '0px';
+    el.style.top = '0px';
   }
-};
+}
 
 function isIntersecting(rect1, rect2) {
   return !(rect2.left > rect1.right || 
@@ -125,13 +118,7 @@ function isIntersecting(rect1, rect2) {
 </script>
 
 <style>
-#drop-zone {
-  position: relative;
-  border: 2px dashed #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  color: #aaa;
+.dragging {
+  opacity: 1;
 }
 </style>

@@ -1,4 +1,5 @@
 <template>
+
     <input type="text" :class="$style.myinput" class="rounded-full items-color w-1/2 bg-[#494545]" placeholder="Search" />
 </template>
 <script setup lang="ts">

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import AdminView from '@/views/AdminView.vue'
-import SavedProjects from "@/views/SavedProjects.vue";
+import SavedProjects from "@/views/SavedProjects1.vue";
 import DraggableConteiner1 from '@/components/DraggableContainer.vue'
 import DragTest from "@/views/DragTest.vue"
 const router = createRouter({
