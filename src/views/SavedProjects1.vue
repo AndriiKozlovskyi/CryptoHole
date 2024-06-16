@@ -5,36 +5,21 @@
         <p class="font-semibold text-2xl self-start text-white">
           Saved Projects
         </p>
-        <div class="relative w-full text-white text-lg font-bold flex flex-row gap-4 overflow-y-hidden">
-          <div class="flex w-1/4">
-            <p>TODO</p>
-          </div>
-          <div class="flex w-1/4">
-            <p>IN PROGRESS</p>
-          </div>
-          <div class="flex w-1/4">
-            <p>WAITING FOR PAYMENT</p>
-          </div> 
-          <div class="flex w-1/4">
-            <p>PAID</p>
-          </div>             
-        </div>
         <div class="relative w-full h-full text-white flex flex-row gap-4 overflow-y-hidden">
-          <div class="flex flex-col h-full w-1/4">
+          <div class="flex bg-[#141418] h-min rounded-xl flex-col w-min">
+            <p class="font-bold p-5">TODO</p>
             <DragCon  v-for="project in projects" :key="project.name" :name="project.name">
               <ProjectBar class="relative h-[8rem]" :project="project"></ProjectBar>
             </DragCon>
             <DropZone id="todo"/>
+            <div class="relative mr-4 flex flex-row py-3 px-3 items-center space-x-3 mb-5 cursor-pointer rounded-lg ml-4 bg-[#181a1d]">
+              <i class="pi pi-plus text-white" style="font-size: 1.5rem; font-weight: 900;"/>
+              <p>Add my project</p>
+            </div>
           </div>
-          <div class="flex flex-col h-full w-1/4">
-            <DropZone id="progress"/>
-          </div>
-          <div class="flex flex-col h-full w-1/4">
-            <DropZone id="waiting"/>
-          </div>
-          <div class="flex flex-col h-full w-1/4">
-            <DropZone id="paid"/>
-          </div>
+          <ProgressBar name="IN PROGRESS" id="progress"/>
+          <ProgressBar name="WAITING FOR PAYMENT" id="waiting"/>
+          <ProgressBar name="PAID" id="paid"/>
         </div>
         <i class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle" style="font-size: 2rem" />
       </div>
@@ -49,6 +34,7 @@ import LocalStorageManager from '@/manager/local_storage_manager';
 import { emitter } from '@/event_bus';
 import DropZone from '@/components/DropZone.vue';
 import DragCon from '@/components/DraggableContainer.vue';
+import ProgressBar from "@/components/ProgressBar.vue"
 
 const projects = ref(LocalStorageManager.getSavedProject());
 

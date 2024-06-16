@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
+  <div class="relative w-3/5 grid grid-cols-4 gap-4 overflow-y-hidden">
     <ProjectBar v-for="project in projects" :key="project.name" 
     :project="project"
   /> 

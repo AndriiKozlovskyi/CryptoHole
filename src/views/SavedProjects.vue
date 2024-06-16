@@ -14,7 +14,7 @@
   
             <DropZone />
   
-            <div class="flex flex-row space-x-4 h-[22.8rem] rounded-lg border-white border hover:bg-[#1E1F24] justify-center items-center">
+            <div class="relative mr-4 flex flex-row py-3 px-3 items-center space-x-3 bottom-2 cursor-pointer rounded-lg ml-4 bg-[#181a1d]">
               <i class="pi pi-plus text-white" />
               <p class="text-white">Add My Project</p>
             </div>

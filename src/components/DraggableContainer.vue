@@ -120,7 +120,7 @@ function dragEnd(e) {
     el.style.top = '0px';
     el.classList.remove(d);
 
-  }
+  } 
 }
 
 function isIntersecting(rect1, rect2) {

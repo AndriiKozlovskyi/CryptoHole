@@ -55,6 +55,7 @@ const save = () => {
 const unsave = () => {
     if (props.project !== undefined)
         LocalStorageManager.unsaveProject(props.project)
+    console.log("BUYIVG")
     saved.value = false;
 };
 </script>
