@@ -35,6 +35,7 @@ import { emitter } from '@/event_bus';
 import DropZone from '@/components/DropZone.vue';
 import DragCon from '@/components/DraggableContainer.vue';
 import ProgressBar from "@/components/ProgressBar.vue"
+import ProfileMenu from '@/components/ProfileMenu.vue';
 
 const projects = ref(LocalStorageManager.getSavedProject());
 

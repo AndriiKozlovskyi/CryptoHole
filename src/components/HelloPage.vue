@@ -1,13 +1,16 @@
 <template>
-  <div class="relative w-3/5 grid grid-cols-4 gap-4 overflow-y-hidden">
-    <ProjectBar v-for="project in projects" :key="project.name" 
-    :project="project"
-  /> 
+  <div class="relative flex flex-row justify-center">
+    <div class="relative w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
+      <ProjectBar v-for="project in projects" :key="project.name" 
+      :project="project"
+    /> 
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref, onBeforeMount } from 'vue';
 import ProjectBar from './ProjectBar1.vue'
+import ProfileMenu from './ProfileMenu.vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 
 const projects = ref(LocalStorageManager.getProjects());

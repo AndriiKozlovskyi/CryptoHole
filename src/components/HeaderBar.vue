@@ -17,13 +17,9 @@
                 @click="toggleMenu()"
             >
                 <img class="circle-image1" src="https://masterpiecer-images.s3.yandex.net/ae360eac8a1c11ee951b7a2f0d1382ba:upscaled"/>
-
             </span>
         </div>
-        <ProfileMenu v-if="showMenu" class="absolute items-color">
-        </ProfileMenu>
     </div>
-
 </template>
 <script setup lang="ts">
 import SearchBar from "./SearchBar.vue"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import HeaderBar from './components/HeaderBar.vue';
+import ProfileMenu from './components/ProfileMenu.vue';
 </script>
 
 <template>
@@ -8,6 +9,8 @@ import HeaderBar from './components/HeaderBar.vue';
   <div class="bg-[#101114] h-full w-full">
     <HeaderBar/>
     <RouterView class="h-full"/>
+    <ProfileMenu class="fixed top-[8rem] right-[10rem]">
+    </ProfileMenu>
   </div>
 </template>
 
