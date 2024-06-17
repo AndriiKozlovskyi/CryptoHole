@@ -1,7 +1,7 @@
-export interface Project {
+export interface SavedProject {
     name: string;
-    tag: string;
-    expenses: Number;
+    expenses: number;
     status: string;
+    amountOfAccs: number;
 };
 

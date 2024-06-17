@@ -7,13 +7,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import LocalStorageManager from "@/manager/local_storage_manager.ts";
 let container = null;
 let el = null;
 let isDragging = ref(false);
 let cOffX = 0;
 let cOffY = 0;
+
+const isDragAvailable = inject('dragAvailable');
 
 const props = defineProps({
   name: String
@@ -36,6 +38,8 @@ onMounted(() => {
 const d = 'dragging';
 
 function dragStart(e) {
+  console.log(isDragAvailable.value)
+  if (!isDragAvailable) return; 
   e = e || window.event;
   e.preventDefault();
   console.log("vrevb")
@@ -129,6 +133,7 @@ function isIntersecting(rect1, rect2) {
            rect2.top > rect1.bottom ||
            rect2.bottom < rect1.top);
 }
+
 </script>
 
 <style>

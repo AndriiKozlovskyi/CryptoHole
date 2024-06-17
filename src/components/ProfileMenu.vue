@@ -29,7 +29,7 @@
             </div>
       
             <div class="flex flex-row justify-center items-center bg-[#101114] rounded-md">
-                <p class="px-2 py-1 text-sm">{{savedProjects.length}}</p>
+                <p class="px-2 py-1 text-sm">{{savedProjects !== undefined ?? savedProjects.length}}</p>
             </div>
         </div>
 

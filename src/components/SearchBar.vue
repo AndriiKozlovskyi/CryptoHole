@@ -3,8 +3,9 @@
         <i class="pi pi-search text-white p-2" style="f"></i>
         <input type="text" :class="$style.myinput" class="rounded-full items-color bg-[#5e5a5a] flex-grow p-2" placeholder="Search" />
     </div>
-  </template>
+</template>
 <script setup lang="ts">
+
 </script>
 
 <style module>

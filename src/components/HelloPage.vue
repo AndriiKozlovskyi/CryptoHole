@@ -8,9 +8,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, onBeforeMount } from 'vue';
-import ProjectBar from './ProjectBar1.vue'
-import ProfileMenu from './ProfileMenu.vue';
+import { ref } from 'vue';
+import ProjectBar from './ProjectBar.vue'
 import LocalStorageManager from '@/manager/local_storage_manager';
 
 const projects = ref(LocalStorageManager.getProjects());
@@ -19,7 +18,6 @@ const projects = ref(LocalStorageManager.getProjects());
 //   {name: "Layer 3", expenses: 23, participants: 23, tag: "Airdrop", src: "https://miro.medium.com/v2/resize:fit:1400/1*EzelpZ7tLKZbyijACRyE1g.jpeg"},
 //  ])
 //  });
-
 
 </script>
 

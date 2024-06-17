@@ -18,7 +18,7 @@ export default class LocalStorageManager {
 
     public static getSavedProjectByName(name: string): SavedProject {
         const projects: SavedProject[] = JSON.parse(this.getItem("savedProjects"));
-        return projects.find(project => project.name === name);
+        return projects.find(project => project.name === name)!;
     }
 
 
@@ -35,12 +35,21 @@ export default class LocalStorageManager {
         this.setItem("projects", JSON.stringify(recentProjects));
     }
 
+    public static addSavedProject(project: SavedProject) {
+        let recentProjects: SavedProject[] = this.getSavedProject();
+        if(recentProjects === null) {
+            recentProjects = [];
+        }
+        recentProjects.push(project);
+        this.setItem("savedProjects", JSON.stringify(recentProjects));
+    }
+
     public static saveProject(project: Project) {
         let recentProjects: SavedProject[] = this.getSavedProject();
         if(recentProjects === null) {
             recentProjects = [];
         }
-        recentProjects.push({name: project.name, expenses: project.expenses, tag: project.tag, status: "todo"});
+        recentProjects.push({name: project.name, expenses: project.expenses, status: "todo", amountOfAccs: 1});
         this.setItem("savedProjects", JSON.stringify(recentProjects));
         emitter.emit("saveProject");
 
