@@ -23,7 +23,7 @@ const router = createRouter({
       component: SavedProjects
     },
     {
-      path: '/project_description',
+      path: '/:name/project_description',
       name: 'project_description',
       component: ProjectDescriptionView
     },

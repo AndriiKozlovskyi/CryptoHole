@@ -2,7 +2,7 @@
     <div class="relative flex items-color hover:bg-[#28292e] h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"  
-        @click="$router.push('project_description')"      
+        @click="goToProjectDescritpion"      
     >
         <!--image-->
         <div class="h-full grow">
@@ -55,6 +55,9 @@ import LocalStorageManager from '@/manager/local_storage_manager';
 import { onBeforeMount, ref } from 'vue';
 import type {Project} from "@/entity/Project";
 import type { PropType } from 'vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
 
 const props = defineProps({
   project: Object as PropType<Project>,
@@ -77,6 +80,12 @@ const unsave = () => {
         LocalStorageManager.unsaveProject(props.project)
     saved.value = false;
 };
+
+const goToProjectDescritpion = () => {
+    router.push({ name: 'project_description', params: { name: props.project?.name } });
+
+}
+
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
