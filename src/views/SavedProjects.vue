@@ -8,7 +8,7 @@
         <div class="relative w-full h-full text-white flex flex-row gap-4 overflow-y-hidden">
           <div class="flex bg-[#141418] h-min rounded-xl flex-col w-min">
             <p class="font-bold p-5">TODO</p>
-            <DragCon  v-for="project in todoProjects" :key="project.name" :name="project.name">
+            <DragCon  v-for="project in projects" :key="project.name" :name="project.name">
               <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>
             </DragCon>
             <DropZone id="todo"/>
@@ -17,7 +17,6 @@
               <p>Add my project</p>
             </div>
           </div>
-          <ProgressBar name="TODO" id="todo"/>
 
           <ProgressBar name="IN PROGRESS" id="progress"/>
           <ProgressBar name="WAITING FOR PAYMENT" id="waiting"/>
@@ -40,10 +39,10 @@ import ProgressBar from "@/components/ProgressBar.vue"
 
 const projects = ref(LocalStorageManager.getSavedProject());
 
-const todoProjects = ref(projects.value.filter(project => project.status === 'todo'));
-const progressProjects = ref(projects.value.filter(project => project.status === 'progress'));
-const waitingProjects = ref(projects.value.filter(project => project.status === 'waiting'));
-const paidProjects = ref(projects.value.filter(project => project.status === 'paid'));
+// const todoProjects = ref(projects.value.filter(project => project.status === 'todo'));
+// const progressProjects = ref(projects.value.filter(project => project.status === 'progress'));
+// const waitingProjects = ref(projects.value.filter(project => project.status === 'waiting'));
+// const paidProjects = ref(projects.value.filter(project => project.status === 'paid'));
 
 onBeforeMount(() => {
   emitter.on("saveProject", () => {
@@ -56,15 +55,12 @@ onBeforeMount(() => {
     projects.value = LocalStorageManager.getSavedProject();
   });
   emitter.on("addSavedProject", () => {
-      // addProjectBarToDropZone();
-
-    // projects.value = LocalStorageManager.getSavedProject();
-    // addElement (document.createElement('div'), "waiting");            
+    projects.value = LocalStorageManager.getSavedProject();
   });
 });
 
 onMounted(() => {
-  // addProjectBarToDropZone();
+  addProjectBarToDropZone();
 
 })
 
