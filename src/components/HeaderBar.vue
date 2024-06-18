@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed w-full flex flex-row justify-between bg-[#101114] text-gray-400 font-semibold items-center">
+    <div class="fixed w-full flex z-[1000] flex-row justify-between bg-[#101114] text-gray-400 font-semibold items-center">
         <div class="flex flex-row space-x-6 w-1/3">
             <p class="text-center text-lg px-3 py-4">CryptoArchive.com</p>
             <p class="text-white hover:bg-[#28292e] cursor-pointer rounded-xl px-3 py-4">News</p>

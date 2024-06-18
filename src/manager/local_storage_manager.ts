@@ -21,6 +21,11 @@ export default class LocalStorageManager {
         return projects.find(project => project.name === name)!;
     }
 
+    public static getProjectByName(name: string): Project {
+        const projects: Project[] = JSON.parse(this.getItem("projects"));
+        return projects.find(project => project.name === name)!;
+    }
+
 
     public static setProjects(projects: Project[]) {
         this.setItem("projects", JSON.stringify(projects));
