@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-color h-portrait-card space-y-2 group mb-10 overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform]  group"   
+    <div class="flex items-color h-portrait-card space-y-2 group mb-4 overflow-hidden flex-col rounded-lg tracking-tight cursor-pointer transition-[transform]  group"   
     >  
         <!--tag-->
     
@@ -27,17 +27,23 @@
 </template>
 <script setup lang="ts">
 import MyInput from "@/components/MyInput.vue";
-import type { Project } from "@/entity/Project";
 import type { SavedProject } from "@/entity/saved_project";
 import LocalStorageManager from "@/manager/local_storage_manager";
 import { ref } from "vue";
+
+const props = defineProps({
+   status: String 
+});
 
 const name = ref("");
 const expenses = ref("");
 const amountOfAccs = ref("");
 
+const emit = defineEmits(['save']);
+
 const save = () => {
-    const project: SavedProject = {name: name.value, amountOfAccs: amountOfAccs.value, expenses: expenses.value, status: "todo" }
+    const project: SavedProject = {name: name.value, amountOfAccs: Number(amountOfAccs.value), expenses: Number(expenses.value), status: props.status! }
     LocalStorageManager.addSavedProject(project);
+    emit('save');
 }
 </script>

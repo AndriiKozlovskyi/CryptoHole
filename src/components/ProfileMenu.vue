@@ -15,7 +15,7 @@
             </div>
       
             <div class="flex flex-row justify-center items-center bg-[#101114] rounded-md">
-                <p class="px-2 py-1 text-sm">{{projects.length}}</p>
+                <p class="px-2 py-1 text-sm">{{projectLength}}</p>
             </div>
         </div>
         <div 
@@ -29,7 +29,7 @@
             </div>
       
             <div class="flex flex-row justify-center items-center bg-[#101114] rounded-md">
-                <p class="px-2 py-1 text-sm">{{savedProjects !== undefined ?? savedProjects.length}}</p>
+                <p class="px-2 py-1 text-sm">{{savedProjectLength}}</p>
             </div>
         </div>
 
@@ -42,14 +42,14 @@
             </div>
       
             <div class="flex flex-row justify-center items-center bg-[#101114] rounded-md">
-                <p class="px-2 py-1 text-sm">{{projects.length}}</p>
+                <p class="px-2 py-1 text-sm">{{projectLength}}</p>
             </div>
         </div>
     </div>
 </template>
 <script setup lang="ts">
 import LocalStorageManager from '@/manager/local_storage_manager';
-import { ref, onBeforeMount, watch } from 'vue';
+import { ref, onBeforeMount, watch, computed } from 'vue';
 import { emitter } from '@/event_bus';
 import { useRoute } from 'vue-router'
 
@@ -68,6 +68,20 @@ onBeforeMount(() => {
 
 const savedProjects = ref(LocalStorageManager.getSavedProject());
 const projects = ref(LocalStorageManager.getProjects());
+
+const projectLength = computed(() => {
+    if(projects.value === undefined || projects.value === null) {
+        return 0;
+    }
+    return projects.value.length;
+});
+
+const savedProjectLength = computed(() => {
+    if(savedProjects.value === undefined || savedProjects.value === null) {
+        return 0;
+    }
+    return savedProjects.value.length;
+})
 
 watch(
   () => route.path,

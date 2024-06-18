@@ -42,6 +42,7 @@ export default class LocalStorageManager {
         }
         recentProjects.push(project);
         this.setItem("savedProjects", JSON.stringify(recentProjects));
+        emitter.emit("addSavedProject");
     }
 
     public static saveProject(project: Project) {
