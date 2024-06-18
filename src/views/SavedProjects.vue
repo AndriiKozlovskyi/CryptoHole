@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-full bg flex flex-col overflow-y-auto">
-    <div class="flex flex-col h-full w-full items-center space-y-3 bg mt-[6rem]">
+    <div class="flex flex-col h-100% w-full items-center space-y-3 bg mt-[6rem]">
       <div class="flex flex-col h-full w-5/6 space-y-6">
         <p class="font-semibold text-2xl self-start text-white">
           Saved Projects
