@@ -4,6 +4,7 @@ type Events = {
   saveProject: undefined
   unsaveProject: undefined
   updateSavedProject: undefined
+  updateProject: undefined
   addSavedProject: undefined
 
 }

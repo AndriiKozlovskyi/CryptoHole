@@ -77,6 +77,36 @@ export default class LocalStorageManager {
 
         this.setItem("savedProjects", JSON.stringify(newProjects));
         emitter.emit("updateSavedProject");
+    }
+
+    public static updateProject(project: Project) {
+        let recentProjects: Project[] = this.getProjects();
+        if(recentProjects === null) {
+            recentProjects = [];
+        }
+
+        const newProjects = recentProjects.map(_project => {
+            if (project.name === _project.name) {
+                return project;
+            }
+            return _project;
+
+        });
+
+        this.setItem("projects", JSON.stringify(newProjects));
+        emitter.emit("updateProject");
+    }
+
+    public static deleteProject(project: Project) {
+        let recentProjects: Project[] = this.getProjects();
+        if(recentProjects === null) {
+            recentProjects = [];
+        }
+
+        const newProjects = recentProjects.filter(_project => _project.name !== project.name);
+
+        this.setItem("projects", JSON.stringify(newProjects));
+        emitter.emit("updateProject");
 
     }
 

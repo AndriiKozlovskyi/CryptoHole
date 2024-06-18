@@ -16,7 +16,7 @@ let cOffX = 0;
 let cOffY = 0;
 
 const isDragAvailable = inject('dragAvailable');
-
+let indicator = null;
 const props = defineProps({
   name: String
 });
@@ -24,11 +24,21 @@ const props = defineProps({
 onMounted(() => {
   el = document.getElementById(props.name);
   el.style.position = "relative";
-  el.style.width = "18rem";
+  el.style.width = "16.25rem";
   el.style.zIndex = 900;
-  el.style.paddingTop = '1rem';
-  el.style.paddingLeft = '1rem';
-  el.style.paddingRight = '1rem';
+  el.style.paddingTop = '0.2rem';
+  el.style.paddingLeft = '0.5rem';
+  el.style.paddingRight = '0.5rem';
+
+  indicator = document.createElement('div');
+  indicator.style.position = 'absolute';
+  indicator.style.height = '2px';
+  indicator.style.backgroundColor = 'blue';
+  indicator.style.opacity = 0.5
+  indicator.style.width = '80%';
+  indicator.style.display = 'none';
+  document.body.appendChild(indicator);
+  // el.style.fontWeight = 200
 
   container = document.getElementById('container');
   
@@ -59,9 +69,60 @@ function dragStart(e) {
 function dragMove(e) {
   e = e || window.event;
   e.preventDefault();
+  el.style.zIndex = 950;
 
+  const cursorX = e.clientX;
+  const cursorY = e.clientY;
+
+  let closestDropZone = null;
+  let minDistance = Infinity;
+
+  const dropZones = document.querySelectorAll('.drop-zone');
+
+  dropZones.forEach(dropZone => {
+    const dropZoneRect = dropZone.getBoundingClientRect();
+
+    if (isIntersectingPoint(cursorX, cursorY, dropZoneRect)) {
+      const distance = Math.sqrt(
+        Math.pow(cursorX - (dropZoneRect.left + dropZoneRect.width / 2), 2) +
+        Math.pow(cursorY - (dropZoneRect.top + dropZoneRect.height / 2), 2)
+      );
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestDropZone = dropZone;
+      }
+    }
+  });
+
+  if (closestDropZone) {
+    const children = Array.from(closestDropZone.children);
+    let insertBeforeElement = null;
+    let indicatorTop = null;
+
+    for (let child of children) {
+      const childRect = child.getBoundingClientRect();
+      if (cursorY < childRect.top + childRect.height / 2) {
+        insertBeforeElement = child;
+        indicatorTop = childRect.top;
+        break;
+      }
+    }
+
+    if (!insertBeforeElement) {
+      const dropZoneRect = closestDropZone.getBoundingClientRect();
+      indicatorTop = dropZoneRect.bottom;
+    }
+
+    indicator.style.top = indicatorTop + 'px';
+    indicator.style.left = closestDropZone.getBoundingClientRect().left + 'px';
+    indicator.style.width = closestDropZone.getBoundingClientRect().width + 'px';
+    indicator.style.display = 'block';
+  } else {
+    indicator.style.display = 'none';
+  }
   const index = Array.prototype.indexOf.call(el.parentNode.children, el);
-  console.log(index)
+
   el.style.top = (e.clientY - index * el.offsetHeight - cOffY).toString() + 'px';
   el.style.left = (e.clientX - cOffX).toString() + 'px';
 }
@@ -76,29 +137,24 @@ function dragEnd(e) {
   container.style.cursor = null;
 
   isDragging.value = false;
+  indicator.style.display = 'none';
 
-  const dropZones = document.querySelectorAll('.drop-zone');
   const elRect = el.getBoundingClientRect();
+  const cursorX = e.clientX;
+  const cursorY = e.clientY;
 
   let closestDropZone = null;
   let minDistance = Infinity;
 
+  const dropZones = document.querySelectorAll('.drop-zone');
+
   dropZones.forEach(dropZone => {
     const dropZoneRect = dropZone.getBoundingClientRect();
 
-    if (isIntersecting(elRect, dropZoneRect)) {
-      const elCenter = {
-        x: elRect.left + elRect.width / 2,
-        y: elRect.top + elRect.height / 2
-      };
-      const dropZoneCenter = {
-        x: dropZoneRect.left + dropZoneRect.width / 2,
-        y: dropZoneRect.top + dropZoneRect.height / 2
-      };
-
+    if (isIntersectingPoint(cursorX, cursorY, dropZoneRect)) {
       const distance = Math.sqrt(
-        Math.pow(elCenter.x - dropZoneCenter.x, 2) +
-        Math.pow(elCenter.y - dropZoneCenter.y, 2)
+        Math.pow(cursorX - (dropZoneRect.left + dropZoneRect.width / 2), 2) +
+        Math.pow(cursorY - (dropZoneRect.top + dropZoneRect.height / 2), 2)
       );
 
       if (distance < minDistance) {
@@ -109,23 +165,37 @@ function dragEnd(e) {
   });
 
   if (closestDropZone) {
+    const children = Array.from(closestDropZone.children);
+    let insertBeforeElement = null;
 
-    const project = LocalStorageManager.getSavedProjectByName(el.id);
-    project.status = closestDropZone.id;
-    LocalStorageManager.updateSavedProject(project);
+    for (let child of children) {
+      const childRect = child.getBoundingClientRect();
+      if (cursorY < childRect.top + childRect.height / 2) {
+        insertBeforeElement = child;
+        break;
+      }
+    }
 
-    closestDropZone.appendChild(el);
+    closestDropZone.insertBefore(el, insertBeforeElement);
+
     el.style.position = 'relative';
-    el.style.paddingTop = '1rem'
-    el.style.paddingLeft = '1rem'
-    el.style.paddingRight = '1rem'
-
+    el.style.paddingTop = '0.2rem';
+    el.style.paddingLeft = '0.5rem';
+    el.style.paddingRight = '0.5rem';
     el.style.left = '0px';
     el.style.top = '0px';
     el.classList.remove(d);
 
-  } 
+    const project = LocalStorageManager.getSavedProjectByName(el.id);
+    project.status = closestDropZone.id;
+    LocalStorageManager.updateSavedProject(project);
+  }
 }
+
+function isIntersectingPoint(x, y, rect) {
+  return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
+}
+
 
 function isIntersecting(rect1, rect2) {
   return !(rect2.left > rect1.right || 
@@ -138,6 +208,6 @@ function isIntersecting(rect1, rect2) {
 
 <style>
 .dragging {
-  opacity: 1;
+  opacity: 0.5;
 }
 </style>

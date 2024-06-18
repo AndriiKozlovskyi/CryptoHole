@@ -5,9 +5,12 @@
         <p class="font-semibold text-2xl self-start text-white">
           Saved Projects
         </p>
-        <div class="relative w-full h-full text-white flex flex-row gap-4 overflow-y-hidden">
-          <div class="flex bg-[#141418] h-min rounded-xl flex-col w-min">
-            <p class="font-bold p-5">TODO</p>
+        <div class="relative w-full h-[100%] text-white flex flex-row gap-1 overflow-y-hidden">
+          <div class="flex bg-[#141418] h-[100%] rounded-xl flex-col w-min">
+            <div class="flex flex-row items-center justify-between ">
+              <p class="font-normal text-sm p-2">TODO</p>
+              <p class="px-3 text-gray-400">{{ todoProjects.length }}</p>
+            </div>
             <DragCon  v-for="project in projects" :key="project.name" :name="project.name">
               <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>
             </DragCon>
@@ -18,9 +21,9 @@
             </div>
           </div>
 
-          <ProgressBar name="IN PROGRESS" id="progress"/>
-          <ProgressBar name="WAITING FOR PAYMENT" id="waiting"/>
-          <ProgressBar name="PAID" id="paid"/>
+          <ProgressBar :amountOfProjects="progressProjects.length" name="IN PROGRESS" id="progress"/>
+          <ProgressBar :amountOfProjects="waitingProjects.length" name="WAITING FOR PAYMENT" id="waiting"/>
+          <ProgressBar :amountOfProjects="paidProjects.length" name="PAID" id="paid"/>
         </div>
         <i class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle" style="font-size: 2rem" />
       </div>
@@ -29,7 +32,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, provide, ref } from 'vue';
+import { onBeforeMount, onMounted, provide, computed, ref } from 'vue';
 import ProjectBar from '@/components/SavedProjectBar.vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 import { emitter } from '@/event_bus';
@@ -39,10 +42,10 @@ import ProgressBar from "@/components/ProgressBar.vue"
 
 const projects = ref(LocalStorageManager.getSavedProject());
 
-// const todoProjects = ref(projects.value.filter(project => project.status === 'todo'));
-// const progressProjects = ref(projects.value.filter(project => project.status === 'progress'));
-// const waitingProjects = ref(projects.value.filter(project => project.status === 'waiting'));
-// const paidProjects = ref(projects.value.filter(project => project.status === 'paid'));
+const todoProjects = computed(() => projects.value.filter(project => project.status === 'todo'));
+const progressProjects = computed(() => projects.value.filter(project => project.status === 'progress'));
+const waitingProjects = computed(() => projects.value.filter(project => project.status === 'waiting'));
+const paidProjects = computed(() => projects.value.filter(project => project.status === 'paid'));
 
 onBeforeMount(() => {
   emitter.on("saveProject", () => {
@@ -100,8 +103,8 @@ const addElement = (el, id) => {
   document.getElementById(id).appendChild(el);
   console.log(document.getElementById(id))
   el.style.position = "relative";
-  el.style.paddingLeft = '1rem'
-  el.style.paddingRight = '1rem'
+  el.style.paddingLeft = '0.5rem'
+  el.style.paddingRight = '0.5rem'
   el.style.left = '0px';
   el.style.top = '0px';
   el.classList.remove("dragging");

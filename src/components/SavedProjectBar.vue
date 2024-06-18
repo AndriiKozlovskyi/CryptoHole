@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex items-color hover:bg-[#28292e] h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="relative flex items-color h-[5rem] hover:bg-[#28292e] overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"        
     >  
@@ -8,10 +8,10 @@
         <!--lowwer bar-->
         <div class="flex flex-row justify-between px-5">
             <!--name-->
-            <div class="font text-white text-2xl mt-3 font-semibold">
+            <div class="apple-font text-white text-xl mt-3 font-normal">
                 {{ project?.name }}
             </div>
-            <div class="flex flex-row items-center text-white text-lg ">
+            <div class="flex flex-row items-center text-white text-sm ">
                 <button 
                     class="px-3 py-3" 
                     @click="decreaseAccs" 
@@ -28,13 +28,14 @@
             </div>
         </div>
             <!--lowwer bar-->
-        <div class="flex grow flex-row px-5 justify-between items-end w-full rounded-full text-sm text-white">
+        <div class="flex flex-row px-5 justify-between items-end w-full rounded-full text-sm text-white">
             <!--expenses-->
             <div class="flex flex-row space-x-1 mb-5 items-center">
+                <img width="16px" heig1ht="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
+
                 <p class="font-semibold text-[14px] text-gray-300">
                     {{ project?.expenses }}
                 </p>
-                <img width="16px" heig1ht="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
             </div>
             
         </div>
@@ -77,7 +78,13 @@ const decreaseAccs = () => {
   }
   .font {
     font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .apple-font {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
   }
   .part {
     font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;

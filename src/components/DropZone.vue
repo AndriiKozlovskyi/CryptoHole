@@ -19,9 +19,10 @@
   justify-content: start;
   font-size: 1rem;
   color: #aaa;
+  height: 100%;
   background-color: #141418;
   padding-bottom: 1rem;
-  width: 18rem;
+  width: 16.25rem;
 
 }
 </style>
