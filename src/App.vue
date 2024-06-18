@@ -22,7 +22,8 @@ import ProfileMenu from './components/ProfileMenu.vue';
 html, body, #app {
   height: 100%;
   font-family: 'Montserrat', sans-serif;
-  background: rgb(30, 31, 36);
+  background: #101114;
 
 }
+
 </style>

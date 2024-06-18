@@ -3,6 +3,7 @@ import MainView from '@/views/MainView.vue'
 import AdminView from '@/views/AdminView.vue'
 import SavedProjects from "@/views/SavedProjects.vue";
 import DraggableConteiner1 from '@/components/DraggableContainer.vue'
+import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/saved_projects',
       name: 'saved_projects',
       component: SavedProjects
+    },
+    {
+      path: '/project_description',
+      name: 'project_description',
+      component: ProjectDescriptionView
     },
   ]
 })

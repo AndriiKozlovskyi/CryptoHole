@@ -1,7 +1,8 @@
 <template>
     <div class="relative flex items-color hover:bg-[#28292e] h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
-        @mouseleave="hovered = false"        
+        @mouseleave="hovered = false"  
+        @click="$router.push('project_description')"      
     >
         <!--image-->
         <div class="h-full grow">
