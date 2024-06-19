@@ -97,20 +97,29 @@ function dragMove(e) {
     let indicatorTop = null;
 
     for (let child of children) {
+      if(el.id === child.id) {
+        continue;
+      }
       const childRect = child.getBoundingClientRect();
       if (cursorY < childRect.top + childRect.height / 2) {
         insertBeforeElement = child;
         indicatorTop = childRect.top;
         break;
       }
-      if (children.indexOf(child) === children.length - 1) {
+      else if (cursorY > childRect.top + childRect.height / 2 && cursorY < childRect.top + childRect.height) {
         insertBeforeElement = child;
         indicatorTop = childRect.bottom;
         break;
       }
+
+      else if (cursorY > children[children.length-1].getBoundingClientRect().top + children[children.length-1].getBoundingClientRect().height) {
+        insertBeforeElement = children[children.length-1];
+        indicatorTop = children[children.length-1].getBoundingClientRect().bottom;
+        break;
+      }
     }
 
-    if (!insertBeforeElement) {
+   if (!insertBeforeElement) {
       const dropZoneRect = closestDropZone.getBoundingClientRect();
       indicatorTop = dropZoneRect.top;
     }
@@ -171,8 +180,12 @@ function dragEnd(e) {
     let insertBeforeElement = null;
 
     for (let child of children) {
+      if(el.id === child.id) {
+        continue;
+      }
       const childRect = child.getBoundingClientRect();
       if (cursorY < childRect.top + childRect.height / 2) {
+        console.log("UIBIBIBUBUIIBUUIBBIU")
         insertBeforeElement = child;
         break;
       }
