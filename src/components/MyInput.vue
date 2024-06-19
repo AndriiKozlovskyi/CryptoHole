@@ -13,18 +13,18 @@
 defineProps({
     placeholder: {
         type: String,
-        required: true
+        required: false
     },
     type: String,
     modelValue: {
-        type: String,
+        type: String, Number,
         required: true
     },
 })
 </script>
 <style module>
 .myinput {
-    padding: 0.1rem 1rem;
+    padding: 0.05rem 1rem;
     border-width: 1px;
     outline: none;
     color: white;
