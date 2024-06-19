@@ -107,7 +107,6 @@ export default class LocalStorageManager {
 
         this.setItem("projects", JSON.stringify(newProjects));
         emitter.emit("updateProject");
-
     }
 
     public static isProjectSaved(project: Project) {
@@ -128,6 +127,20 @@ export default class LocalStorageManager {
         this.setItem("savedProjects", JSON.stringify(recentProjects));
         emitter.emit("unsaveProject");
     }
+
+    public static updateSavedProjectsByOrder(projects: SavedProject[], dropZoneId: string) {
+        let recentProjects: SavedProject[] = this.getSavedProject();
+        if(recentProjects === null) {
+            recentProjects = [];
+        }
+        recentProjects = recentProjects.filter(item => item.status !== dropZoneId);
+
+        recentProjects = recentProjects.concat(projects);
+
+        this.setItem("savedProjects", JSON.stringify(recentProjects));
+
+    }
+
 
     public static getSavedProject() {
         const projects: SavedProject[] = JSON.parse(this.getItem("savedProjects"));

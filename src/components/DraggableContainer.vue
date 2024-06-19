@@ -47,7 +47,6 @@ onMounted(() => {
 const d = 'dragging';
 
 function dragStart(e) {
-  console.log(isDragAvailable.value)
   if (!isDragAvailable) return; 
   e = e || window.event;
   e.preventDefault();
@@ -189,19 +188,24 @@ function dragEnd(e) {
     el.style.top = '0px';
     el.classList.remove(d);
 
-    const project = LocalStorageManager.getSavedProjectByName(el.id);
-    project.status = closestDropZone.id;
-    LocalStorageManager.updateSavedProject(project);
+    const projects = [];
+    for (const child of closestDropZone.children) {
+      const project = LocalStorageManager.getProjectByName(child.id);
+      project.status = closestDropZone.id;
+      LocalStorageManager.updateSavedProject(project);
+      projects.push(project)
+    }
+
+    LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
   }
   if (!closestDropZone) {
-      el.style.position = 'relative';
+      el.style.display = 'relative';
       el.style.paddingTop = '0.2rem';
       el.style.paddingLeft = '0.5rem';
       el.style.paddingRight = '0.5rem';
       el.style.left = '0px';
       el.style.top = '0px';
       el.classList.remove(d);
-      el.parentNode.appendChild(el);
     }
 }
 
