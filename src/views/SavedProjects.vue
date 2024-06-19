@@ -7,7 +7,7 @@
         </p>
         <div class="relative w-full h-[100%] text-white flex flex-row gap-1 overflow-y-hidden">
           <div class="flex bg-[#1f1e24] h-[100%] rounded-xl flex-col w-min">
-            <div class="flex flex-row items-center justify-between ">
+            <div class="flex flex-row items-center justify-between w-min">
               <p class="font-normal text-sm p-2">TODO</p>
               <p class="px-3 text-gray-400">{{ todoProjects.length }}</p>
             </div>

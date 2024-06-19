@@ -10,8 +10,8 @@
         </div>
         <!--save mark-->
         <div class="absolute flex flex-row mt-5 px-5 justify-end w-full h-full">
-            <i v-if="saved && hovered" class="pi pi-bookmark-fill text-white" style="font-size: 1.5rem;" @click="unsave()"></i>
-            <i v-if="!saved && hovered" class="pi pi-bookmark  text-white" style="font-size: 1.5rem;" @click="save()"></i>
+            <i v-if="saved && hovered" class="pi pi-bookmark-fill text-white" style="font-size: 1.5rem;" @click.stop="unsave()"></i>
+            <i v-if="!saved && hovered" class="pi pi-bookmark  text-white" style="font-size: 1.5rem;" @click.stop="save()"></i>
         </div>
         <!--tag-->
         <div class="absolute rounded-full mt-5 ml-5 px-3 py-1 bg-slate-600 bg-opacity-50 text-white hover:bg-opacity-100">
@@ -44,7 +44,7 @@
                     <p class="font-semibold text-[14px] text-gray-300">
                         {{ project?.expenses }}
                     </p>
-                    <img width="16px" heig1ht="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
+                    <img width="16px" height="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
                 </div>
             </div>
         </div>
