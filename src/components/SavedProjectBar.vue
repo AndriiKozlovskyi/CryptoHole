@@ -43,6 +43,7 @@
 import { ref } from 'vue';
 import type {SavedProject} from "@/entity/saved_project";
 import type { PropType } from 'vue';
+import LocalStorageManager from '@/manager/local_storage_manager';
 
 const props = defineProps({
   project: Object as PropType<SavedProject>,
@@ -55,6 +56,7 @@ const emit = defineEmits(['dragSwitch'])
 const increaseAccs = () => {
     emit('dragSwitch');
     project.value!.amountOfAccs = project.value!.amountOfAccs + 1;
+    LocalStorageManager.updateSavedProject(project.value!);
     emit('dragSwitch');
 }
 
@@ -62,6 +64,7 @@ const decreaseAccs = () => {
     emit('dragSwitch');
     if (project.value!.amountOfAccs <= 1) return
     project.value!.amountOfAccs = project.value!.amountOfAccs - 1;
+    LocalStorageManager.updateSavedProject(project.value!);
     emit('dragSwitch');
 }
 
