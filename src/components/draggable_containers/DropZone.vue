@@ -2,7 +2,6 @@
   <div class="drop-zone">
     <slot></slot>
   </div>
-
 </template>
 
 <script setup>
@@ -20,7 +19,7 @@
   font-size: 1rem;
   color: #aaa;
   height: 100%;
-  background-color: #1E1F24;
+  background-color: var(--primary-item-color);
   padding-bottom: 1rem;
   width: 16.25rem;
 

@@ -22,11 +22,26 @@ import SideMenu from './components/menu/SideMenu.vue';
 
 html, body, #app {
   height: 100%;
-  font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
 
   background: #101114;
   --primary-item-color: #1e1f24;
   --hover-item-color: #28292e;
+  --secondary-text-color: #98989d;
 }
+
+
+
+  .tag-bg {
+    border-top-left-radius: 30%;
+  }
+  .font {
+    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .apple-font {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
 
 </style>

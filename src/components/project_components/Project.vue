@@ -7,7 +7,7 @@
     >
         <!--image-->
         <div class="h-full grow">
-            <img class="h-full w-full rounded-t-xl object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95" :src="project?.src"/>
+            <img class="h-full w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95" :src="project?.src"/>
         </div>
         <!--save mark-->
         <div class="absolute flex flex-row mt-5 px-5 justify-end w-full h-full">
@@ -27,25 +27,25 @@
             <!--horizontal line-->
             <hr class="w-full border-gray-700">
             <!--lowwer bar-->
-            <div class="flex flex-row justify-between w-full rounded-full text-sm text-white">
+            <div class="flex flex-row justify-between w-full mb-5 rounded-full text-sm text-white">
                 <!--participants bar-->
-                <div class="flex flex-row mb-5 space-x-3 items-center">
+                <div class="flex flex-row space-x-3 items-center">
                     <img class="rounded-full" width="28px" height="28px" src="https://masterpiecer-images.s3.yandex.net/65782260a05d11eebe3ad20dae950626:upscaled"/>
                     <div class="flex flex-col">
-                        <p class="amount font-semibold text-white">
+                        <p class="text-[14px] text-white">
                             {{project?.participants}}K
                         </p>
-                        <p class="part text-[#848486]">
+                        <p class="text-[12px] text-secondary-text-color">
                             Participants
                         </p>
                     </div>
                 </div>
                 <!--expenses-->
-                <div class="flex flex-row space-x-1 mb-5 items-center">
-                    <p class="font-semibold text-[14px] text-gray-300">
-                        {{ project?.expenses }}
+                <div class="flex flex-row space-x-2 items-center">
+                    <i class="pi pi-wallet"/>
+                    <p class="text-[14px] text-white">
+                        {{ project?.expenses }}$
                     </p>
-                    <img width="16px" height="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
                 </div>
             </div>
         </div>
@@ -90,7 +90,6 @@ const unsave = () => {
 
 const goToProjectDescritpion = () => {
     router.push({ name: 'project_description', params: { name: props.project?.name } });
-
 }
 
 </script>
@@ -104,14 +103,6 @@ const goToProjectDescritpion = () => {
   .font {
     font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
     font-size: 20px;
-  }
-  .part {
-    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 12px;
-  }
-  .amount {
-    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 14px;
   }
   .items-color {
     background: rgb(30, 31, 36);

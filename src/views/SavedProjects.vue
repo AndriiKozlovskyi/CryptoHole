@@ -2,14 +2,14 @@
   <div class="h-full w-full bg flex flex-col overflow-y-auto">
     <div class="flex flex-col h-100% w-full items-center space-y-3 bg mt-[6rem]">
       <div class="flex flex-col h-full w-5/6 space-y-6">
-        <p class="font-semibold text-2xl self-start text-white">
+        <p class="font-semibold text-lg self-start text-white">
           Saved Projects
         </p>
-        <div class="relative w-full h-[100%] text-white flex flex-row gap-1 overflow-y-hidden">
-          <div class="flex bg-[#1f1e24] h-[100%] rounded-xl flex-col w-min">
-            <div class="flex flex-row items-center justify-between w-min">
-              <p class="font-normal text-sm p-2">TODO</p>
-              <p class="px-3 text-gray-400">{{ todoProjects.length }}</p>
+        <div class="relative w-full h-[100%] flex flex-row gap-1 overflow-y-hidden">
+          <div class="flex bg-primary-item-color h-[100%] rounded-xl flex-col w-min">
+            <div class="flex flex-row items-center justify-between text-secondary-text-color w-min">
+              <p class="apple-font text-sm p-2">TODO</p>
+              <p class="px-3">{{ todoProjects.length }}</p>
             </div>
             <DragCon  v-for="project in projects" :key="project.name" :name="project.name">
               <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>

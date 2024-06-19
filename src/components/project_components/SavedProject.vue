@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex bg-[#141418] justify-between h-[6rem] shadow-2xl hover:bg-[#28292e] overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="relative flex bg-hover-primary-item-color justify-between h-[5.5rem] shadow-lg overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"    
         v-on-click-outside="stopEditing"   
@@ -10,7 +10,7 @@
             <!--name-->
             <div
                 v-if="!isEditing"
-                class="apple-font text-white text-xl font-medium">
+                class="apple-font text-white mt-1 font-base">
                 {{ project?.name }}
             </div>
             <MyInput
@@ -22,18 +22,16 @@
                 class="w-[9rem] apple-font mt-1 text-white text-sm font-medium"
             />
             <i v-if="hovered && !isEditing" class="pi pi-pencil mt-3" @mousedown.stop @click="isEditing = true"/>
-
-      
         </div>
-        <div class="flex flex-row px-3 items-center space-x-2 text-gray-400 text-sm ">
-            <i class="pi pi-user"/>
+        <div class="flex flex-row px-3 items-center space-x-2 text-sm ">
+            <i class="pi pi-user secondary-text-color"/>
                 <button 
                     class="px-2 py-1" 
                     @click="decreaseAccs" 
                     @mousedown.stop
                     v-if="hovered && !isEditing"
                 >-</button>
-                <p v-if="!isEditing">{{ project?.amountOfAccs }}</p>
+                <p v-if="!isEditing" class="apple-font text-white">{{ project?.amountOfAccs }}</p>
                 <MyInput
                     v-if="isEditing"
                     v-model="amountOfAccs"
@@ -53,19 +51,21 @@
         <div class="flex flex-row px-3 justify-between items-end w-full rounded-full text-sm text-white">
             <!--expenses-->
             <div class="flex flex-row space-x-2 mb-3 items-center ">
-                <!-- <img width="16px" height="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/> -->
-
-                <i class="pi pi-wallet text-gray-400"/>
-                <p v-if="!isEditing" class="font-md text-[15px] text-gray-400" >
-                    {{ project?.expenses }}$
-                </p>
+                <i class="pi pi-wallet text-secondary-text-color"/>
+                <div class="flex flex-row">
+                    <p class="text-secondary-text-color">$</p>
+                    <p v-if="!isEditing" class="apple-font text-white" >
+                        {{ project?.expenses }}
+                    </p>
+                </div>
+          
                 <MyInput
                     v-if="isEditing"
                     v-model="expenses"
                     type="text"
                     @focus.stop 
                     @mousedown.stop
-                    class="w-[7.5rem] apple-font text-white text-sm font-medium"
+                    class="w-[7.5rem] apple-font text-white"
                 />
             </div>
             
@@ -125,7 +125,7 @@ const decreaseAccs = () => {
 
 </script>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 
@@ -138,10 +138,6 @@ const decreaseAccs = () => {
     font-weight: 400;
   }
 
-  .apple-font {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-  }
   .part {
     font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
     font-size: 12px;

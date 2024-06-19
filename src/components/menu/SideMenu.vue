@@ -1,5 +1,5 @@
 <template>
-    <div class="px-4 py-3 w-1/6 cursor-pointer space-y-2 font flex flex-col font-lg right-0 top-[6rem] rounded-xl">
+    <div class="flex flex-col w-[14rem] space-y-2">
         <MenuItem name="All Projects" :countOfItemsInside="projectLength" path="/">
             <i class="pi pi-th-large"/>
         </MenuItem>
@@ -14,7 +14,6 @@ import { ref, onBeforeMount, computed } from 'vue';
 import { emitter } from '@/event_bus';
 import MenuItem from "./MenuItem.vue";
 
-
 onBeforeMount(() => {
     emitter.on("saveProject", () => {
         savedProjects.value = LocalStorageManager.getSavedProject();
@@ -22,7 +21,7 @@ onBeforeMount(() => {
     emitter.on("unsaveProject", () => {
         savedProjects.value = LocalStorageManager.getSavedProject();
     });
-  });
+});
 
 const savedProjects = ref(LocalStorageManager.getSavedProject());
 const projects = ref(LocalStorageManager.getProjects());
@@ -42,5 +41,3 @@ const savedProjectLength = computed(() => {
 })
 
 </script>
-<style>
-</style>
