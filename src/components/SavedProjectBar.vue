@@ -1,44 +1,44 @@
 <template>
-    <div class="relative flex bg-[#141418] justify-between h-[5rem] shadow-2xl hover:bg-[#28292e] overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="relative flex bg-[#141418] justify-between h-[6rem] shadow-2xl hover:bg-[#28292e] overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"        
     >  
         <!--lowwer bar-->
         <div class="flex flex-row justify-between px-3">
             <!--name-->
-            <div class="apple-font text-white text-xl mt-1 font-normal">
+            <div class="apple-font text-white text-xl mt-1 font-medium">
                 {{ project?.name }}
             </div>
-            <div class="flex flex-row items-center text-white text-sm ">
+            <i v-if="hovered" class="pi pi-pencil mt-3"/>
+
+      
+        </div>
+        <div class="flex flex-row px-3 items-center space-x-2 text-gray-400 text-sm ">
+            <i class="pi pi-user"/>
                 <button 
-                    class="px-3 py-3" 
+                    class="px-2 py-1" 
                     @click="decreaseAccs" 
                     @mousedown.stop
                     v-if="hovered"
                 >-</button>
                 <p>{{ project?.amountOfAccs }}</p>
                 <button 
-                    class="px-3 py-3" 
+                    class="px-2 py-1" 
                     @click="increaseAccs" 
                     @mousedown.stop
                     v-if="hovered"
                 >+</button>
             </div>
-        </div>
             <!--lowwer bar-->
         <div class="flex flex-row px-3 justify-between items-end w-full rounded-full text-sm text-white">
             <!--expenses-->
-            <div class="flex flex-row space-x-1 mb-3 items-center">
-                <img width="16px" heig1ht="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
+            <div class="flex flex-row space-x-2 mb-3 items-center ">
+                <!-- <img width="16px" height="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/> -->
 
-                <p class="font-semibold text-[14px] text-gray-300" 
-                @click="doubleClickExpenses"
-                @mousedown.stop
-                >
-                    {{ project?.expenses }}
+                <i class="pi pi-wallet text-gray-400"/>
+                <p class="font-md text-[15px] text-gray-400" >
+                    {{ project?.expenses }}$
                 </p>
-                <MyInput v-if="showExpensesInput" v-model="project.expenses" @focus.stop type="text"/>
-
             </div>
             
         </div>
@@ -65,14 +65,6 @@ const increaseAccs = () => {
     LocalStorageManager.updateSavedProject(project.value!);
     emit('dragSwitch');
 }
-
-const doubleClickExpenses = () => {
-    emit('dragSwitch');
-    showExpensesInput.value = true;
-    console.log("DDDDD");
-    emit('dragSwitch');
-}
-
 
 const decreaseAccs = () => {
     emit('dragSwitch');
