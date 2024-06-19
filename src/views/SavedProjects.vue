@@ -15,10 +15,6 @@
               <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>
             </DragCon>
             <DropZone id="todo"/>
-            <!-- <div class="relative mr-4 flex flex-row py-3 px-3 items-center space-x-3 mb-5 cursor-pointer rounded-lg ml-4 bg-[#181a1d]">
-              <i class="pi pi-plus text-white" style="font-size: 1.5rem; font-weight: 900;"/>
-              <p>Add my project</p>
-            </div> -->
           </div>
 
           <ProgressBar :amountOfProjects="progressProjects.length" name="IN PROGRESS" id="progress"/>
@@ -33,12 +29,12 @@
 
 <script setup>
 import { onBeforeMount, onMounted, provide, computed, ref } from 'vue';
-import ProjectBar from '@/components/SavedProjectBar.vue';
+import ProjectBar from '@/components/project_components/SavedProject.vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 import { emitter } from '@/event_bus';
-import DropZone from '@/components/DropZone.vue';
-import DragCon from '@/components/DraggableContainer.vue';
-import ProgressBar from "@/components/ProgressBar.vue"
+import DropZone from '@/components/draggable_containers/DropZone.vue';
+import DragCon from '@/components/draggable_containers/DraggableContainer.vue';
+import ProgressBar from "@/components/project_components/ProjectStatusContainer.vue"
 
 const projects = ref(LocalStorageManager.getSavedProject());
 
@@ -120,6 +116,3 @@ const dragSwitch = () => {
 }
 </script>
 
-<style scoped>
-/* Add any additional styles if necessary */
-</style>

@@ -4,7 +4,13 @@ export default {
   darkMode: true,
   content: [],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        "primary-item-color": "var(--primary-item-color)",
+        "hover-primary-item-color": "var(--hover-item-color)",
+
+      },
+    }
   },
   plugins: []
 }

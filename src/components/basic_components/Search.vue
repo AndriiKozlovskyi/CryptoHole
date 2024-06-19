@@ -1,11 +1,17 @@
 <template>
     <div class="flex items-center w-2/3 bg-[#1e1f24] px-3 rounded-full">
-        <i class="pi pi-search text-white p-2" style="f"></i>
-        <input type="text" :class="$style.myinput" class="rounded-full items-color bg-[#5e5a5a] flex-grow p-2" placeholder="Search" />
+        <i class="pi pi-search text-white p-2"/>
+        <MyInput/>
     </div>
 </template>
 <script setup lang="ts">
-
+import MyInput from './MyInput.vue';
+defineProps({
+    modelValue: {
+        type: [String, Number],
+        required: true
+    },
+});
 </script>
 
 <style module>

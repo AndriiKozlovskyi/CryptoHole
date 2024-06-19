@@ -22,8 +22,7 @@
     </div>
 </template>
 <script setup lang="ts">
-import SearchBar from "./SearchBar.vue"
-import ProfileMenu from "./ProfileMenu.vue";
+import SearchBar from "./basic_components/Search.vue"
 import { ref } from "vue";
 
 const showMenu = ref(false);

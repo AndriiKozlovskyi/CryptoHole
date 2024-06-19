@@ -77,7 +77,7 @@ import { ref } from 'vue';
 import type {SavedProject} from "@/entity/saved_project";
 import type { PropType } from 'vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
-import MyInput from './MyInput.vue';
+import MyInput from '@/components/basic_components/MyInput.vue';
 import { vOnClickOutside } from '@vueuse/components';
 const props = defineProps({
   project: { 

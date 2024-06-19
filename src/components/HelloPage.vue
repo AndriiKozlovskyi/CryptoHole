@@ -9,15 +9,10 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue';
-import ProjectBar from './ProjectBar.vue'
+import ProjectBar from '@/components/project_components/Project.vue'
 import LocalStorageManager from '@/manager/local_storage_manager';
 
 const projects = ref(LocalStorageManager.getProjects());
-//  onBeforeMount(() => {
-//   LocalStorageManager.setProjects([ {name: "Blast through Ambient Finance", expenses: 100, participants: 54, tag: "Game", src: "https://images.cointelegraph.com/cdn-cgi/image/format=auto,onerror=redirect,quality=90,width=1434/https://s3.cointelegraph.com/storage/uploads/view/e09726c06084625fce19cb193ee079fd.jpg"},
-//   {name: "Layer 3", expenses: 23, participants: 23, tag: "Airdrop", src: "https://miro.medium.com/v2/resize:fit:1400/1*EzelpZ7tLKZbyijACRyE1g.jpeg"},
-//  ])
-//  });
 
 </script>
 

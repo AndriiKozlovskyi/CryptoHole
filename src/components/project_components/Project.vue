@@ -1,6 +1,6 @@
 <template>
     <Toast/>
-    <div class="relative flex items-color hover:bg-[#28292e] h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"  
         @click="goToProjectDescritpion"      
@@ -21,7 +21,7 @@
         <!--lowwer bar-->
         <div class="flex grow flex-col gap-5 mt-2 items-start px-5">
             <!--name-->
-            <div class="font text-white text-2xl font-semibold">
+            <div class="text-white text-[20px] font-normal">
                 {{ project?.name }}
             </div>
             <!--horizontal line-->
