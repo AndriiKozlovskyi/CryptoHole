@@ -190,8 +190,9 @@ function dragEnd(e) {
 
     const projects = [];
     for (const child of closestDropZone.children) {
-      const project = LocalStorageManager.getProjectByName(child.id);
+      const project = LocalStorageManager.getSavedProjectByName(child.id);
       project.status = closestDropZone.id;
+      console.log(project)
       LocalStorageManager.updateSavedProject(project);
       projects.push(project)
     }

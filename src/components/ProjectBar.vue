@@ -1,4 +1,5 @@
 <template>
+    <Toast/>
     <div class="relative flex items-color hover:bg-[#28292e] h-portrait-card group overflow-hidden w-full basis-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"  
@@ -56,6 +57,10 @@ import { onBeforeMount, ref } from 'vue';
 import type {Project} from "@/entity/Project";
 import type { PropType } from 'vue';
 import { useRouter } from 'vue-router'
+import ToastManager from "@/manager/toaster_manager";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
 
 const router = useRouter();
 
@@ -73,12 +78,14 @@ const save = () => {
     if (props.project !== undefined)
         LocalStorageManager.saveProject(props.project)
     saved.value = true;
+    ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 };
 
 const unsave = () => {
     if (props.project !== undefined)
         LocalStorageManager.unsaveProject(props.project)
     saved.value = false;
+    ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 };
 
 const goToProjectDescritpion = () => {
