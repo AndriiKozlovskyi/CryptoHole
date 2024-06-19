@@ -6,7 +6,7 @@
           Saved Projects
         </p>
         <div class="relative w-full h-[100%] text-white flex flex-row gap-1 overflow-y-hidden">
-          <div class="flex bg-[#141418] h-[100%] rounded-xl flex-col w-min">
+          <div class="flex bg-[#1f1e24] h-[100%] rounded-xl flex-col w-min">
             <div class="flex flex-row items-center justify-between ">
               <p class="font-normal text-sm p-2">TODO</p>
               <p class="px-3 text-gray-400">{{ todoProjects.length }}</p>
@@ -15,10 +15,10 @@
               <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>
             </DragCon>
             <DropZone id="todo"/>
-            <div class="relative mr-4 flex flex-row py-3 px-3 items-center space-x-3 mb-5 cursor-pointer rounded-lg ml-4 bg-[#181a1d]">
+            <!-- <div class="relative mr-4 flex flex-row py-3 px-3 items-center space-x-3 mb-5 cursor-pointer rounded-lg ml-4 bg-[#181a1d]">
               <i class="pi pi-plus text-white" style="font-size: 1.5rem; font-weight: 900;"/>
               <p>Add my project</p>
-            </div>
+            </div> -->
           </div>
 
           <ProgressBar :amountOfProjects="progressProjects.length" name="IN PROGRESS" id="progress"/>
@@ -64,7 +64,6 @@ onBeforeMount(() => {
 
 onMounted(() => {
   addProjectBarToDropZone();
-
 })
 
 const addProjectBarToDropZone = () => {

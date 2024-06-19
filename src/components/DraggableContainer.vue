@@ -25,7 +25,6 @@ onMounted(() => {
   el = document.getElementById(props.name);
   el.style.position = "relative";
   el.style.width = "16.25rem";
-  el.style.zIndex = 900;
   el.style.paddingTop = '0.2rem';
   el.style.paddingLeft = '0.5rem';
   el.style.paddingRight = '0.5rem';
@@ -37,11 +36,11 @@ onMounted(() => {
   indicator.style.opacity = 0.5
   indicator.style.width = '80%';
   indicator.style.display = 'none';
+  
   document.body.appendChild(indicator);
-  // el.style.fontWeight = 200
 
   container = document.getElementById('container');
-  
+
   el.addEventListener('mousedown', dragStart);
 });
 
@@ -52,7 +51,6 @@ function dragStart(e) {
   if (!isDragAvailable) return; 
   e = e || window.event;
   e.preventDefault();
-  console.log("vrevb")
 
   cOffX = e.clientX - el.offsetLeft;
   cOffY = e.clientY - el.offsetTop;
@@ -69,14 +67,13 @@ function dragStart(e) {
 function dragMove(e) {
   e = e || window.event;
   e.preventDefault();
-  el.style.zIndex = 950;
 
   const cursorX = e.clientX;
   const cursorY = e.clientY;
 
   let closestDropZone = null;
   let minDistance = Infinity;
-
+  el.style.zIndex = 1001; // Adjust this value as needed
   const dropZones = document.querySelectorAll('.drop-zone');
 
   dropZones.forEach(dropZone => {
@@ -107,11 +104,16 @@ function dragMove(e) {
         indicatorTop = childRect.top;
         break;
       }
+      if (children.indexOf(child) === children.length - 1) {
+        insertBeforeElement = child;
+        indicatorTop = childRect.bottom;
+        break;
+      }
     }
 
     if (!insertBeforeElement) {
       const dropZoneRect = closestDropZone.getBoundingClientRect();
-      indicatorTop = dropZoneRect.bottom;
+      indicatorTop = dropZoneRect.top;
     }
 
     indicator.style.top = indicatorTop + 'px';
@@ -130,6 +132,8 @@ function dragMove(e) {
 function dragEnd(e) {
   e = e || window.event;
   e.preventDefault();
+  el.style.zIndex = 900; // Adjust this value as needed
+
 
   document.removeEventListener('mousemove', dragMove);
   document.removeEventListener('mouseup', dragEnd);
@@ -139,7 +143,6 @@ function dragEnd(e) {
   isDragging.value = false;
   indicator.style.display = 'none';
 
-  const elRect = el.getBoundingClientRect();
   const cursorX = e.clientX;
   const cursorY = e.clientY;
 
@@ -190,18 +193,20 @@ function dragEnd(e) {
     project.status = closestDropZone.id;
     LocalStorageManager.updateSavedProject(project);
   }
+  if (!closestDropZone) {
+      el.style.position = 'relative';
+      el.style.paddingTop = '0.2rem';
+      el.style.paddingLeft = '0.5rem';
+      el.style.paddingRight = '0.5rem';
+      el.style.left = '0px';
+      el.style.top = '0px';
+      el.classList.remove(d);
+      el.parentNode.appendChild(el);
+    }
 }
 
 function isIntersectingPoint(x, y, rect) {
   return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
-}
-
-
-function isIntersecting(rect1, rect2) {
-  return !(rect2.left > rect1.right || 
-           rect2.right < rect1.left || 
-           rect2.top > rect1.bottom ||
-           rect2.bottom < rect1.top);
 }
 
 </script>

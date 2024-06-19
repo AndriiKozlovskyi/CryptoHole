@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-color h-portrait-card space-y-2 group mb-4 overflow-hidden flex-col rounded-lg tracking-tight cursor-pointer transition-[transform]  group"   
+    <div class="flex bg-[#141418] h-portrait-card space-y-2 group mb-4 overflow-hidden flex-col rounded-lg tracking-tight cursor-pointer transition-[transform]  group"   
     >  
         <!--tag-->
     

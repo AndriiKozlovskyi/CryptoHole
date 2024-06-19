@@ -20,7 +20,7 @@
   font-size: 1rem;
   color: #aaa;
   height: 100%;
-  background-color: #141418;
+  background-color: #1E1F24;
   padding-bottom: 1rem;
   width: 16.25rem;
 
