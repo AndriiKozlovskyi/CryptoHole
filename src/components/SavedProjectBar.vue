@@ -31,9 +31,14 @@
             <div class="flex flex-row space-x-1 mb-3 items-center">
                 <img width="16px" heig1ht="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/>
 
-                <p class="font-semibold text-[14px] text-gray-300">
+                <p class="font-semibold text-[14px] text-gray-300" 
+                @click="doubleClickExpenses"
+                @mousedown.stop
+                >
                     {{ project?.expenses }}
                 </p>
+                <MyInput v-if="showExpensesInput" v-model="project.expenses" @focus.stop type="text"/>
+
             </div>
             
         </div>
@@ -44,13 +49,14 @@ import { ref } from 'vue';
 import type {SavedProject} from "@/entity/saved_project";
 import type { PropType } from 'vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
+import MyInput from './MyInput.vue';
 
 const props = defineProps({
   project: Object as PropType<SavedProject>,
 });
 const hovered = ref(false);
 const project = ref(props.project);
-
+const showExpensesInput = ref(false);
 const emit = defineEmits(['dragSwitch'])
 
 const increaseAccs = () => {
@@ -59,6 +65,14 @@ const increaseAccs = () => {
     LocalStorageManager.updateSavedProject(project.value!);
     emit('dragSwitch');
 }
+
+const doubleClickExpenses = () => {
+    emit('dragSwitch');
+    showExpensesInput.value = true;
+    console.log("DDDDD");
+    emit('dragSwitch');
+}
+
 
 const decreaseAccs = () => {
     emit('dragSwitch');
