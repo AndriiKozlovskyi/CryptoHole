@@ -21,7 +21,7 @@
                 @mousedown.stop
                 class="w-[9rem] apple-font mt-1 text-white text-sm font-medium"
             />
-            <i v-if="hovered" class="pi pi-pencil mt-3" @mousedown.stop @click="isEditing = true"/>
+            <i v-if="hovered && !isEditing" class="pi pi-pencil mt-3" @mousedown.stop @click="isEditing = true"/>
 
       
         </div>
