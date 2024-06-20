@@ -5,48 +5,23 @@
         @mouseleave="hovered = false"  
         @click="goToProjectDescritpion"      
     >
-        <!--image-->
         <div class="h-full grow">
             <img class="h-full w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95" :src="project?.src"/>
         </div>
-        <!--save mark-->
-        <div class="absolute flex flex-row mt-5 px-5 justify-end w-full h-full">
-            <i v-if="saved && hovered" class="pi pi-bookmark-fill text-white" style="font-size: 1.5rem;" @click.stop="unsave()"></i>
-            <i v-if="!saved && hovered" class="pi pi-bookmark  text-white" style="font-size: 1.5rem;" @click.stop="save()"></i>
+      
+        <div class="absolute w-full flex flex-row justify-between p-5">
+            <Tag :tag="project?.tag"/>
+            <SaveButton v-if="hovered" :condition="saved && hovered" @save="save" @unsave="unsave"/>
         </div>
-        <!--tag-->
-        <div class="absolute rounded-full mt-5 ml-5 px-3 py-1 bg-slate-600 bg-opacity-50 text-white hover:bg-opacity-100">
-            #{{ project?.tag }}
-        </div>
-        <!--lowwer bar-->
-        <div class="flex grow flex-col gap-5 mt-2 items-start px-5">
-            <!--name-->
-            <div class="text-white text-[20px] font-normal">
+    
+        <div class="flex flex-col gap-5 mt-2 px-5">
+            <p class="text-white text-[20px]">
                 {{ project?.name }}
-            </div>
-            <!--horizontal line-->
-            <hr class="w-full border-gray-700">
-            <!--lowwer bar-->
-            <div class="flex flex-row justify-between w-full mb-5 rounded-full text-sm text-white">
-                <!--participants bar-->
-                <div class="flex flex-row space-x-3 items-center">
-                    <img class="rounded-full" width="28px" height="28px" src="https://masterpiecer-images.s3.yandex.net/65782260a05d11eebe3ad20dae950626:upscaled"/>
-                    <div class="flex flex-col">
-                        <p class="text-[14px] text-white">
-                            {{project?.participants}}K
-                        </p>
-                        <p class="text-[12px] text-secondary-text-color">
-                            Participants
-                        </p>
-                    </div>
-                </div>
-                <!--expenses-->
-                <div class="flex flex-row space-x-2 items-center">
-                    <i class="pi pi-wallet"/>
-                    <p class="text-[14px] text-white">
-                        {{ project?.expenses }}$
-                    </p>
-                </div>
+            </p>
+            <hr class="w-full border-secondary-text-color opacity-25">
+            <div class="flex flex-row justify-between w-full mb-5 rounded-full">
+                <ParticipantsForm :participants="project?.participants"/>
+                <ExpensesForm :expenses="project?.expenses"/>
             </div>
         </div>
     </div>
@@ -59,6 +34,10 @@ import type { PropType } from 'vue';
 import { useRouter } from 'vue-router'
 import ToastManager from "@/manager/toaster_manager";
 import { useToast } from "primevue/usetoast";
+import ExpensesForm from '@/components/basic_components/ExpensesForm.vue';
+import ParticipantsForm from '@/components/basic_components/ParticipantsForm.vue';
+import Tag from "@/components/basic_components/Tag.vue";
+import SaveButton from '@/components/basic_components/SaveButton.vue';
 
 const toast = useToast();
 

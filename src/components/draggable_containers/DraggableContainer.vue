@@ -185,7 +185,6 @@ function dragEnd(e) {
       }
       const childRect = child.getBoundingClientRect();
       if (cursorY < childRect.top + childRect.height / 2) {
-        console.log("UIBIBIBUBUIIBUUIBBIU")
         insertBeforeElement = child;
         break;
       }

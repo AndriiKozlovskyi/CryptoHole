@@ -12,7 +12,7 @@
               <p class="px-3">{{ todoProjects.length }}</p>
             </div>
             <DragCon  v-for="project in projects" :key="project.name" :name="project.name">
-              <ProjectBar @drag-switch="dragSwitch()" class="relative h-[8rem]" :project="project"></ProjectBar>
+              <ProjectBar @drag-switch="dragSwitch()" :project="project"></ProjectBar>
             </DragCon>
             <DropZone id="todo"/>
           </div>

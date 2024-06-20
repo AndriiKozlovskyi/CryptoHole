@@ -1,11 +1,11 @@
 <template>
-	<div class="relative flex bg-primary-item-color h-[100%] items-start rounded-md flex-col w-min"
+	<div class="flex bg-primary-item-color h-[100%] rounded-md flex-col w-min"
 		@mouseenter="hovered = true"
 		@mouseleave="hovered = false" 
 	>
-	    <div class="flex flex-row apple-font items-center text-secondary-text-color justify-between">
-			<p class="text-[14px] p-2">{{ name }}</p>
-			<p class="px-3">{{ amountOfProjects }}</p>
+	    <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
+			<p class="text-[14px] apple-font">{{ name }}</p>
+			<p>{{ amountOfProjects }}</p>
 		</div>
 		<DropZone :id="id"/>
 	</div>

@@ -1,12 +1,12 @@
 <template>
-    <div class="flex flex-col text-white px-4 py-1">
+    <div class="flex">
         <input 
         :placeholder="placeholder"
         :type="type" 
         :class="$style.myinput" 
         @input="$emit('update:modelValue', $event.target.value)"
         :value="modelValue" 
-        class="bg-[#1e1f24]  rounded-lg"
+        class="bg-[#1e1f24] rounded-full w-full text-white px-3 py-1"
         />
     </div>
 </template>

@@ -1,16 +1,14 @@
 <template>
-    <div class="relative flex bg-hover-primary-item-color justify-between h-[5.5rem] shadow-lg overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="flex bg-hover-primary-item-color h-[7rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"    
         v-on-click-outside="stopEditing"   
         @keyup.enter="updateProject"
     >  
-        <!--lowwer bar-->
         <div class="flex flex-row justify-between px-3">
-            <!--name-->
             <div
                 v-if="!isEditing"
-                class="apple-font text-white mt-1 font-base">
+                class="apple-font text-white mt-1 text-[16px]">
                 {{ project?.name }}
             </div>
             <MyInput
@@ -19,19 +17,21 @@
                 type="text"
                 @focus.stop 
                 @mousedown.stop
-                class="w-[9rem] apple-font mt-1 text-white text-sm font-medium"
+                class="w-[9rem] apple-font mt-1 text-white text-[14px]"
             />
             <i v-if="hovered && !isEditing" class="pi pi-pencil mt-3" @mousedown.stop @click="isEditing = true"/>
         </div>
-        <div class="flex flex-row px-3 items-center space-x-2 text-sm ">
-            <i class="pi pi-user secondary-text-color"/>
-                <button 
-                    class="px-2 py-1" 
+
+        <div class="flex flex-col mt-3 space-y-1 ml-3">
+            <div class="flex flex-row items-center space-x-2">
+                <i class="pi pi-user secondary-text-color"/>
+                <button
+                    class="px-1"
                     @click="decreaseAccs" 
                     @mousedown.stop
                     v-if="hovered && !isEditing"
                 >-</button>
-                <p v-if="!isEditing" class="apple-font text-white">{{ project?.amountOfAccs }}</p>
+                <p v-if="!isEditing" class="text-[14px] text-white">{{ project?.amountOfAccs }}</p>
                 <MyInput
                     v-if="isEditing"
                     v-model="amountOfAccs"
@@ -41,26 +41,16 @@
                     class="w-[7.5rem] apple-font text-white text-sm font-medium"
                 />
                 <button 
-                    class="px-2 py-1" 
+                    class="px-1" 
                     @click="increaseAccs" 
                     @mousedown.stop
                     v-if="hovered  && !isEditing"
                 >+</button>
             </div>
-            <!--lowwer bar-->
-        <div class="flex flex-row px-3 justify-between items-end w-full rounded-full text-sm text-white">
-            <!--expenses-->
-            <div class="flex flex-row space-x-2 mb-3 items-center ">
+            <ExpensesForm v-if="!isEditing" :expenses="expenses"/>
+            <div v-if="isEditing" class="flex flex-row space-x-2 items-center">
                 <i class="pi pi-wallet text-secondary-text-color"/>
-                <div class="flex flex-row">
-                    <p class="text-secondary-text-color">$</p>
-                    <p v-if="!isEditing" class="apple-font text-white" >
-                        {{ project?.expenses }}
-                    </p>
-                </div>
-          
                 <MyInput
-                    v-if="isEditing"
                     v-model="expenses"
                     type="text"
                     @focus.stop 
@@ -68,7 +58,6 @@
                     class="w-[7.5rem] apple-font text-white"
                 />
             </div>
-            
         </div>
     </div>
 </template>
@@ -79,6 +68,8 @@ import type { PropType } from 'vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 import MyInput from '@/components/basic_components/MyInput.vue';
 import { vOnClickOutside } from '@vueuse/components';
+import ExpensesForm from '@/components/basic_components/ExpensesForm.vue';
+
 const props = defineProps({
   project: { 
     required: true,
@@ -124,26 +115,3 @@ const decreaseAccs = () => {
 }
 
 </script>
-
-<style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-
-  .tag-bg {
-    border-top-left-radius: 30%;
-  }
-  .font {
-    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 16px;
-    font-weight: 400;
-  }
-
-  .part {
-    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 12px;
-  }
-  .amount {
-    font-family: Inter,Helvetica Rounded,Helvetica,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-    font-size: 14px;
-  }
-  </style>
