@@ -1,15 +1,27 @@
 <template>
     <div class="relative flex bg-[#141418] justify-between h-[6rem] shadow-2xl hover:bg-[#28292e] overflow-hidden w-full flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
-        @mouseleave="hovered = false"        
+        @mouseleave="hovered = false"    
+        v-on-click-outside="stopEditing"   
+        @keyup.enter="updateProject"
     >  
         <!--lowwer bar-->
         <div class="flex flex-row justify-between px-3">
             <!--name-->
-            <div class="apple-font text-white text-xl mt-1 font-medium">
+            <div
+                v-if="!isEditing"
+                class="apple-font text-white text-xl font-medium">
                 {{ project?.name }}
             </div>
-            <i v-if="hovered" class="pi pi-pencil mt-3"/>
+            <MyInput
+                v-if="isEditing"
+                v-model="name"
+                type="text"
+                @focus.stop 
+                @mousedown.stop
+                class="w-[9rem] apple-font mt-1 text-white text-sm font-medium"
+            />
+            <i v-if="hovered && !isEditing" class="pi pi-pencil mt-3" @mousedown.stop @click="isEditing = true"/>
 
       
         </div>
@@ -19,14 +31,22 @@
                     class="px-2 py-1" 
                     @click="decreaseAccs" 
                     @mousedown.stop
-                    v-if="hovered"
+                    v-if="hovered && !isEditing"
                 >-</button>
-                <p>{{ project?.amountOfAccs }}</p>
+                <p v-if="!isEditing">{{ project?.amountOfAccs }}</p>
+                <MyInput
+                    v-if="isEditing"
+                    v-model="amountOfAccs"
+                    type="text"
+                    @focus.stop 
+                    @mousedown.stop
+                    class="w-[7.5rem] apple-font text-white text-sm font-medium"
+                />
                 <button 
                     class="px-2 py-1" 
                     @click="increaseAccs" 
                     @mousedown.stop
-                    v-if="hovered"
+                    v-if="hovered  && !isEditing"
                 >+</button>
             </div>
             <!--lowwer bar-->
@@ -36,9 +56,17 @@
                 <!-- <img width="16px" height="16px" src="https://cryptologos.cc/logos/tether-usdt-logo.png"/> -->
 
                 <i class="pi pi-wallet text-gray-400"/>
-                <p class="font-md text-[15px] text-gray-400" >
+                <p v-if="!isEditing" class="font-md text-[15px] text-gray-400" >
                     {{ project?.expenses }}$
                 </p>
+                <MyInput
+                    v-if="isEditing"
+                    v-model="expenses"
+                    type="text"
+                    @focus.stop 
+                    @mousedown.stop
+                    class="w-[7.5rem] apple-font text-white text-sm font-medium"
+                />
             </div>
             
         </div>
@@ -50,13 +78,21 @@ import type {SavedProject} from "@/entity/saved_project";
 import type { PropType } from 'vue';
 import LocalStorageManager from '@/manager/local_storage_manager';
 import MyInput from './MyInput.vue';
-
+import { vOnClickOutside } from '@vueuse/components';
 const props = defineProps({
-  project: Object as PropType<SavedProject>,
+  project: { 
+    required: true,
+    type: Object as PropType<SavedProject>
+    },
 });
 const hovered = ref(false);
 const project = ref(props.project);
-const showExpensesInput = ref(false);
+const name = ref(project.value?.name);
+const amountOfAccs = ref(project.value?.amountOfAccs);
+const expenses = ref(project.value?.expenses);
+
+const isEditing = ref(false);
+
 const emit = defineEmits(['dragSwitch'])
 
 const increaseAccs = () => {
@@ -64,6 +100,19 @@ const increaseAccs = () => {
     project.value!.amountOfAccs = project.value!.amountOfAccs + 1;
     LocalStorageManager.updateSavedProject(project.value!);
     emit('dragSwitch');
+}
+
+const stopEditing = () => {
+    isEditing.value = false;
+}
+
+const updateProject = () => {
+    project.value.name = name.value;
+    project.value.amountOfAccs = amountOfAccs.value;
+    project.value.expenses = expenses.value;
+
+    LocalStorageManager.updateSavedProject(project.value);
+    isEditing.value = false;
 }
 
 const decreaseAccs = () => {
