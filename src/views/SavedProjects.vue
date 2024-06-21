@@ -3,37 +3,37 @@
     <div class="flex flex-col w-full ml-[10rem] space-y-5">
       <p class="font-semibold text-lg text-white">Saved Projects</p>
       <div class="w-full flex flex-row gap-1 overflow-y-hidden">
-        <div class="flex bg-primary-item-color rounded-xl flex-col w-min">
-          <div
-            class="flex mt-1 flex-row items-center justify-between text-secondary-text-color w-full"
-          >
-            <p class="apple-font text-sm p-3">TODO</p>
-            <p class="px-3">{{ todoProjects.length }}</p>
-          </div>
-          <DragCon class="" v-for="project in projects" :key="project.name" :name="project.name">
-            <ProjectBar @drag-switch="dragSwitch()" :project="project"></ProjectBar>
-          </DragCon>
-          <DropZone id="todo" />
-        </div>
-
-        <!-- <ProgressBar
+        <ProgressBar
           :amountOfProjects="todoProjects.length"
+          :projects="todoProjects"
           name="TODO"
           id="todo"
-        /> -->
+        />
 
         <ProgressBar
           :amountOfProjects="progressProjects.length"
+          :projects="progressProjects"
           name="IN PROGRESS"
           id="progress"
         />
         <ProgressBar
           :amountOfProjects="waitingProjects.length"
+          :projects="waitingProjects"
           name="WAITING FOR PAYMENT"
           id="waiting"
         />
-        <ProgressBar :amountOfProjects="paidProjects.length" name="PAID" id="paid" />
-        <ProgressBar :amountOfProjects="failedProjects.length" name="FAILED" id="failed" />
+        <ProgressBar 
+          :amountOfProjects="paidProjects.length"
+          :projects="paidProjects"
+          name="PAID" 
+          id="paid" 
+        />
+        <ProgressBar 
+          :amountOfProjects="failedProjects.length" 
+          :projects="failedProjects"
+          name="FAILED" 
+          id="failed" 
+        />
       </div>
       <i
         class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle"
@@ -54,15 +54,15 @@ import ProgressBar from '@/components/project_components/ProjectStatusContainer.
 
 const projects = ref(LocalStorageManager.getSavedProject())
 
-const todoProjects = computed(() => projects.value.filter((project) => project.status === 'todo'))
-const progressProjects = computed(() =>
+const todoProjects = ref(projects.value.filter((project) => project.status === 'todo'))
+const progressProjects = ref(
   projects.value.filter((project) => project.status === 'progress')
 )
-const waitingProjects = computed(() =>
+const waitingProjects = ref(
   projects.value.filter((project) => project.status === 'waiting')
 )
-const paidProjects = computed(() => projects.value.filter((project) => project.status === 'paid'))
-const failedProjects = computed(() =>
+const paidProjects = ref(projects.value.filter((project) => project.status === 'paid'))
+const failedProjects = ref(
   projects.value.filter((project) => project.status === 'failed')
 )
 
