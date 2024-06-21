@@ -6,7 +6,6 @@ type Events = {
   updateSavedProject: undefined
   updateProject: undefined
   addSavedProject: undefined
-
 }
 
 export const emitter = mitt<Events>()

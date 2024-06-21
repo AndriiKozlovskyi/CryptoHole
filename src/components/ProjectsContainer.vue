@@ -1,19 +1,16 @@
 <template>
   <div class="flex flex-row justify-center">
     <div class="w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
-      <ProjectBar v-for="project in projects" :key="project.name" 
-      :project="project"
-    /> 
+      <ProjectBar v-for="project in projects" :key="project.name" :project="project" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import ProjectBar from '@/components/project_components/Project.vue'
-import LocalStorageManager from '@/manager/local_storage_manager';
+import LocalStorageManager from '@/manager/local_storage_manager'
 
-const projects = ref(LocalStorageManager.getProjects());
-
+const projects = ref(LocalStorageManager.getProjects())
 </script>
 
 <style>
@@ -28,16 +25,16 @@ const projects = ref(LocalStorageManager.getProjects());
   border-radius: 1px;
   width: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(19, 25, 27); 
+  background: rgb(19, 25, 27);
   border-radius: 100px;
   width: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #0a211a; 
+  background: #0a211a;
 }
 </style>

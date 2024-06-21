@@ -1,5 +1,5 @@
 export enum Tag {
-    Game, 
-    Launchpad,
-    Airdrop
+  Game,
+  Launchpad,
+  Airdrop
 }
