@@ -1,5 +1,5 @@
 <template>
-    <div class="flex bg-hover-primary-item-color h-[7rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
+    <div class="flex bg-hover-primary-item-color h-[9rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"    
         v-on-click-outside="stopEditing"   
@@ -57,6 +57,11 @@
                     @mousedown.stop
                     class="w-[7.5rem] apple-font text-white"
                 />
+            </div>
+            <div class="flex flex-row text-[14px] space-x-2 items-center">
+                <i class="pi pi-clock"/>
+                <p class="w-[10rem] rounded-lg text-white">10h before</p>
+
             </div>
         </div>
     </div>

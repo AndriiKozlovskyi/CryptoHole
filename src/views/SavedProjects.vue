@@ -20,6 +20,8 @@
           <ProgressBar :amountOfProjects="progressProjects.length" name="IN PROGRESS" id="progress"/>
           <ProgressBar :amountOfProjects="waitingProjects.length" name="WAITING FOR PAYMENT" id="waiting"/>
           <ProgressBar :amountOfProjects="paidProjects.length" name="PAID" id="paid"/>
+          <ProgressBar :amountOfProjects="failedProjects.length" name="FAILED" id="failed"/>
+
         </div>
         <i class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle" style="font-size: 2rem" />
       </div>
@@ -42,6 +44,7 @@ const todoProjects = computed(() => projects.value.filter(project => project.sta
 const progressProjects = computed(() => projects.value.filter(project => project.status === 'progress'));
 const waitingProjects = computed(() => projects.value.filter(project => project.status === 'waiting'));
 const paidProjects = computed(() => projects.value.filter(project => project.status === 'paid'));
+const failedProjects = computed(() => projects.value.filter(project => project.status === 'failed'));
 
 onBeforeMount(() => {
   emitter.on("saveProject", () => {
@@ -87,6 +90,9 @@ const addProjectBarToDropZone = () => {
               break;
             case "paid":
               addElement (element, "paid");            
+              break;
+            case "failed":
+              addElement (element, "failed");            
               break;
           }
         }
