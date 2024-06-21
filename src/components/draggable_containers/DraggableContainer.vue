@@ -7,227 +7,220 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject } from 'vue'
-import LocalStorageManager from '@/manager/local_storage_manager.ts'
-let container = null
-let el = null
-let isDragging = ref(false)
-let cOffX = 0
-let cOffY = 0
+import { onMounted, ref, inject } from 'vue';
+import LocalStorageManager from '@/manager/local_storage_manager.ts';
 
-const isDragAvailable = inject('dragAvailable')
-let indicator = null
+let container = null;
+let el = null;
+let indicator = null;
+let cOffX = 0;
+let cOffY = 0;
+
+const isDragging = ref(false);
+const isDragAvailable = inject('dragAvailable');
 const props = defineProps({
   name: String
-})
+});
 
-onMounted(() => {
-  el = document.getElementById(props.name)
-  el.style.position = 'relative'
-  el.style.width = '16.25rem'
-  el.style.paddingTop = '0.2rem'
-  el.style.paddingLeft = '0.5rem'
-  el.style.paddingRight = '0.5rem'
+const d = 'dragging';
 
-  indicator = document.createElement('div')
-  indicator.style.position = 'absolute'
-  indicator.style.height = '2px'
-  indicator.style.backgroundColor = 'blue'
-  indicator.style.opacity = 0.5
-  indicator.style.width = '80%'
-  indicator.style.display = 'none'
+const setElementStyles = (element, styles) => {
+  for (const [key, value] of Object.entries(styles)) {
+    element.style[key] = value;
+  }
+};
 
-  document.body.appendChild(indicator)
+const createIndicator = () => {
+  const indicator = document.createElement('div');
+  setElementStyles(indicator, {
+    position: 'absolute',
+    height: '2px',
+    backgroundColor: 'blue',
+    opacity: 0.5,
+    width: '80%',
+    display: 'none'
+  });
+  document.body.appendChild(indicator);
+  return indicator;
+};
 
-  container = document.getElementById('container')
+const initializeElement = (el) => {
+  setElementStyles(el, {
+    position: 'relative',
+    width: '16.25rem',
+    paddingTop: '0.2rem',
+    paddingLeft: '0.5rem',
+    paddingRight: '0.5rem'
+  });
+};
 
-  el.addEventListener('mousedown', dragStart)
-})
+const getClosestDropZone = (cursorX, cursorY) => {
+  let closestDropZone = null;
+  let minDistance = Infinity;
 
-const d = 'dragging'
-
-function dragStart(e) {
-  if (!isDragAvailable) return
-  e = e || window.event
-  e.preventDefault()
-
-  cOffX = e.clientX - el.offsetLeft
-  cOffY = e.clientY - el.offsetTop
-
-  document.addEventListener('mousemove', dragMove)
-  document.addEventListener('mouseup', dragEnd)
-
-  el.classList.add(d)
-  container.style.cursor = 'move'
-
-  isDragging.value = true
-}
-
-function dragMove(e) {
-  e = e || window.event
-  e.preventDefault()
-
-  const cursorX = e.clientX
-  const cursorY = e.clientY
-
-  let closestDropZone = null
-  let minDistance = Infinity
-  el.style.zIndex = 1001 // Adjust this value as needed
-  const dropZones = document.querySelectorAll('.drop-zone')
-
-  dropZones.forEach((dropZone) => {
-    const dropZoneRect = dropZone.getBoundingClientRect()
-
+  document.querySelectorAll('.drop-zone').forEach((dropZone) => {
+    const dropZoneRect = dropZone.getBoundingClientRect();
     if (isIntersectingPoint(cursorX, cursorY, dropZoneRect)) {
       const distance = Math.sqrt(
         Math.pow(cursorX - (dropZoneRect.left + dropZoneRect.width / 2), 2) +
-          Math.pow(cursorY - (dropZoneRect.top + dropZoneRect.height / 2), 2)
-      )
+        Math.pow(cursorY - (dropZoneRect.top + dropZoneRect.height / 2), 2)
+      );
 
       if (distance < minDistance) {
-        minDistance = distance
-        closestDropZone = dropZone
+        minDistance = distance;
+        closestDropZone = dropZone;
       }
     }
-  })
+  });
+
+  return closestDropZone;
+};
+
+const updateIndicatorPosition = (closestDropZone, cursorY) => {
+  const children = Array.from(closestDropZone.children);
+  let insertBeforeElement = null;
+  let indicatorTop = null;
+
+  for (let child of children) {
+    if (el.id === child.id) continue;
+
+    const childRect = child.getBoundingClientRect();
+    if (cursorY < childRect.top + childRect.height / 2) {
+      insertBeforeElement = child;
+      indicatorTop = childRect.top;
+      break;
+    } else if (cursorY > childRect.top + childRect.height / 2 && cursorY < childRect.bottom) {
+      insertBeforeElement = child;
+      indicatorTop = childRect.bottom;
+      break;
+    } else if (cursorY > children[children.length - 1].getBoundingClientRect().bottom) {
+      insertBeforeElement = children[children.length - 1];
+      indicatorTop = children[children.length - 1].getBoundingClientRect().bottom;
+      break;
+    }
+  }
+
+  if (!insertBeforeElement) {
+    const dropZoneRect = closestDropZone.getBoundingClientRect();
+    indicatorTop = dropZoneRect.top;
+  }
+
+  setElementStyles(indicator, {
+    top: `${indicatorTop}px`,
+    left: `${closestDropZone.getBoundingClientRect().left}px`,
+    width: `${closestDropZone.getBoundingClientRect().width}px`,
+    display: 'block'
+  });
+};
+
+const dragStart = (e) => {
+  if (!isDragAvailable) return;
+  e.preventDefault();
+
+  cOffX = e.clientX - el.offsetLeft;
+  cOffY = e.clientY - el.offsetTop;
+
+  document.addEventListener('mousemove', dragMove);
+  document.addEventListener('mouseup', dragEnd);
+
+  el.classList.add(d);
+  container.style.cursor = 'move';
+  isDragging.value = true;
+};
+
+const dragMove = (e) => {
+  e.preventDefault();
+
+  el.style.zIndex = 1001
+
+  const cursorX = e.clientX;
+  const cursorY = e.clientY;
+  const closestDropZone = getClosestDropZone(cursorX, cursorY);
 
   if (closestDropZone) {
-    const children = Array.from(closestDropZone.children)
-    let insertBeforeElement = null
-    let indicatorTop = null
-
-    for (let child of children) {
-      if (el.id === child.id) {
-        continue
-      }
-      const childRect = child.getBoundingClientRect()
-      if (cursorY < childRect.top + childRect.height / 2) {
-        insertBeforeElement = child
-        indicatorTop = childRect.top
-        break
-      } else if (
-        cursorY > childRect.top + childRect.height / 2 &&
-        cursorY < childRect.top + childRect.height
-      ) {
-        insertBeforeElement = child
-        indicatorTop = childRect.bottom
-        break
-      } else if (
-        cursorY >
-        children[children.length - 1].getBoundingClientRect().top +
-          children[children.length - 1].getBoundingClientRect().height
-      ) {
-        insertBeforeElement = children[children.length - 1]
-        indicatorTop = children[children.length - 1].getBoundingClientRect().bottom
-        break
-      }
-    }
-
-    if (!insertBeforeElement) {
-      const dropZoneRect = closestDropZone.getBoundingClientRect()
-      indicatorTop = dropZoneRect.top
-    }
-
-    indicator.style.top = indicatorTop + 'px'
-    indicator.style.left = closestDropZone.getBoundingClientRect().left + 'px'
-    indicator.style.width = closestDropZone.getBoundingClientRect().width + 'px'
-    indicator.style.display = 'block'
+    updateIndicatorPosition(closestDropZone, cursorY);
   } else {
-    indicator.style.display = 'none'
+    indicator.style.display = 'none';
   }
   const index = Array.prototype.indexOf.call(el.parentNode.children, el)
 
   el.style.top = (e.clientY - index * el.offsetHeight - cOffY).toString() + 'px'
-  el.style.left = (e.clientX - cOffX).toString() + 'px'
-}
+  el.style.left = `${e.clientX - cOffX}px`;
+};
 
-function dragEnd(e) {
-  e = e || window.event
-  e.preventDefault()
-  el.style.zIndex = 900 // Adjust this value as needed
+const dragEnd = (e) => {
+  e.preventDefault();
+  el.style.zIndex = 900;
 
-  document.removeEventListener('mousemove', dragMove)
-  document.removeEventListener('mouseup', dragEnd)
+  document.removeEventListener('mousemove', dragMove);
+  document.removeEventListener('mouseup', dragEnd);
 
-  container.style.cursor = null
+  container.style.cursor = null;
+  isDragging.value = false;
+  indicator.style.display = 'none';
 
-  isDragging.value = false
-  indicator.style.display = 'none'
-
-  const cursorX = e.clientX
-  const cursorY = e.clientY
-
-  let closestDropZone = null
-  let minDistance = Infinity
-
-  const dropZones = document.querySelectorAll('.drop-zone')
-
-  dropZones.forEach((dropZone) => {
-    const dropZoneRect = dropZone.getBoundingClientRect()
-
-    if (isIntersectingPoint(cursorX, cursorY, dropZoneRect)) {
-      const distance = Math.sqrt(
-        Math.pow(cursorX - (dropZoneRect.left + dropZoneRect.width / 2), 2) +
-          Math.pow(cursorY - (dropZoneRect.top + dropZoneRect.height / 2), 2)
-      )
-
-      if (distance < minDistance) {
-        minDistance = distance
-        closestDropZone = dropZone
-      }
-    }
-  })
+  const cursorX = e.clientX;
+  const cursorY = e.clientY;
+  const closestDropZone = getClosestDropZone(cursorX, cursorY);
 
   if (closestDropZone) {
-    const children = Array.from(closestDropZone.children)
-    let insertBeforeElement = null
-
-    for (let child of children) {
-      if (el.id === child.id) {
-        continue
-      }
-      const childRect = child.getBoundingClientRect()
-      if (cursorY < childRect.top + childRect.height / 2) {
-        insertBeforeElement = child
-        break
-      }
-    }
-
-    closestDropZone.insertBefore(el, insertBeforeElement)
-
-    el.style.position = 'relative'
-    el.style.paddingTop = '0.2rem'
-    el.style.paddingLeft = '0.5rem'
-    el.style.paddingRight = '0.5rem'
-    el.style.left = '0px'
-    el.style.top = '0px'
-    el.classList.remove(d)
-
-    const projects = []
-    for (const child of closestDropZone.children) {
-      const project = LocalStorageManager.getSavedProjectByName(child.id)
-      project.status = closestDropZone.id
-      console.log(project)
-      LocalStorageManager.updateSavedProject(project)
-      projects.push(project)
-    }
-
-    LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
+    insertElementIntoDropZone(closestDropZone, cursorY);
+  } else {
+    resetElementStyles(el);
   }
-  if (!closestDropZone) {
-    el.style.display = 'relative'
-    el.style.paddingTop = '0.2rem'
-    el.style.paddingLeft = '0.5rem'
-    el.style.paddingRight = '0.5rem'
-    el.style.left = '0px'
-    el.style.top = '0px'
-    el.classList.remove(d)
-  }
-}
+};
 
-function isIntersectingPoint(x, y, rect) {
-  return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom
-}
+const insertElementIntoDropZone = (closestDropZone, cursorY) => {
+  const children = Array.from(closestDropZone.children);
+  let insertBeforeElement = null;
+
+  for (let child of children) {
+    if (el.id === child.id) continue;
+
+    const childRect = child.getBoundingClientRect();
+    if (cursorY < childRect.top + childRect.height / 2) {
+      insertBeforeElement = child;
+      break;
+    }
+  }
+
+  closestDropZone.insertBefore(el, insertBeforeElement);
+  resetElementStyles(el);
+  el.classList.remove(d);
+
+  const projects = Array.from(closestDropZone.children).map((child) => {
+    const project = LocalStorageManager.getSavedProjectByName(child.id);
+    project.status = closestDropZone.id;
+    LocalStorageManager.updateSavedProject(project);
+    return project;
+  });
+
+  LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id);
+};
+
+const resetElementStyles = (el) => {
+  setElementStyles(el, {
+    position: 'relative',
+    paddingTop: '0.2rem',
+    paddingLeft: '0.5rem',
+    paddingRight: '0.5rem',
+    left: '0px',
+    top: '0px'
+  });
+  el.classList.remove(d);
+};
+
+const isIntersectingPoint = (x, y, rect) => {
+  return x > rect.left && x < rect.right && y > rect.top && y < rect.bottom;
+};
+
+onMounted(() => {
+  el = document.getElementById(props.name);
+  container = document.getElementById('container');
+  indicator = createIndicator();
+  initializeElement(el);
+  el.addEventListener('mousedown', dragStart);
+});
 </script>
 
 <style>

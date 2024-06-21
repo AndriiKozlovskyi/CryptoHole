@@ -1,40 +1,44 @@
 <template>
-  <div class="h-full w-full bg flex flex-col overflow-y-auto">
-    <div class="flex flex-col h-100% w-full items-center space-y-3 bg mt-[6rem]">
-      <div class="flex flex-col h-full w-5/6 space-y-6">
-        <p class="font-semibold text-lg self-start text-white">Saved Projects</p>
-        <div class="relative w-full h-[100%] flex flex-row gap-1 overflow-y-hidden">
-          <div class="flex bg-primary-item-color h-[100%] rounded-xl flex-col w-min">
-            <div
-              class="flex mt-1 flex-row items-center justify-between text-secondary-text-color w-full"
-            >
-              <p class="apple-font text-sm p-3">TODO</p>
-              <p class="px-3">{{ todoProjects.length }}</p>
-            </div>
-            <DragCon class="" v-for="project in projects" :key="project.name" :name="project.name">
-              <ProjectBar @drag-switch="dragSwitch()" :project="project"></ProjectBar>
-            </DragCon>
-            <DropZone id="todo" />
+  <div class="relative w-full flex flex-col items-center mt-[6rem]">
+    <div class="flex flex-col w-full ml-[10rem] space-y-5">
+      <p class="font-semibold text-lg text-white">Saved Projects</p>
+      <div class="w-full flex flex-row gap-1 overflow-y-hidden">
+        <div class="flex bg-primary-item-color rounded-xl flex-col w-min">
+          <div
+            class="flex mt-1 flex-row items-center justify-between text-secondary-text-color w-full"
+          >
+            <p class="apple-font text-sm p-3">TODO</p>
+            <p class="px-3">{{ todoProjects.length }}</p>
           </div>
-
-          <ProgressBar
-            :amountOfProjects="progressProjects.length"
-            name="IN PROGRESS"
-            id="progress"
-          />
-          <ProgressBar
-            :amountOfProjects="waitingProjects.length"
-            name="WAITING FOR PAYMENT"
-            id="waiting"
-          />
-          <ProgressBar :amountOfProjects="paidProjects.length" name="PAID" id="paid" />
-          <ProgressBar :amountOfProjects="failedProjects.length" name="FAILED" id="failed" />
+          <DragCon class="" v-for="project in projects" :key="project.name" :name="project.name">
+            <ProjectBar @drag-switch="dragSwitch()" :project="project"></ProjectBar>
+          </DragCon>
+          <DropZone id="todo" />
         </div>
-        <i
-          class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle"
-          style="font-size: 2rem"
+
+        <!-- <ProgressBar
+          :amountOfProjects="todoProjects.length"
+          name="TODO"
+          id="todo"
+        /> -->
+
+        <ProgressBar
+          :amountOfProjects="progressProjects.length"
+          name="IN PROGRESS"
+          id="progress"
         />
+        <ProgressBar
+          :amountOfProjects="waitingProjects.length"
+          name="WAITING FOR PAYMENT"
+          id="waiting"
+        />
+        <ProgressBar :amountOfProjects="paidProjects.length" name="PAID" id="paid" />
+        <ProgressBar :amountOfProjects="failedProjects.length" name="FAILED" id="failed" />
       </div>
+      <i
+        class="fixed cursor-pointer right-4 bottom-4 text-white pi pi-question-circle"
+        style="font-size: 2rem"
+      />
     </div>
   </div>
 </template>

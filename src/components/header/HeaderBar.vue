@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed w-full flex z-[1000] flex-row justify-between text-secondary-text-color apple-font items-center"
+    class="fixed w-full flex z-[1000] top-0 flex-row justify-between text-secondary-text-color apple-font items-center"
   >
     <div class="flex flex-row space-x-6 w-1/3">
       <Logo />

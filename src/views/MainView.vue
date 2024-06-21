@@ -10,7 +10,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import ProjectsContainer from '@/components/ProjectsContainer.vue'
+import ProjectsContainer from '@/components/project_components/ProjectsContainer.vue'
 import HelpButton from '@/components/HelpButton.vue'
 </script>
 <style>
