@@ -19,7 +19,7 @@
 import DropZone from '@/components/draggable_containers/DropZone.vue'
 import ProjectBar from '@/components/project_components/SavedProject.vue'
 import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, provide } from 'vue'
 import LocalStorageManager from '@/manager/local_storage_manager';
 
 const hovered = ref(false)
@@ -30,5 +30,13 @@ const props = defineProps({
   projects: Array,
   amountOfProjects: Number
 });
+const isDragAvailable = ref(true)
+provide('dragAvailable', isDragAvailable)
+
+const dragSwitch = () => {
+  console.log(isDragAvailable.value)
+
+  isDragAvailable.value = !isDragAvailable.value
+}
 
 </script>

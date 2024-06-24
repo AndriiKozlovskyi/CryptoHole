@@ -4,35 +4,12 @@
       <p class="font-semibold text-lg text-white">Saved Projects</p>
       <div class="w-full flex flex-row gap-1 overflow-y-hidden">
         <ProgressBar
-          :amountOfProjects="todoProjects.length"
-          :projects="todoProjects"
-          name="TODO"
-          id="todo"
-        />
-
-        <ProgressBar
-          :amountOfProjects="progressProjects.length"
-          :projects="progressProjects"
-          name="IN PROGRESS"
-          id="progress"
-        />
-        <ProgressBar
-          :amountOfProjects="waitingProjects.length"
-          :projects="waitingProjects"
-          name="WAITING FOR PAYMENT"
-          id="waiting"
-        />
-        <ProgressBar 
-          :amountOfProjects="paidProjects.length"
-          :projects="paidProjects"
-          name="PAID" 
-          id="paid" 
-        />
-        <ProgressBar 
-          :amountOfProjects="failedProjects.length" 
-          :projects="failedProjects"
-          name="FAILED" 
-          id="failed" 
+          v-for="status in statusContainers"
+          :amountOfProjects="status.projects.length"
+          :projects="status.projects"
+          :key="status.id"
+          :name="status.name"
+          :id="status.id"
         />
       </div>
       <i
@@ -44,12 +21,9 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, provide, computed, ref } from 'vue'
-import ProjectBar from '@/components/project_components/SavedProject.vue'
+import { onBeforeMount, onMounted, provide, ref } from 'vue'
 import LocalStorageManager from '@/manager/local_storage_manager'
 import { emitter } from '@/event_bus'
-import DropZone from '@/components/draggable_containers/DropZone.vue'
-import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
 import ProgressBar from '@/components/project_components/ProjectStatusContainer.vue'
 
 const projects = ref(LocalStorageManager.getSavedProject())
@@ -66,6 +40,14 @@ const failedProjects = ref(
   projects.value.filter((project) => project.status === 'failed')
 )
 
+const statusContainers = ref([
+  {id: "todo", name: "TODO", projects: todoProjects},
+  {id: "progress", name: "IN PROGRESS", projects: progressProjects}, 
+  {id: "waiting", name: "WAITING FOR PAYMENT", projects: waitingProjects}, 
+  {id: "paid", name: "PAID", projects: paidProjects}, 
+  {id: "failed", name: "FAILED", projects: failedProjects}, 
+])
+
 onBeforeMount(() => {
   emitter.on('saveProject', () => {
     projects.value = LocalStorageManager.getSavedProject()
@@ -79,7 +61,7 @@ onBeforeMount(() => {
   emitter.on('addSavedProject', () => {
     projects.value = LocalStorageManager.getSavedProject()
   })
-})
+});
 
 onMounted(() => {
   addProjectBarToDropZone()
@@ -133,9 +115,4 @@ const addElement = (el, id) => {
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
 
-const dragSwitch = () => {
-  console.log(isDragAvailable.value)
-
-  isDragAvailable.value = !isDragAvailable.value
-}
 </script>
