@@ -102,7 +102,7 @@
   </div>
         <p class="text-start pl-2 mt-10 font-extrabold text-2xl text-white">Description:</p>
         <div class="mt-3 ml-auto mr-auto rounded-lg p-5 text-secondary-text-color ">
-          <p>Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.</p>
+          <p>{{ description }}</p>
         </div>
       </aside>
     </main>
@@ -130,6 +130,7 @@ const project = ref();
 
 const isHovering = ref(false)
 
+const description = ref("Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.");
 const startAnimation = () => {
   isHovering.value = true
 }

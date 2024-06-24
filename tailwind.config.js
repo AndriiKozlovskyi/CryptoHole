@@ -9,6 +9,7 @@ export default {
         "primary-item-color": "var(--primary-item-color)",
         "hover-primary-item-color": "var(--hover-item-color)",
         "secondary-text-color": "var(--secondary-text-color)",
+        "background-color": "var(--background-color)"
       },
     }
   },

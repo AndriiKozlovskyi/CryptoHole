@@ -24,6 +24,7 @@ body,
 #app {
   height: 100%;
   background: #101114;
+  --background-color: #101114;
   --primary-item-color: #1e1f24;
   --hover-item-color: #28292e;
   --secondary-text-color: #98989d;
