@@ -8,19 +8,18 @@
       <p>{{ amountOfProjects }}</p>
     </div>
     <DragCon class="" v-for="project in projects" :key="project.name" :name="project.name">
-      <ProjectBar @drag-switch="dragSwitch()" :project="project"></ProjectBar>
+      <Project @drag-switch="dragSwitch()" :project="project"></Project>
     </DragCon>
-
-    
     <DropZone :id="id" />
   </div>
 </template>
 <script setup>
 import DropZone from '@/components/draggable_containers/DropZone.vue'
-import ProjectBar from '@/components/project_components/SavedProject.vue'
+import Project from '@/components/project_components/SavedProject.vue'
 import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
-import { computed, ref, provide } from 'vue'
-import LocalStorageManager from '@/manager/local_storage_manager';
+import { ref, provide, onMounted } from 'vue'
+import LocalStorageManager from '@/manager/local_storage_manager'
+import { emitter } from '@/event_bus'
 
 const hovered = ref(false)
 
@@ -30,12 +29,28 @@ const props = defineProps({
   projects: Array,
   amountOfProjects: Number
 });
+
+const amountOfProjects = ref(props.amountOfProjects);
+
+onMounted(() => {
+  emitter.on('saveProject', () => {
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+  })
+  emitter.on('unsaveProject', () => {
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+  })
+  emitter.on('updateSavedProject', () => {
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+  })
+  emitter.on('addSavedProject', () => {
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+  })
+});
+
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
 
 const dragSwitch = () => {
-  console.log(isDragAvailable.value)
-
   isDragAvailable.value = !isDragAvailable.value
 }
 

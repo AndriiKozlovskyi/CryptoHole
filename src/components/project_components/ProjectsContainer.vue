@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-row justify-center">
     <div class="w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
-      <ProjectBar v-for="project in projects" :key="project.name" :project="project" />
+      <Project v-for="project in projects" :key="project.name" :project="project" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import ProjectBar from '@/components/project_components/Project.vue'
+import Project from '@/components/project_components/Project.vue'
 import LocalStorageManager from '@/manager/local_storage_manager'
 
 const projects = ref(LocalStorageManager.getProjects())

@@ -64,13 +64,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import type { SavedProject } from '@/entity/saved_project'
 import type { PropType } from 'vue'
 import LocalStorageManager from '@/manager/local_storage_manager'
 import MyInput from '@/components/basic_components/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
 import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
+import { emitter } from '@/event_bus'
 
 const props = defineProps({
   project: {
@@ -87,6 +88,21 @@ const expenses = ref(project.value?.expenses)
 const isEditing = ref(false)
 
 const emit = defineEmits(['dragSwitch'])
+
+onBeforeMount(() => {
+  emitter.on('saveProject', () => {
+    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
+  })
+  emitter.on('unsaveProject', () => {
+    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
+  })
+  emitter.on('updateSavedProject', () => {
+    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
+  })
+  emitter.on('addSavedProject', () => {
+    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
+  })
+});
 
 const increaseAccs = () => {
   emit('dragSwitch')
