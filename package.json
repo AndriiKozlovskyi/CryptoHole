@@ -15,10 +15,15 @@
   "dependencies": {
     "@vueuse/components": "^10.11.0",
     "mitt": "3.0.1",
+    "pinia": "^2.1.4",
+    "pinia-orm": "^1.9.1",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "axios": "^1.4.0",
+    "axios-case-converter": "^1.1.0",
+    "humps": "^2.0.1",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {

@@ -12,6 +12,11 @@
 <script setup lang="ts">
 import ProjectsContainer from '@/components/project_components/ProjectsContainer.vue'
 import HelpButton from '@/components/HelpButton.vue'
+import ProjectApi from "@/api/project_api";
+import { onMounted } from 'vue';
+
+onMounted(() => {
+});
 </script>
 <style>
 .main-view {

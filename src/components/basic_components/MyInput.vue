@@ -11,16 +11,23 @@
   </div>
 </template>
 <script setup lang="ts">
+defineEmits(['update:modelValue'])
+
 defineProps({
   placeholder: {
     type: String,
     required: false
   },
+  type: {
+    type: String,
+    required: false,
+    default: 'text'
+  },
   modelValue: {
     type: [String, Number],
     required: false
   }
-})
+});
 </script>
 <style module>
 .myinput {

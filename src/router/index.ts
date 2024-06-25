@@ -5,10 +5,22 @@ import SavedProjects from '@/views/SavedProjects.vue'
 import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
+import LoginView from "@/views/LoginView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/auth',
+      name: 'auth',
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: LoginView
+        },
+      ]
+    },
     {
       path: '/',
       name: 'home',

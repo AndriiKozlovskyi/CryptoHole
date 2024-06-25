@@ -1,16 +1,23 @@
 {
-  "files": [],
   "compilerOptions": {
     "target": "ESNext", 
     "module": "ESNext",
     "moduleResolution": "node",
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [ "node"],
+    "paths": {
+      "@/*": ["src/*"]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/__tests__/**/*.ts", "src/__tests__/**/*.tsx",  "./db/**/*",
+  "./src/**/*"],
+  "exclude": ["node_modules", "dist", "lib", "lib-amd"]
 }

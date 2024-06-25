@@ -6,12 +6,15 @@ import 'primevue/resources/themes/aura-light-green/theme.css'
 import 'primeicons/primeicons.css'
 import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
+import store from './store/store'
+
 
 const app = createApp(App)
 
 app.use(router)
 app.use(PrimeVue)
 app.use(ToastService)
+app.use(store)
 app.component('Toast', Toast)
 
 app.mount('#app')
