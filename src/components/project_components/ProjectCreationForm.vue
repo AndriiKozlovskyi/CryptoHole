@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import MyInput from '@/components/basic_components/MyInput.vue'
+import MyInput from '@/components/basic_components/input/MyInput.vue'
 import type { SavedProject } from '@/entity/saved_project'
 import LocalStorageManager from '@/manager/local_storage_manager'
 import { ref } from 'vue'

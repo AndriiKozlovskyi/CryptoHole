@@ -1,4 +1,5 @@
 import authApi from '@/api/auth_api'
+import BaseApiResponse from '@/dtos/responses/base_api_response'
 
 export default class AuthManager {
   static getToken() {
@@ -9,10 +10,10 @@ export default class AuthManager {
     localStorage.setItem('token', token)
   }
 
-  static async getTokenFromApi(username: string, password: string) {
+  static async getTokenFromApi(identifier: string, password: string) {
     try {
       const res = await authApi.login({
-        username,
+        identifier,
         password
       })
 
@@ -23,11 +24,11 @@ export default class AuthManager {
     }
   }
 
-  static async login(username: string, password: string) {
-    if (!username || !password) {
+  static async login(identifier: string, password: string) {
+    if (!identifier || !password) {
       throw new Error('username or password is empty')
     }
-    const token = await this.getTokenFromApi(username, password)
+    const token = await this.getTokenFromApi(identifier, password)
     this.setToken(token)
   }
 
@@ -35,12 +36,12 @@ export default class AuthManager {
     localStorage.removeItem('token')
   }
 
-  static async register(username: string, email: string, password: string) {
+  static async register(username: string, email: string, password: string): Promise<BaseApiResponse<String>> {
     if (!username || !password || !email) {
       throw new Error('Not all credentials are provided')
     }
 
-    await authApi.register({
+    return await authApi.register({
       username,
       email,
       password

@@ -29,23 +29,17 @@ import ProgressBar from '@/components/project_components/ProjectStatusContainer.
 const projects = ref(LocalStorageManager.getSavedProject())
 
 const todoProjects = ref(projects.value.filter((project) => project.status === 'todo'))
-const progressProjects = ref(
-  projects.value.filter((project) => project.status === 'progress')
-)
-const waitingProjects = ref(
-  projects.value.filter((project) => project.status === 'waiting')
-)
+const progressProjects = ref(projects.value.filter((project) => project.status === 'progress'))
+const waitingProjects = ref(projects.value.filter((project) => project.status === 'waiting'))
 const paidProjects = ref(projects.value.filter((project) => project.status === 'paid'))
-const failedProjects = ref(
-  projects.value.filter((project) => project.status === 'failed')
-)
+const failedProjects = ref(projects.value.filter((project) => project.status === 'failed'))
 
 const statusContainers = ref([
-  {id: "todo", name: "TODO", projects: todoProjects},
-  {id: "progress", name: "IN PROGRESS", projects: progressProjects}, 
-  {id: "waiting", name: "WAITING FOR PAYMENT", projects: waitingProjects}, 
-  {id: "paid", name: "PAID", projects: paidProjects}, 
-  {id: "failed", name: "FAILED", projects: failedProjects}, 
+  { id: 'todo', name: 'TODO', projects: todoProjects },
+  { id: 'progress', name: 'IN PROGRESS', projects: progressProjects },
+  { id: 'waiting', name: 'WAITING FOR PAYMENT', projects: waitingProjects },
+  { id: 'paid', name: 'PAID', projects: paidProjects },
+  { id: 'failed', name: 'FAILED', projects: failedProjects }
 ])
 
 onBeforeMount(() => {
@@ -61,7 +55,7 @@ onBeforeMount(() => {
   emitter.on('addSavedProject', () => {
     projects.value = LocalStorageManager.getSavedProject()
   })
-});
+})
 
 onMounted(() => {
   addProjectBarToDropZone()
@@ -114,5 +108,4 @@ const addElement = (el, id) => {
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
-
 </script>

@@ -3,7 +3,8 @@
     class="flex bg-primary-item-color h-[100%] rounded-md flex-col w-min"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
-  >    <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
+  >
+    <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
       <p class="text-[14px] apple-font">{{ name }}</p>
       <p>{{ amountOfProjects }}</p>
     </div>
@@ -28,24 +29,32 @@ const props = defineProps({
   id: String,
   projects: Array,
   amountOfProjects: Number
-});
+})
 
-const amountOfProjects = ref(props.amountOfProjects);
+const amountOfProjects = ref(props.amountOfProjects)
 
 onMounted(() => {
   emitter.on('saveProject', () => {
-    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter(
+      (project) => project.status === props.id
+    ).length
   })
   emitter.on('unsaveProject', () => {
-    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter(
+      (project) => project.status === props.id
+    ).length
   })
   emitter.on('updateSavedProject', () => {
-    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter(
+      (project) => project.status === props.id
+    ).length
   })
   emitter.on('addSavedProject', () => {
-    amountOfProjects.value = LocalStorageManager.getSavedProject().filter((project) => project.status === props.id).length
+    amountOfProjects.value = LocalStorageManager.getSavedProject().filter(
+      (project) => project.status === props.id
+    ).length
   })
-});
+})
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
@@ -53,5 +62,4 @@ provide('dragAvailable', isDragAvailable)
 const dragSwitch = () => {
   isDragAvailable.value = !isDragAvailable.value
 }
-
 </script>

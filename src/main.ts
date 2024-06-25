@@ -8,7 +8,6 @@ import ToastService from 'primevue/toastservice'
 import Toast from 'primevue/toast'
 import store from './store/store'
 
-
 const app = createApp(App)
 
 app.use(router)

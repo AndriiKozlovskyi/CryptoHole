@@ -48,15 +48,14 @@ const router = useRouter()
 
 const props = defineProps({
   project: Object as PropType<Project>
-});
+})
 
 const saved = ref(false)
 const hovered = ref(false)
 
 onBeforeMount(() => {
-  
   saved.value = LocalStorageManager.isProjectSaved(props.project!)
-});
+})
 
 const save = () => {
   if (props.project !== undefined) LocalStorageManager.saveProject(props.project)
