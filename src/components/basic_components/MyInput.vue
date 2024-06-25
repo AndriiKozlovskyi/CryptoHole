@@ -6,7 +6,7 @@
       :class="$style.myinput"
       @input="$emit('update:modelValue', $event.target.value)"
       :value="modelValue"
-      class="bg-[#1e1f24] text-[14px] apple-font rounded-full w-full text-white px-3 py-1"
+      class="bg-[#1e1f24] text-[16px] apple-font rounded-full w-full text-white px-3 py-1"
     />
   </div>
 </template>

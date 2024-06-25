@@ -1,5 +1,5 @@
 <template>
-    <button class="rounded-full hover:bg-hover-primary-item-color px-3 py-2 bg-primary-item-color text-white" @click="$emit('onClick')">
+    <button class="rounded-lg hover:bg-[#4619bd] px-3 py-2 font-apple bg-[#4c12b2] text-white" @click="$emit('onClick')">
         {{ text }}
     </button>
 </template>

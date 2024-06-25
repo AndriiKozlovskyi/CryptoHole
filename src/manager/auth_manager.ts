@@ -35,13 +35,14 @@ export default class AuthManager {
     localStorage.removeItem('token')
   }
 
-  static async register(username: string, password: string) {
-    if (!username || !password) {
+  static async register(username: string, email: string, password: string) {
+    if (!username || !password || !email) {
       throw new Error('Not all credentials are provided')
     }
 
     await authApi.register({
       username,
+      email,
       password
     })
   }
