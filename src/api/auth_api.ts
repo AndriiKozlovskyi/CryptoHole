@@ -1,7 +1,7 @@
 import type LoginResponse from '@/dtos/responses/login_response'
 import type BaseApiResponse from '@/dtos/responses/base_api_response'
-import ApiFactory from './api_factory'
-import ApiOptions, { defaultApiOptions } from '@/api/api_options'
+import ApiFactory from '@/api/base/api_factory'
+import ApiOptions, { defaultApiOptions } from '@/api/base/api_options'
 
 class AuthApi {
   baseUrl = 'http://localhost:8080/api/v1/auth'

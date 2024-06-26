@@ -1,10 +1,9 @@
-import { Tag } from '@/entity/tag'
-
-export interface Projectesponse {
+export interface ProjectResponse {
   id: number
   name: string
-  tags: Tag[]
+  tags: string[]
   expenses: number
   participants: number
   src: string
+  saved: boolean
 }

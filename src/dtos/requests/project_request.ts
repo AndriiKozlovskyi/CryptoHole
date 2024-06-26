@@ -1,8 +1,6 @@
-import { Tag } from '@/entity/tag'
-
 export interface ProjectRequest {
   name: string
-  tags: Tag[]
+  tags: string[]
   expenses: number
   participants: number
   src: string

@@ -8,7 +8,7 @@ export default class Tag extends Model {
     return {
       id: this.number(null),
       name: this.string(''),
-      projects: this.belongsToMany(Project, 'project_tag', 'tag_id', 'project_id')
+      projects: this.hasMany(Project, 'project_id')
     }
   }
 

@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-row justify-center">
     <div class="w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
-      <Project v-for="project in projects" :key="project.name" :project="project" />
+      <Project v-for="project in projects" :key="project.name" :id="project.id" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import Project from '@/components/project_components/Project.vue'
-import LocalStorageManager from '@/manager/local_storage_manager'
+import ProjectManager from '@/manager/project_manager';
 
-const projects = ref(LocalStorageManager.getProjects())
+const projects = computed(() => ProjectManager.all())
 </script>
 
 <style>
@@ -20,7 +20,6 @@ const projects = ref(LocalStorageManager.getProjects())
   border-radius: 20px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   border-radius: 1px;
   width: 10px;

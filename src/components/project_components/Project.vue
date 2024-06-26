@@ -13,7 +13,7 @@
     </div>
     <div class="absolute w-full flex flex-row justify-between p-5">
       <Tag :tag="project?.tag" />
-      <SaveButton v-if="hovered" :condition="saved && hovered" @save="save" @unsave="unsave" />
+      <SaveButton v-if="hovered" :condition="project.saved && hovered" @save="save" @unsave="unsave" />
     </div>
 
     <div class="flex flex-col gap-5 mt-2 px-5">
@@ -29,10 +29,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import LocalStorageManager from '@/manager/local_storage_manager'
-import { onBeforeMount, ref } from 'vue'
-import type { Project } from '@/entity/project'
-import type { PropType } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
@@ -40,36 +37,34 @@ import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
 import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue'
 import Tag from '@/components/project_components/Tag.vue'
 import SaveButton from '@/components/project_components/SaveButton.vue'
+import ProjectManager from '@/manager/project_manager'
+import SavedProjectManager from '@/manager/saved_project_manager'
 
 const toast = useToast()
 
 const router = useRouter()
 
 const props = defineProps({
-  project: Object as PropType<Project>
+  id: Number
 })
 
-const saved = ref(false)
 const hovered = ref(false)
 
-onBeforeMount(() => {
-  saved.value = LocalStorageManager.isProjectSaved(props.project!)
-})
+const project = computed(() => ProjectManager.getById(props.id))
+const savedProject = computed(() => ProjectManager.getById(props.id))
 
 const save = () => {
-  if (props.project !== undefined) LocalStorageManager.saveProject(props.project)
-  saved.value = true
+  if (project.value !== undefined) SavedProjectManager.saveProject(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 }
 
 const unsave = () => {
-  if (props.project !== undefined) LocalStorageManager.unsaveProject(props.project)
-  saved.value = false
+  if (savedProject.value !== undefined) SavedProjectManager.unsaveProject(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 }
 
 const goToProjectDescritpion = () => {
-  router.push({ name: 'project_description', params: { name: props.project?.name } })
+  router.push({ name: 'project_description', params: { name: project.value.name } })
 }
 </script>
 <style>

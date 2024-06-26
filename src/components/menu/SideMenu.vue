@@ -9,22 +9,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import LocalStorageManager from '@/manager/local_storage_manager'
-import { ref, onBeforeMount, computed } from 'vue'
-import { emitter } from '@/event_bus'
+import { computed } from 'vue'
 import MenuItem from './MenuItem.vue'
+import SavedProjectManager from '@/manager/saved_project_manager';
+import ProjectManager from '@/manager/project_manager';
 
-onBeforeMount(() => {
-  emitter.on('saveProject', () => {
-    savedProjects.value = LocalStorageManager.getSavedProject()
-  })
-  emitter.on('unsaveProject', () => {
-    savedProjects.value = LocalStorageManager.getSavedProject()
-  })
-})
 
-const savedProjects = ref(LocalStorageManager.getSavedProject())
-const projects = ref(LocalStorageManager.getProjects())
+const savedProjects = computed(() => SavedProjectManager.all())
+const projects = computed(() => ProjectManager.all())
 
 const projectLength = computed(() => {
   if (projects.value === undefined || projects.value === null) {
