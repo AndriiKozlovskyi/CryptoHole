@@ -7,6 +7,7 @@
             @input="$emit('update:modelValue', $event.target.value)"
             :value="modelValue"
             class="bg-[#1e1f24] text-[16px] apple-font rounded-full w-full text-white px-3 py-1"
+            @focusin="$emit('focusin')"
         />
         <i
             :class="`px-3 top-0 text-gray-400 ${isPasswordVisible ? 'pi pi-eye' : 'pi pi-eye-slash'}`"
@@ -16,7 +17,7 @@
 </template>
 <script setup lang="ts">
 import {ref} from "vue";
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'focusin'])
 
 defineProps({
     modelValue: String,

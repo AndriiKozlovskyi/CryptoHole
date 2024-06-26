@@ -18,6 +18,14 @@ class AuthApi {
     return await ApiFactory.getInstance(this.getOptions()).post('/login', body)
   }
 
+  async usernameExists(username: string): Promise<BaseApiResponse<Boolean>> {
+    return await ApiFactory.getInstance(this.getOptions()).get(`/checkUsername?username=${username}`)
+  }
+
+  async emailExists(email: string): Promise<BaseApiResponse<Boolean>> {
+    return await ApiFactory.getInstance(this.getOptions()).get(`/checkEmail?email=${email}`)
+  }
+
   async register(body: any): Promise<BaseApiResponse<String>> {
     return await ApiFactory.getInstance(this.getOptions()).post('/register', body)
   }

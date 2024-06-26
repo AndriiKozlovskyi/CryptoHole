@@ -1,6 +1,6 @@
 <template>
-  <div class="relative w-full flex flex-col items-center mt-[6rem]">
-    <div class="flex flex-col w-full ml-[10rem] space-y-5">
+  <div class="relative w-full h-full overflow-y-hidden flex flex-col items-center">
+    <div class="flex flex-col w-full ml-[10rem] space-y-5  mt-[6rem]">
       <p class="font-semibold text-lg text-white">Saved Projects</p>
       <div class="w-full flex flex-row gap-1 overflow-y-hidden">
         <ProgressBar

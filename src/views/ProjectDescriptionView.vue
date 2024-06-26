@@ -1,5 +1,4 @@
 <template>
-  <Toast />
   <div class="flex h-100% w-full flex-row justify-start items-center">
     <main class="w-full h-full flex justify-between font">
       <div class="absolute h-100% flex flex-col mt-[1rem] space-y-10 ml-[5rem] max-w-[40rem]">

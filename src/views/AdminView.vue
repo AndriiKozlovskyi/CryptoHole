@@ -29,7 +29,6 @@
       Save
     </button>
   </div>
-  <Toast />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'

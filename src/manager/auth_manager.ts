@@ -32,6 +32,14 @@ export default class AuthManager {
     this.setToken(token)
   }
 
+  static async usernameExists(username: string): Promise<BaseApiResponse<Boolean>> {
+    return await authApi.usernameExists(username);
+  }
+
+  static async emailExists(email: string): Promise<BaseApiResponse<Boolean>> {
+    return await authApi.emailExists(email);
+  }
+
   static logout() {
     localStorage.removeItem('token')
   }

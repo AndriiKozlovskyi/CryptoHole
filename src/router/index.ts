@@ -8,6 +8,7 @@ import NewsView from '@/views/NewsView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AuthManager from '@/manager/auth_manager'
+import BasicLayout from "@/views/BasicLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,27 +32,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: MainView,
+      component: BasicLayout,
       children: [
         {
-          path: '/admin',
-          name: 'admin',
-          component: AdminView
+          path: '/projects',
+          name: 'projects',
+          component: MainView
         },
         {
           path: '/saved_projects',
           name: 'saved_projects',
           component: SavedProjects
-        },
-        {
-          path: '/guides',
-          name: 'guides',
-          component: GuidesView
-        },
-        {
-          path: '/news',
-          name: 'news',
-          component: NewsView
         },
         {
           path: '/:name/project_description',
@@ -64,6 +55,21 @@ const router = createRouter({
           return { name: 'login' }
         }
       }
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView
+    },
+    {
+      path: '/guides',
+      name: 'guides',
+      component: GuidesView
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: NewsView
     },
   ]
 })

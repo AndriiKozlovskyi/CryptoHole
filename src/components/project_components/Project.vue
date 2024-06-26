@@ -1,5 +1,4 @@
 <template>
-  <Toast />
   <div
     class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card group overflow-hidden w-full basis-full h-[20rem] flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"

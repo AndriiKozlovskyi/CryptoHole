@@ -6,9 +6,9 @@ import SideMenu from './components/menu/SideMenu.vue'
 
 <template>
   <div class="bg-[#101114] h-full w-full">
-    <HeaderBar />
+    <!-- <HeaderBar /> -->
     <RouterView class="h-full" />
-    <SideMenu class="fixed top-[8rem] right-[10rem]" />
+    <!-- <SideMenu class="fixed top-[8rem] right-[10rem]" /> -->
   </div>
 </template>
 

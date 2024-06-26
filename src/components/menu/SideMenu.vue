@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-[14rem] space-y-2">
-    <MenuItem name="All Projects" :countOfItemsInside="projectLength" path="/">
+    <MenuItem name="All Projects" :countOfItemsInside="projectLength" path="/projects">
       <i class="pi pi-th-large" />
     </MenuItem>
     <MenuItem name="Saved Projects" :countOfItemsInside="savedProjectLength" path="/saved_projects">
