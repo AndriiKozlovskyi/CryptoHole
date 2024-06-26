@@ -1,31 +1,29 @@
 <template>
   <div class="flex flex-col gap-y-1 h-full w-full justify-center items-center">
     <div
-      class="flex flex-col gap-5 border-[1px] w-[22rem] items-center border-hover-primary-item-color px-10 py-10 rounded-lg"
+      class="flex flex-col gap-y-3 border-[1px] w-[22rem] items-center border-hover-primary-item-color px-10 py-10 rounded-lg"
     >
-			<div class="flex flex-col">
-				<div class="flex flex-col">
-					<p v-if="!usernameEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${usernameExists ? 'text-opacity-100' : 'text-transparent'}`" >* Username already exists</p>
-					<p v-if="usernameEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${usernameEmpty ? 'text-opacity-100' : 'text-transparent'}`" >* Username cannot be empty</p>
-					<MyInput v-model="credentials.username" placeholder="Username" @focusout="usernameValidate" @focusin="usernameExists = false; usernameEmpty = false"/>
-				</div>
-				<div class="flex flex-col">
-					<p v-if="!emailEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${emailExists ? 'text-opacity-100' : 'text-transparent'}`" >* Email already exists</p>
-					<p v-if="emailEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${emailEmpty ? 'text-opacity-100' : 'text-transparent'}`" >* Email cannot be empty</p>
-					<MyInput v-model="credentials.email" placeholder="Email"@focusout="emailValidate" @focusin="emailExists = false; emailEmpty = false;">
-						<i class="pi pi-exclamation-circle text-red-600 px-3" v-if="!emailValid"/>
-					</MyInput>
-				</div>
-				<div class="flex flex-col">
-					<p v-if="!passwordEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${!passwordValid ? 'text-opacity-100' : 'text-transparent'}`" >* min 8 characters</p>
-					<p v-if="passwordEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${passwordEmpty ? 'text-opacity-100' : 'text-transparent'}`" >* Password cannot be empty</p>
-					<PasswordInput v-model="credentials.password" placeholder="Password" @focusin="passwordEmpty = false; passwordValid = true;"/>
-				</div>
-				<div class="flex flex-col">
-					<p v-if="!repeatedPasswordEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${!passwordsMatch ? 'text-opacity-100' : 'text-transparent'}`" >* Passwords don't match</p>
-					<p v-if="repeatedPasswordEmpty" :class="`text-red-500 text-[12px] apple-font px-3 ${repeatedPasswordEmpty ? 'text-opacity-100' : 'text-transparent'}`" >* Confirm password cannot be empty</p>
-					<PasswordInput placeholder="Repeat password" v-model="credentials.repeatedPassword" @focusin="repeatedPasswordEmpty = false; passwordsMatch = true;"/>
-				</div>
+			<div class="flex flex-col h-[2.5rem] justify-end">
+				<p v-if="usernameExists" class="text-red-500 text-[12px] apple-font px-3">* Username already exists</p>
+				<p v-if="usernameEmpty" class="text-red-500 text-[12px] apple-font px-3">* Username cannot be empty</p>
+				<MyInput v-model="credentials.username" placeholder="Username" @focusout="usernameValidate" @focusin="usernameExists = false; usernameEmpty = false"/>
+			</div>
+			<div class="flex flex-col h-[2.5rem] justify-end">
+				<p v-if="emailExists" class="text-red-500 text-[12px] apple-font px-3">* Email already exists</p>
+				<p v-if="emailEmpty" class="text-red-500 text-[12px] apple-font px-3">* Email cannot be empty</p>
+				<MyInput v-model="credentials.email" placeholder="Email"@focusout="emailValidate" @focusin="emailExists = false; emailEmpty = false;">
+					<i class="pi pi-exclamation-circle text-red-600 px-3" v-if="!emailValid"/>
+				</MyInput>
+			</div>
+			<div class="flex flex-col h-[2.5rem] justify-end">
+				<p v-if="passwordEmpty" class="text-red-500 text-[12px] apple-font px-3">* Password cannot be empty</p>
+				<p v-else-if="!passwordValid" class="text-red-500 text-[12px] apple-font px-3">* min 8 characters</p>
+				<PasswordInput v-model="credentials.password" placeholder="Password" @focusin="passwordEmpty = false; passwordValid = true;"/>
+			</div>
+			<div class="flex flex-col h-[2.5rem] justify-end">
+				<p v-if="repeatedPasswordEmpty" class="text-red-500 text-[12px] apple-font px-3">* Confirm password cannot be empty</p>
+				<p v-else-if="!passwordsMatch" class="text-red-500 text-[12px] apple-font px-3">* Passwords don't match</p>
+				<PasswordInput placeholder="Repeat password" v-model="credentials.repeatedPassword" @focusin="repeatedPasswordEmpty = false; passwordsMatch = true;"/>
 			</div>
       <MyButton class="w-1/3" text="Register" @onClick="tryRegister"/>
 
