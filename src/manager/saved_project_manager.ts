@@ -5,6 +5,7 @@ import SavedProjectApi from "@/api/saved_project_api";
 import { SavedProjectResponse } from '@/dtos/responses/saved_project_response';
 import ProjectApi from "@/api/project_api";
 import ProjectManager from './project_manager';
+import _ from 'lodash';
 
 export default class SavedProjectManager {
   protected static get repository() {
@@ -22,12 +23,22 @@ export default class SavedProjectManager {
   static async loadAll() {
     const response = await SavedProjectApi.getAllSavedProjects();
     const projects = await this.getFormatedProjects(response.data)
+    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSS")
     this.repository.save(projects)
   }
 
   static async createProject(project: SavedProject) {
     this.repository.save(project)
   }
+
+  static async update(id: number, _savedProject: SavedProject) {
+    const savedProjectRequest = this.getFormatedProject(_savedProject);
+    const rest = _.omit(savedProjectRequest, ['id', 'project']);
+
+    const savedProject = await SavedProjectApi.updateProject(id, rest);
+    this.repository.where('id', id).update(savedProject.data);
+  }
+
   static async saveProject(id: number) {
     const response = await ProjectApi.saveProject(id);
     const project = this.getFormatedProject(response.data);

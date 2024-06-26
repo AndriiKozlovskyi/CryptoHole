@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <div :id="props.name">
+    <div :id="id">
       <slot></slot>
     </div>
   </div>
@@ -9,6 +9,7 @@
 <script setup>
 import { onMounted, ref, inject } from 'vue'
 import LocalStorageManager from '@/manager/local_storage_manager.ts'
+import SavedProjectManager from '@/manager/saved_project_manager';
 
 let container = null
 let el = null
@@ -19,7 +20,7 @@ let cOffY = 0
 const isDragging = ref(false)
 const isDragAvailable = inject('dragAvailable')
 const props = defineProps({
-  name: String
+  id: Number
 })
 
 const d = 'dragging'
@@ -189,10 +190,10 @@ const insertElementIntoDropZone = (closestDropZone, cursorY) => {
   el.classList.remove(d)
 
   const projects = Array.from(closestDropZone.children).map((child) => {
-    const project = LocalStorageManager.getSavedProjectByName(child.id)
-    project.status = closestDropZone.id
-    LocalStorageManager.updateSavedProject(project)
-    return project
+    const project = SavedProjectManager.getById(child.id);
+    project.status = closestDropZone.id;
+    SavedProjectManager.update(project.id, project);
+    return project;
   })
 
   LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
@@ -215,7 +216,8 @@ const isIntersectingPoint = (x, y, rect) => {
 }
 
 onMounted(() => {
-  el = document.getElementById(props.name)
+  el = document.getElementById(props.id)
+  console.log(props.id)
   container = document.getElementById('container')
   indicator = createIndicator()
   initializeElement(el)

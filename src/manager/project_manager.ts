@@ -4,7 +4,6 @@ import Project from '@/models/project_model'
 import ProjectApi from "@/api/project_api";
 import ProjectResponse from '@/dtos/responses/project_response';
 
-
 export default class ProjectManager {
   protected static get repository() {
     return useRepo(Project, store)
@@ -20,7 +19,6 @@ export default class ProjectManager {
 
   static async update(id: number, object: any) {
     this.repository.where('id', id).update(object);
-    console.log(this.all())
   }
 
   static async loadAll() {

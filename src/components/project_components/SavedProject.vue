@@ -64,23 +64,18 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
-import type { SavedProject } from '@/entity/saved_project'
-import type { PropType } from 'vue'
-import LocalStorageManager from '@/manager/local_storage_manager'
+import { computed, ref } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
 import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
-import { emitter } from '@/event_bus'
+import SavedProjectManager from '@/manager/saved_project_manager'
 
 const props = defineProps({
-  project: {
-    required: true,
-    type: Object as PropType<SavedProject>
-  }
-})
+  id: Number
+});
+
 const hovered = ref(false)
-const project = ref(props.project)
+const project = computed(() => SavedProjectManager.getById(props.id));
 const name = ref(project.value?.name)
 const amountOfAccs = ref(project.value?.amountOfAccs)
 const expenses = ref(project.value?.expenses)
@@ -89,25 +84,10 @@ const isEditing = ref(false)
 
 const emit = defineEmits(['dragSwitch'])
 
-onBeforeMount(() => {
-  emitter.on('saveProject', () => {
-    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
-  })
-  emitter.on('unsaveProject', () => {
-    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
-  })
-  emitter.on('updateSavedProject', () => {
-    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
-  })
-  emitter.on('addSavedProject', () => {
-    project.value = LocalStorageManager.getSavedProjectByName(project.value.name)
-  })
-});
-
 const increaseAccs = () => {
   emit('dragSwitch')
   project.value!.amountOfAccs = project.value!.amountOfAccs + 1
-  LocalStorageManager.updateSavedProject(project.value!)
+  SavedProjectManager.update(props.id, project.value);
   emit('dragSwitch')
 }
 
@@ -119,8 +99,7 @@ const updateProject = () => {
   project.value.name = name.value
   project.value.amountOfAccs = amountOfAccs.value
   project.value.expenses = expenses.value
-
-  LocalStorageManager.updateSavedProject(project.value)
+  SavedProjectManager.update(props.id, project.value);
   isEditing.value = false
 }
 
@@ -128,7 +107,7 @@ const decreaseAccs = () => {
   emit('dragSwitch')
   if (project.value!.amountOfAccs <= 1) return
   project.value!.amountOfAccs = project.value!.amountOfAccs - 1
-  LocalStorageManager.updateSavedProject(project.value!)
+  SavedProjectManager.update(props.id, project.value);
   emit('dragSwitch')
 }
 </script>

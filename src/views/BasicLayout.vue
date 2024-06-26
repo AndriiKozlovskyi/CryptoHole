@@ -14,6 +14,5 @@ import SavedProjectManager from '@/manager/saved_project_manager';
 onBeforeMount (async () => {
   await ProjectManager.loadAll();
   await SavedProjectManager.loadAll();
-
-})
+});
 </script>
