@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, provide, ref, computed } from 'vue'
+import { provide, ref, computed } from 'vue'
 import ProgressBar from '@/components/project_components/ProjectStatusContainer.vue'
 import SavedProjectManager from '@/manager/saved_project_manager';
 const projects = computed(() => SavedProjectManager.all())
@@ -38,17 +38,6 @@ const statusContainers = ref([
   { id: 'paid', name: 'PAID', projects: paidProjects },
   { id: 'failed', name: 'FAILED', projects: failedProjects }
 ]);
-
-// onBeforeMount(async () => {
-//   await SavedProjectManager.loadAll();
-//   const savedProjects =  SavedProjectManager.all()
-
-//   todoProjects.value =  savedProjects.filter((project) => project.status === 'todo')
-//   progressProjects.value = savedProjects.filter((project) => project.status === 'progress')
-//   waitingProjects.value = savedProjects.filter((project) => project.status === 'waiting')
-//   paidProjects.value = savedProjects.filter((project) => project.status === 'paid')
-//   failedProjects.value = savedProjects.filter((project) => project.status === 'failed')
-// });
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)

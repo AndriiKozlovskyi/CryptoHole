@@ -149,7 +149,7 @@ const dragMove = (e) => {
   el.style.left = `${e.clientX - cOffX}px`
 }
 
-const dragEnd = (e) => {
+const dragEnd = async (e) => {
   e.preventDefault()
   el.style.zIndex = 900
 
@@ -165,13 +165,13 @@ const dragEnd = (e) => {
   const closestDropZone = getClosestDropZone(cursorX, cursorY)
 
   if (closestDropZone) {
-    insertElementIntoDropZone(closestDropZone, cursorY)
+    await insertElementIntoDropZone(closestDropZone, cursorY)
   } else {
     resetElementStyles(el)
   }
 }
 
-const insertElementIntoDropZone = (closestDropZone, cursorY) => {
+const insertElementIntoDropZone = async (closestDropZone, cursorY) => {
   const children = Array.from(closestDropZone.children)
   let insertBeforeElement = null
 
@@ -184,19 +184,13 @@ const insertElementIntoDropZone = (closestDropZone, cursorY) => {
       break
     }
   }
-
-  closestDropZone.insertBefore(el, insertBeforeElement)
+  const project = SavedProjectManager.getById(el.id);
+  project.status = closestDropZone.id;
+  await SavedProjectManager.update(project.id, project);
   resetElementStyles(el)
   el.classList.remove(d)
 
-  const projects = Array.from(closestDropZone.children).map((child) => {
-    const project = SavedProjectManager.getById(child.id);
-    project.status = closestDropZone.id;
-    SavedProjectManager.update(project.id, project);
-    return project;
-  })
-
-  LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
+  // LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
 }
 
 const resetElementStyles = (el) => {

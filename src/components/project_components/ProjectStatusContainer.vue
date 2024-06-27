@@ -6,12 +6,13 @@
   >
     <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
       <p class="text-[14px] apple-font">{{ name }}</p>
-      <p>{{ 0 }}</p>
+      <p>{{ amountOfProjects }}</p>
     </div>
-    <DragCon class="relative top-0 left-0" v-for="project in projects" :key="project.name" :id="project.id">
-      <Project @drag-switch="dragSwitch()" :id="project.id"/>
-    </DragCon>
-    <DropZone :id="id" />
+    <DropZone :id="id">
+      <DragCon class="relative top-0 left-0" v-for="project in projects" :key="project.name" :id="project.id">
+        <Project @drag-switch="dragSwitch()" :id="project.id"/>
+      </DragCon>
+    </DropZone>
   </div>
 </template>
 <script setup>
@@ -27,17 +28,12 @@ const props = defineProps({
   name: String,
   id: String,
   projects: Array,
+  amountOfProjects: Number
 })
-
-onMounted(() => {
- console.log(props.amountOfProjects)
-});
 
 const amountOfProjects = computed(() => SavedProjectManager.all().filter(
       (project) => project.status === props.id
     ).length);
-
-
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
