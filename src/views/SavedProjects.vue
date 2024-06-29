@@ -26,7 +26,7 @@ import LocalStorageManager from '@/manager/local_storage_manager'
 import { emitter } from '@/event_bus'
 import ProgressBar from '@/components/project_components/ProjectStatusContainer.vue'
 
-const projects = ref(LocalStorageManager.getSavedProject())
+const projects = ref(LocalStorageManager.getSavedProject() || [])
 
 const todoProjects = ref(projects.value.filter((project) => project.status === 'todo'))
 const progressProjects = ref(

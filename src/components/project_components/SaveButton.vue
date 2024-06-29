@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-row">
+  <div @click="toggleSave" class="flex items-center cursor-pointer">
     <i
       v-if="condition"
       class="pi pi-bookmark-fill text-white"
       style="font-size: 1.5rem"
-      @click.stop="$emit('unsave')"
+       @click.stop="$emit('unsave')"
     ></i>
     <i
       v-if="!condition"
@@ -14,10 +14,20 @@
     ></i>
   </div>
 </template>
+
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   condition: Boolean
 })
 
-defineEmits(['save', 'unsave'])
+const emit = defineEmits(['save', 'unsave'])
+
+const toggleSave = () => {
+  if (props.condition) {
+    emit('unsave')
+  } else {
+    emit('save')
+}
+}
 </script>
+
