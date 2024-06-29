@@ -12,6 +12,7 @@ import AuthManager from '@/manager/auth_manager'
 import BasicLayout from "@/views/BasicLayout.vue";
 import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
+import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,7 +51,7 @@ const router = createRouter({
         {
           path: '/:name/project_description',
           name: 'project_description',
-          component: ProjectDescriptionAdminView,
+          component: ProjectDescriptionView,
           props: true,
           beforeEnter: async (to) => {
             await ProjectManager.loadAll();

@@ -19,7 +19,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue';
-import MyInput from '../basic_components/MyInput.vue';
+import MyInput from "@/components/basic_components/input/MyInput.vue"
 import LocalStorageManager from '@/manager/local_storage_manager';
 import ToastManager from '@/manager/toaster_manager';
 import { useToast } from 'primevue/usetoast';
