@@ -12,18 +12,18 @@ export default class SavedProjectManager {
     return useRepo(SavedProject, store)
   }
 
-  static all(): Collection<SavedProject> {
-    return this.repository.all()
+  static all(): SavedProject[] {
+    return this.repository.all().sort((a, b) => a.orderNumber - b.orderNumber)
   }
 
-  static getById(id: number): SavedProject | null {
-    return this.repository.find(id)
+  static getById(id: number) {
+    return this.repository.where('id', id).first();
   }
 
   static async loadAll() {
     const response = await SavedProjectApi.getAllSavedProjects();
-    const projects = await this.getFormatedProjects(response.data)
-    console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+    const projects = this.getFormatedProjects(response.data)
+
     this.repository.save(projects)
   }
 
@@ -34,8 +34,8 @@ export default class SavedProjectManager {
   static async update(id: number, _savedProject: SavedProject) {
     const savedProjectRequest = this.getFormatedProject(_savedProject);
     const rest = _.omit(savedProjectRequest, ['id', 'project']);
-
     const savedProject = await SavedProjectApi.updateProject(id, rest);
+
     this.repository.where('id', id).update(savedProject.data);
   }
 
@@ -46,6 +46,9 @@ export default class SavedProjectManager {
     this.repository.save(project);
   }
 
+  static getSavedProjectByName(name: string) {
+    return this.repository.where('name', name).first();
+  }
 
   static async unsaveProject(id: number) {
     await SavedProjectApi.unsaveProject(id);
@@ -53,13 +56,38 @@ export default class SavedProjectManager {
     this.repository.destroy(id);
   }
 
-  private static async getFormatedProjects(projects: Array<SavedProjectResponse>) {
+
+  private static getFormatedProjects(projects: Array<SavedProjectResponse>) {
     const _this = this
-    return Promise.all(
-      projects.map(async (project) => {
+  
+    return projects.map((project) => {
         return _this.getFormatedProject(project)
-      })
-    )
+    })
+  }
+
+  static updateOrderNumber(projectId: number, beforeProjectId: number) {
+    const projectToChange = this.repository.where("id", projectId).first();
+
+    if(beforeProjectId === null) {
+      
+      projectToChange.orderNumber = this.getLastOrderNumberForProject(projectToChange.status) + 1;
+      this.update(projectToChange.id, projectToChange);
+      return;
+    }
+    const projectToBeReplaced = this.repository.where("id", beforeProjectId).first();
+
+    projectToChange.orderNumber = projectToBeReplaced.orderNumber;
+    projectToBeReplaced.orderNumber ++;
+
+    this.update(projectToChange.id, projectToChange);
+    this.update(projectToBeReplaced.id, projectToBeReplaced);
+  }
+
+  static updateAll(savedProjects: SavedProject[]) {
+    savedProjects = savedProjects.filter(project => delete project['pivot'])
+
+    this.repository.flush();
+    this.repository.save(savedProjects);
   }
 
   private static getFormatedProject(projectResponse: SavedProjectResponse) {
@@ -69,7 +97,16 @@ export default class SavedProjectManager {
       project: projectResponse.project,
       expenses: projectResponse.expenses,
       status: projectResponse.status,
-      amountOfAccs: projectResponse.amountOfAccs
+      amountOfAccs: projectResponse.amountOfAccs,
+      orderNumber: projectResponse.orderNumber
     }
+  }
+
+  private static getLastOrderNumberForProject(status: string) {
+    const projects = this.repository.where('status', status).get();
+    if(projects.length == 1) {
+      return -1;
+    }
+    return projects[0].orderNumber;
   }
 }

@@ -26,6 +26,6 @@ export default class CategoryApi {
   }
 
   public static async unsaveProject(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/unsave`, null);
+    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/unsave`, AuthManager.getToken());
   }
 }

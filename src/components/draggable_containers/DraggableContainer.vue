@@ -8,7 +8,6 @@
 
 <script setup>
 import { onMounted, ref, inject } from 'vue'
-import LocalStorageManager from '@/manager/local_storage_manager.ts'
 import SavedProjectManager from '@/manager/saved_project_manager';
 
 let container = null
@@ -176,21 +175,28 @@ const insertElementIntoDropZone = async (closestDropZone, cursorY) => {
   let insertBeforeElement = null
 
   for (let child of children) {
-    if (el.id === child.id) continue
-
     const childRect = child.getBoundingClientRect()
     if (cursorY < childRect.top + childRect.height / 2) {
       insertBeforeElement = child
       break
     }
   }
+
   const project = SavedProjectManager.getById(el.id);
   project.status = closestDropZone.id;
   await SavedProjectManager.update(project.id, project);
   resetElementStyles(el)
   el.classList.remove(d)
 
-  // LocalStorageManager.updateSavedProjectsByOrder(projects, closestDropZone.id)
+  if(insertBeforeElement == null) {
+    SavedProjectManager.updateOrderNumber(project.id, null);
+    return;
+
+  }
+
+  const childBeforeId = insertBeforeElement.children[0].id;
+
+  SavedProjectManager.updateOrderNumber(project.id, childBeforeId)
 }
 
 const resetElementStyles = (el) => {
@@ -211,12 +217,17 @@ const isIntersectingPoint = (x, y, rect) => {
 
 onMounted(() => {
   el = document.getElementById(props.id)
-  console.log(props.id)
   container = document.getElementById('container')
   indicator = createIndicator()
   initializeElement(el)
   el.addEventListener('mousedown', dragStart)
-})
+});
+
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+}
 </script>
 
 <style>

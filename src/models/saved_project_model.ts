@@ -5,7 +5,8 @@ export default class SavedProject extends Model {
 
   static fields() {
     return {
-      id: this.number(null),
+      id: this.number(0),
+      orderNumber: this.number(0),
       name: this.string(''),
       project: this.number(0),
       expenses: this.number(0),
@@ -15,6 +16,7 @@ export default class SavedProject extends Model {
   }
 
   declare id: number
+  declare orderNumber: number
   declare name: string
   declare project: number
   declare expenses: number

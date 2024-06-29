@@ -114,7 +114,7 @@
               >
               <SaveButton
                 class="items-center justify-center absolute right-0 w-[5rem] h-[5rem] hover:bg-[rgb(30,31,34)] rounded-full bottom-[3rem]"
-                :condition="saved"
+                :condition="project.saved"
                 @save="save"
                 @unsave="unsave"
               />
@@ -136,49 +136,43 @@
 </template>
 
 <script setup lang="ts">
-import LocalStorageManager from '@/manager/local_storage_manager'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, onBeforeMount, ref } from 'vue'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import SaveButton from '@/components/project_components/SaveButton.vue'
 import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
 import Tag from '@/components/project_components/Tag.vue'
+import ProjectManager from '@/manager/project_manager'
+import SavedProjectManager from '@/manager/saved_project_manager'
 
 const router = useRouter()
 const toast = useToast()
-const route = useRoute()
-const saved = ref(false)
-const project = ref()
+const project = computed(() => ProjectManager.getProjectByName(props.name));
 
-const isHovering = ref(false)
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  }
+})
 
 const description = ref(
   'Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.'
 )
-const startAnimation = () => {
-  isHovering.value = true
-}
 
-const stopAnimation = () => {
-  isHovering.value = false
-}
-
-onMounted(() => {
-  project.value = LocalStorageManager.getProjectByName(route.params.name)
+onBeforeMount(async () => {
+  await ProjectManager.loadAll();
 })
 
-const save = () => {
-  if (project.value !== undefined) LocalStorageManager.saveProject(project.value)
-  saved.value = true
+const save = async () => {
+  if (project.value !== undefined) await SavedProjectManager.saveProject(project.value.id)
   ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 }
 
-const unsave = () => {
-  const savedProject = LocalStorageManager.getSavedProjectByName(project?.value.name)
-  if (project.value !== undefined) LocalStorageManager.unsaveProject(savedProject)
-  saved.value = false
+const unsave = async () => {
+  const savedProject = SavedProjectManager.getSavedProjectByName(project?.value.name)
+  if (project.value !== undefined) await SavedProjectManager.unsaveProject(project.value.id)
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 }
 </script>

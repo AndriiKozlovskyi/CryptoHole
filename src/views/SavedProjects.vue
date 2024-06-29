@@ -23,7 +23,7 @@
 import { provide, ref, computed } from 'vue'
 import ProgressBar from '@/components/project_components/ProjectStatusContainer.vue'
 import SavedProjectManager from '@/manager/saved_project_manager';
-const projects = computed(() => SavedProjectManager.all())
+const projects = computed(() => SavedProjectManager.all());
 
 const todoProjects = computed(() => projects.value.filter((project) => project.status === 'todo'));
 const progressProjects = computed(() => projects.value.filter((project) => project.status === 'progress'));

@@ -3,4 +3,5 @@ export interface SavedProjectRequest {
     expenses: number
     status: string
     amountOfAccs: number
+    orderNumber: number
 }

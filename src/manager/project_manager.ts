@@ -41,6 +41,10 @@ export default class ProjectManager {
     )
   }
 
+  static getProjectByName(name: string) {
+    return this.repository.where('name', name).first();
+  }
+
   private static getFormatedProject(projectResponse: ProjectResponse) {
     return {
       id: projectResponse.id,
