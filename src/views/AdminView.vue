@@ -1,29 +1,17 @@
 <template>
-  <div
-    class="relative text-white w-full items-center justify-center flex overflow-hidden h-[23rem] flex-col rounded-lg"
-  >
-    <p>Create a project</p>
-    <div class="flex flex-col mt-2 items-start px-5">
-      <p>img link</p>
-      <input class="text-black" type="text" v-model="imgSrc" />
+  <Toast />
+  <div class="h-full flex flex-col overflow-y-auto">
+    <div class="flex flex-col items-center mt-[6rem]">
+      <div class="flex flex-col items-center space-y-6">
+        <p class="font-semibold text-2xl self-start text-white">All Projects</p>
+        <div class="flex flex-row space-x-4">
+          <AdminProjectContainer />
+          </div>
+      </div>
     </div>
-
-    <div class="flex flex-col mt-2 items-start px-5">
-      <p>tag</p>
-      <input class="text-black" type="text" v-model="tag" />
-    </div>
-
-    <div class="flex flex-col mt-2 items-start px-5">
-      <p>name</p>
-      <input type="text" class="text-black" v-model="name" />
-    </div>
-    <div class="flex flex-col mt-2 items-start px-5">
-      <p>expenses</p>
-      <input type="text" class="text-black" v-model="expenses" />
-    </div>
-
   </div>
 </template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Project } from '@/entity/Project'
@@ -36,5 +24,18 @@ const expenses = ref(0)
 const tag = ref('')
 const imgSrc = ref('')
 
+const save = () => {
+  const project: Project = {
+    name: name.value,
+    tag: tag.value,
+    expenses: expenses.value,
+    src: imgSrc.value,
+    participants: 0
+  }
+  ToastManager.showSuccessToast(toast, "You've created a project")
+}
 
+const deleteProj = (project: Project) => {
+  ToastManager.showInfoToast(toast, "You've deleted a project")
+}
 </script>

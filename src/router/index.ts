@@ -2,9 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import AdminView from '@/views/AdminView.vue'
 import SavedProjects from '@/views/SavedProjects.vue'
-import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
+import CreateProject from '@/components/admin_components/CreateProject.vue'
+import ProjectDescriptionAdminView from '@/views/ProjectDescriptionAdminView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AuthManager from '@/manager/auth_manager'
@@ -78,6 +79,16 @@ const router = createRouter({
       name: 'news',
       component: NewsView
     },
+    {
+      path: '/admin/create_project',
+      name: 'create_project',
+      component: CreateProject
+    },
+    {
+      path: '/:name/admin/project_description',
+      name: 'admin_project_description',
+      component: ProjectDescriptionAdminView
+    }
   ]
 })
 

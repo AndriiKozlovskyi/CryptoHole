@@ -3,7 +3,7 @@
     class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card group overflow-hidden w-full basis-full h-[20rem] flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
-    @click="goToProjectDescritpion"
+    @click="goToProjectDescription"
   >
     <div class="h-[10rem] w-full grow">
       <img
@@ -66,6 +66,7 @@ const unsave = () => {
 const goToProjectDescritpion = () => {
   router.push({ name: 'project_description', params: { name: project.value.name } })
 }
+
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');

@@ -1,7 +1,7 @@
 <template>
   <section class="flex items-stretch text-secondary-text-color">
     <div class="bg-[#1e1f24] text-white font-extrabold h-20 min-w-20 text-3xl flex items-center justify-center rounded-full z-10">
-      {{ numberOfTask }}
+      {{ taskNumber }}
     </div>
     <div class="flex flex-col ml-3">
       <h2 class="font-bold text-xl mb-2 mt-2 text-white">{{ taskTitle }}</h2>
@@ -14,8 +14,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+
 const props = defineProps({
-  numberOfTask: Number,
+  taskNumber: Number,
   taskTitle: String,
   taskDescription: String,
 });
