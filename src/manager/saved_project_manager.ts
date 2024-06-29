@@ -51,9 +51,11 @@ export default class SavedProjectManager {
   }
 
   static async unsaveProject(id: number) {
-    await SavedProjectApi.unsaveProject(id);
     ProjectManager.update(id, {saved: false});
-    this.repository.destroy(id);
+    const savedProjectId = this.repository.where('project', id).first().id;
+    this.repository.destroy(savedProjectId);
+    await SavedProjectApi.unsaveProject(id);
+
   }
 
 

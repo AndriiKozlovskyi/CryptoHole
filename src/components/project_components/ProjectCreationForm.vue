@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import type { SavedProject } from '@/entity/saved_project'
-import LocalStorageManager from '@/manager/local_storage_manager'
+// import LocalStorageManager from '@/manager/local_storage_manager'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -45,7 +45,7 @@ const save = () => {
     expenses: Number(expenses.value),
     status: props.status!
   }
-  LocalStorageManager.addSavedProject(project)
+  // LocalStorageManager.addSavedProject(project)
   emit('save')
 }
 </script>
