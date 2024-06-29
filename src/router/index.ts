@@ -50,7 +50,7 @@ const router = createRouter({
         {
           path: '/:name/project_description',
           name: 'project_description',
-          component: ProjectDescriptionView,
+          component: ProjectDescriptionAdminView,
           props: true,
           beforeEnter: async (to) => {
             await ProjectManager.loadAll();
