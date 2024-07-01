@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import HeaderBar from './components/header/HeaderBar.vue'
-import SideMenu from './components/menu/SideMenu.vue'
 </script>
 
 <template>

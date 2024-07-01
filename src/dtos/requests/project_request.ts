@@ -1,6 +1,6 @@
 export interface ProjectRequest {
   name: string
-  tags: string[]
+  tagsIds: number[]
   expenses: number
   participants: number
   src: string

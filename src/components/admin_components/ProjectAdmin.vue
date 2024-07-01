@@ -32,7 +32,6 @@
   </template>
   <script setup lang="ts">
   
-import type { Project } from '@/entity/project'
 import type { PropType } from 'vue'
 import { defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -41,6 +40,7 @@ import ParticipantsForm from '@/components/project_components/ParticipantsForm.v
 import Tag from '@/components/project_components/Tag.vue'
 import DeleteForm from './DeleteForm.vue'
 import EditForm from './EditForm.vue'
+import Project from '@/models/project_model'
 
 
 const router = useRouter()

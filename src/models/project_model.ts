@@ -1,4 +1,5 @@
 import { Model } from 'pinia-orm'
+import Tag from './tag_model'
 
 export default class Project extends Model {
   static entity = 'project'
@@ -7,7 +8,7 @@ export default class Project extends Model {
     return {
       id: this.number(null),
       name: this.string(''),
-      tags: this.attr([]),
+      tags: this.attr(Array<Tag>),
       expenses: this.number(0),
       participants: this.number(0),
       src: this.string(''),
@@ -17,7 +18,7 @@ export default class Project extends Model {
 
   declare id: number
   declare name: string
-  declare tag: string[]
+  declare tags: Array<Tag>
   declare expenses: number
   declare participants: number
   declare src: string

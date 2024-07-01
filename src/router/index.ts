@@ -13,6 +13,7 @@ import BasicLayout from "@/views/BasicLayout.vue";
 import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
 import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
+import TagManager from '@/manager/tag_manager'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,22 +54,44 @@ const router = createRouter({
           name: 'project_description',
           component: ProjectDescriptionView,
           props: true,
-          beforeEnter: async (to) => {
-            await ProjectManager.loadAll();
-            await SavedProjectManager.loadAll();
-          }
         },
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
         }
+        await ProjectManager.loadAll();
+        await SavedProjectManager.loadAll();
       }
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: AdminView
+      path: "/admin",
+      name: "admin",
+      children: [
+        {
+          path: "",
+          name: "base_admin",
+          component: AdminView,
+        },
+        {
+          path: 'create_project',
+          name: 'create_project',
+          component: CreateProject
+        },
+        {
+          path: ':name/project_description',
+          name: 'admin_project_description',
+          component: ProjectDescriptionAdminView
+        },
+      ],
+      beforeEnter: async (to) => {
+        if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
+          return { name: 'login' }
+        }
+        await ProjectManager.loadAll();
+        await SavedProjectManager.loadAll();
+        await TagManager.loadAll();
+      }
     },
     {
       path: '/guides',
@@ -80,16 +103,7 @@ const router = createRouter({
       name: 'news',
       component: NewsView
     },
-    {
-      path: '/admin/create_project',
-      name: 'create_project',
-      component: CreateProject
-    },
-    {
-      path: '/:name/admin/project_description',
-      name: 'admin_project_description',
-      component: ProjectDescriptionAdminView
-    }
+    
   ]
 })
 

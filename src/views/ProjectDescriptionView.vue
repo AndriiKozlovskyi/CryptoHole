@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import SaveButton from '@/components/project_components/SaveButton.vue';
 import ExpensesForm from '@/components/project_components/ExpensesForm.vue';
@@ -47,7 +47,6 @@ import TaskMain from '@/components/project_description/TaskMain.vue';
 const router = useRouter();
 const toast = useToast();
 const project = ref();
-const route = useRoute();
 
 const saved = ref(false);
 const tasks = [
@@ -83,7 +82,6 @@ const tasks = [
   }
 ];
 
-const task = ref([{taskTitle: 'Open your SCube account, Initiate a transfer, Verify the transaction', taskDescription: 'Open your SCube account, Initiate a transfer, Verify the transaction', taskNumber: 1}]);
 const participants = ref();
 const expenses = ref();
 const tag = ref();
@@ -91,23 +89,23 @@ const description = ref("Drift is a fully on-chain perpetual and spot DEX built 
 
 onMounted(() => {
   // project.value = LocalStorageManager.getProjectByName(route.params.name);
-  participants.value = project.value.participants;
-  expenses.value = project.value.expenses;
-  tag.value = project.value.tag;
+  // participants.value = project.value.participants;
+  // expenses.value = project.value.expenses;
+  // tag.value = project.value.tag;
 });
 
 const save = () => {
-    if (project.value !== undefined)
-        // LocalStorageManager.saveProject(project.value)
-     saved.value = true;
-     ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
+  if (project.value !== undefined)
+      // LocalStorageManager.saveProject(project.value)
+  saved.value = true;
+  ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 };
 const unsave = () => {
 //  const savedProject = LocalStorageManager.getSavedProjectByName(project?.value.name);
-     if (project.value !== undefined)
-        // LocalStorageManager.unsaveProject(savedProject)
-    saved.value = false;
-    ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
+  if (project.value !== undefined)
+      // LocalStorageManager.unsaveProject(savedProject)
+  saved.value = false;
+  ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 };
 
 </script>

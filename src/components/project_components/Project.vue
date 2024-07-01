@@ -11,8 +11,10 @@
         :src="project?.src"
       />
     </div>
-    <div class="absolute w-full flex flex-row justify-between p-5">
-      <Tag :tag="project?.tag" />
+    <div class="absolute w-full flex flex-row items-start justify-between p-5">
+      <div class="flex flex-col space-y-1">
+        <Tag v-for="tag in project?.tags" :key="tag.id" :tag="tag.name" />
+      </div>
       <SaveButton v-if="hovered" :condition="project.saved && hovered" @save="save" @unsave="unsave" />
     </div>
 
@@ -41,9 +43,7 @@ import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
 
 const toast = useToast()
-
 const router = useRouter()
-
 const props = defineProps({
   id: Number
 })
@@ -63,7 +63,7 @@ const unsave = () => {
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 }
 
-const goToProjectDescritpion = () => {
+const goToProjectDescription = () => {
   router.push({ name: 'project_description', params: { name: project.value.name } })
 }
 

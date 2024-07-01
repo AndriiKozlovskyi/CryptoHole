@@ -32,7 +32,6 @@
   </template>
   
   <script setup lang="ts">
-  import LocalStorageManager from '@/manager/local_storage_manager';
   import { onMounted, ref } from 'vue';
   import { useRoute, useRouter } from 'vue-router'; 
   import ExpensesForm from '@/components/project_components/ExpensesForm.vue';
@@ -40,12 +39,12 @@
   import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue';
   import DescriptionAside from '@/components/project_description/DescriptionAside.vue';
   import TaskMain from '@/components/project_description/TaskMain.vue';
+import ProjectManager from '@/manager/project_manager';
   
   const router = useRouter();
   const project = ref();
   const route = useRoute();
   
-  const task = ref([{taskTitle: 'Open your SCube account, Initiate a transfer, Verify the transaction', taskDescription: 'Open your SCube account, Initiate a transfer, Verify the transaction', taskNumber: 1}]);
   const tasks = [
     {
       taskNumber: 1,
@@ -85,10 +84,10 @@
   const description = ref("Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.");
   
   onMounted(() => {
-    project.value = LocalStorageManager.getProjectByName(route.params.name);
-    participants.value = project.value.participants;
-    expenses.value = project.value.expenses;
-    tag.value = project.value.tag;
+    project.value = ProjectManager.getProjectByName(route.params.name[0]);
+    // participants.value = project.value.participants;
+    // expenses.value = project.value.expenses;
+    // tag.value = project.value.tag;
   });
   </script>
   
