@@ -26,6 +26,10 @@ export default class ProjectManager {
     this.repository.where('id', id).update(project);
   }
 
+  static changeSaved(id: number, saved: boolean) {
+    this.repository.where('id', id).update({saved: saved});
+  }
+
   static async loadAll() {
     const response = await ProjectApi.getAllProjects();
     const projects = this.getFormatedProjects(response.data);

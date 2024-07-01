@@ -42,7 +42,7 @@ export default class SavedProjectManager {
   static async saveProject(id: number) {
     const response = await ProjectApi.saveProject(id);
     const project = this.getFormatedProject(response.data);
-    ProjectManager.update(id, {saved: true});
+    ProjectManager.changeSaved(id, true)
     this.repository.save(project);
   }
 
@@ -51,13 +51,12 @@ export default class SavedProjectManager {
   }
 
   static async unsaveProject(id: number) {
-    ProjectManager.update(id, {saved: false});
-    const savedProjectId = this.repository.where('project', id).first().id;
+    const savedProjectId = this.repository.where('project', id).all()[0].id;
+    ProjectManager.changeSaved(id, false)
     this.repository.destroy(savedProjectId);
     await SavedProjectApi.unsaveProject(id);
 
   }
-
 
   private static getFormatedProjects(projects: Array<SavedProjectResponse>) {
     const _this = this

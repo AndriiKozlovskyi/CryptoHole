@@ -50,7 +50,7 @@ const router = createRouter({
           component: SavedProjects
         },
         {
-          path: '/:name/project_description',
+          path: '/:id/project_description',
           name: 'project_description',
           component: ProjectDescriptionView,
           props: true,

@@ -51,7 +51,7 @@ const props = defineProps({
 const hovered = ref(false)
 
 const project = computed(() => ProjectManager.getById(props.id))
-const savedProject = computed(() => ProjectManager.getById(props.id))
+const savedProject = computed(() => SavedProjectManager.getById(props.id))
 
 const save = () => {
   if (project.value !== undefined) SavedProjectManager.saveProject(props.id)
@@ -64,7 +64,7 @@ const unsave = () => {
 }
 
 const goToProjectDescription = () => {
-  router.push({ name: 'project_description', params: { name: project.value.name } })
+  router.push({ name: 'project_description', params: { id: project.value.id } })
 }
 
 </script>

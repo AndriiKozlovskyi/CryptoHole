@@ -5,7 +5,6 @@
       <article class="absolute h-100% flex flex-col mt-[1rem] space-y-10 ml-[5rem] max-w-[40rem]">
         <header class="text-white z-[50] text-3xl ml-16 font-extrabold mb-10 relative top-[3.5rem] p-4">Step-by-step guide</header>
         <div class="top-0 bottom-0 fixed left-[7.1rem] transform translate-x-1 w-1 bg-gray-500 z-0"></div>
-          
         <TaskMain v-for="task in tasks" :taskTitle="task.taskTitle" :taskDescription="task.taskDescription" :key="task.taskNumber" :taskNumber="task.taskNumber">
         </TaskMain>
       </article>
@@ -17,14 +16,16 @@
 
         <section class="relative">
           <img :src="project?.src" alt="Logo" class="w-full h-auto" />
-          <Tag class="absolute top-3 left-3" :tag="tag"/>
+          <div class="absolute top-3 left-3 flex flex-col space-y-1">
+            <Tag v-for="tag in project?.tags" :key="tag.id" :tag="tag.name" />
+          </div>        
         </section>
 
         <section class="flex flex-col justify-center space-y-5 mt-5 text-sm relative">
             <a class="text-blue-500 font-bold hover:text-blue-400" target="_blank" href="https://www.drift.trade/drift-governance-token"><i class="pi pi-link text-secondary-text-color"></i>Drift Governance Token</a>
-            <SaveButton class="items-center justify-center absolute right-[-1rem] w-[5rem] h-[5rem] hover:bg-[rgb(30,31,34)] rounded-full top-[-3rem]" :condition="saved" @save="save" @unsave="unsave"/>
-            <ParticipantsForm class="text-white" :participants="participants"/>
-            <ExpensesForm :expenses="expenses"/>
+            <SaveButton class="items-center justify-center absolute right-[-1rem] w-[5rem] h-[5rem] hover:bg-[rgb(30,31,34)] rounded-full top-[-3rem]" :condition="project.saved" @save="save" @unsave="unsave"/>
+            <ParticipantsForm class="text-white" :participants="project.participants"/>
+            <ExpensesForm :expenses="project.expenses"/>
             <DescriptionAside :description="description" />
         </section>
       </div>
@@ -33,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import SaveButton from '@/components/project_components/SaveButton.vue';
@@ -43,12 +44,17 @@ import ParticipantsForm from '@/components/project_components/ParticipantsForm.v
 import DescriptionAside from '@/components/project_description/DescriptionAside.vue';
 import ToastManager from '@/manager/toaster_manager';
 import TaskMain from '@/components/project_description/TaskMain.vue';
+import ProjectManager from '@/manager/project_manager';
+import SavedProjectManager from '@/manager/saved_project_manager';
 
+const props = defineProps({
+  id: Number
+});
+
+const id = props.id;
 const router = useRouter();
 const toast = useToast();
-const project = ref();
 
-const saved = ref(false);
 const tasks = [
   {
     taskNumber: 1,
@@ -82,31 +88,19 @@ const tasks = [
   }
 ];
 
-const participants = ref();
-const expenses = ref();
-const tag = ref();
 const description = ref("Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.");
-
-onMounted(() => {
-  // project.value = LocalStorageManager.getProjectByName(route.params.name);
-  // participants.value = project.value.participants;
-  // expenses.value = project.value.expenses;
-  // tag.value = project.value.tag;
-});
+const project = computed(() => ProjectManager.getById(id))
+const savedProject = computed(() => SavedProjectManager.getById(id))
 
 const save = () => {
-  if (project.value !== undefined)
-      // LocalStorageManager.saveProject(project.value)
-  saved.value = true;
+  if (project.value !== undefined) SavedProjectManager.saveProject(id)
   ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
-};
+}
+
 const unsave = () => {
-//  const savedProject = LocalStorageManager.getSavedProjectByName(project?.value.name);
-  if (project.value !== undefined)
-      // LocalStorageManager.unsaveProject(savedProject)
-  saved.value = false;
+  SavedProjectManager.unsaveProject(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
-};
+}
 
 </script>
 
