@@ -30,7 +30,6 @@ export default class ProjectManager {
     const response = await ProjectApi.getAllProjects();
     const projects = this.getFormatedProjects(response.data);
 
-    console.log(projects)
     this.repository.save(projects);
   }
 

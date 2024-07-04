@@ -24,6 +24,10 @@ export default class TagApi {
     public static async createTag(tag: TagRequest): Promise<BaseApiResponse<TagResponse>> {
       return await ApiFactory.getInstance(this.getOptions()).post('', tag)
     }
+      
+    public static async updateTag(id: number, tag: TagRequest): Promise<BaseApiResponse<TagResponse>> {
+      return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, tag)
+    }
 
     public static async deleteTag(id: number) {
       return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
