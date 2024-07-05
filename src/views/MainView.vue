@@ -2,14 +2,14 @@
   <div class="h-full flex flex-col">
     <div class="flex flex-col items-center">
       <div class="flex flex-col w-full items-center space-y-6">
-        <ProjectsContainer />
+        <EventsContainer />
         <HelpButton />
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import ProjectsContainer from '@/components/project_components/ProjectsContainer.vue'
+import EventsContainer from '@/components/project_components/EventsContainer.vue'
 import HelpButton from '@/components/HelpButton.vue'
 </script>
 <style>

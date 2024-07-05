@@ -27,4 +27,6 @@ export default class Event extends Model {
   declare src: string
   declare tasks: Array<Task>
   declare saved: boolean
+  declare startDate: string
+  declare endDate: string
 }

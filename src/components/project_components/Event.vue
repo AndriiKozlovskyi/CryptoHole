@@ -21,7 +21,7 @@
     <div class="flex flex-col gap-2 mt-2 px-5">
       <div class="flex flex-row justify-between w-full rounded-full">
         <p class="text-white text-[17px] apple-font">
-          {{ event?.name.toLocaleUpperCase() }}
+          {{ event?.name }}
         </p>
         <div class="h-full flex items-center">
           <i class="pi pi-share-alt text-secondary-text-color"/>
@@ -47,8 +47,8 @@ import { useToast } from 'primevue/usetoast'
 import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue'
 import Tag from '@/components/project_components/Tag.vue'
 import SaveButton from '@/components/project_components/SaveButton.vue'
-import SavedProjectManager from '@/manager/saved_project_manager'
 import EventManager from '@/manager/event_manager'
+import SavedEventManager from '@/manager/saved_event_manager'
 
 const toast = useToast()
 const router = useRouter()
@@ -59,16 +59,16 @@ const props = defineProps({
 const hovered = ref(false)
 
 const event = computed(() => EventManager.getById(props.id))
-const savedEvent = computed(() => EventManager.getById(props.id))
+const savedEvent = computed(() => SavedEventManager.getById(props.id))
 
 const save = () => {
-  if (event.value !== undefined) SavedProjectManager.saveProject(props.id)
-  ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
+  if (event.value !== undefined) SavedEventManager.participateEvent(props.id)
+  ToastManager.showSuccessToast(toast, "You've been successfully saved am event")
 }
 
 const unsave = () => {
-  if (savedEvent.value !== undefined) SavedProjectManager.unsaveProject(props.id)
-  ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
+  if (savedEvent.value !== undefined) SavedEventManager.unparticipateEvent(props.id)
+  ToastManager.showSuccessToast(toast, "You've been successfully unsaved an event")
 }
 
 const goToProjectDescription = () => {

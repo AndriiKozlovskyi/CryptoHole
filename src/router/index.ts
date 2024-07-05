@@ -42,8 +42,8 @@ const router = createRouter({
       component: BasicLayout,
       children: [
         {
-          path: 'projects',
-          name: 'projects',
+          path: 'events',
+          name: 'events',
           component: MainView
         },
         {

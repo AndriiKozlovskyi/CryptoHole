@@ -10,14 +10,14 @@
     </div>
     <DropZone :id="id">
       <DragCon class="relative top-0 left-0" v-for="event in events" :key="event.name" :id="event.id">
-        <SavedProject @drag-switch="dragSwitch()" :id="event.id"/>
+        <SavedEvent @drag-switch="dragSwitch()" :id="event.id"/>
       </DragCon>
     </DropZone>
   </div>
 </template>
 <script setup>
 import DropZone from '@/components/draggable_containers/DropZone.vue'
-import SavedProject from '@/components/project_components/SavedProject.vue'
+import SavedEvent from '@/components/project_components/SavedEvent.vue'
 import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
 import { ref, provide, computed } from 'vue'
 import SavedEventManager from '@/manager/saved_event_manager'

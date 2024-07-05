@@ -57,7 +57,6 @@ const name = ref(event.value?.name)
 const isEditing = ref(false)
 
 const emit = defineEmits(['dragSwitch'])
-34
 
 const stopEditing = () => {
   isEditing.value = false

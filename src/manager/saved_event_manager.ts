@@ -6,6 +6,8 @@ import SavedEventResponse from '@/dtos/responses/saved_event_response';
 import AccountManager from './account_manager';
 import SavedEventApi from '@/api/saved_event_api';
 import SavedEventRequest from '@/dtos/requests/saved_event_request';
+import EventApi from '@/api/event_api';
+import EventManager from './event_manager';
 
 export default class SavedEventManager {
   protected static get repository() {
@@ -20,9 +22,8 @@ export default class SavedEventManager {
     return this.repository.find(id)
   }
 
-  static async update(id: number, object: any) {
-    const rest = _.omit(object, ['id', 'event']);
-    const event = await SavedEventApi.updateSavedEvent(id, rest);
+  static async update(id: number, _savedEvent: SavedEventRequest) {
+    const event = await SavedEventApi.updateSavedEvent(id, _savedEvent);
     this.repository.where('id', id).update(event);
   }
 
@@ -40,12 +41,33 @@ export default class SavedEventManager {
     this.repository.save(savedEventResult)
   }
 
+	static async participateEvent(id: number) {
+		const savedEvent = await EventApi.participateEvent(id);
+		const result = this.getFormatedSavedEvent(savedEvent.data);
+    this.repository.save(result);
+
+		const event = EventManager.getById(id);
+		event.saved = true;
+    EventManager.update(id, event);
+	}
+
+	static async unparticipateEvent(id: number) {
+		const savedEventId = this.repository.where('event', id).first();
+    this.repository.destroy(savedEventId.id);
+    await EventApi.unparticipateEvent(id);
+
+		const event = EventManager.getById(id);
+		event.saved = false;
+    EventManager.update(id, event);
+	}
+
   static updateOrderNumber(eventId: number, beforeEventId: number) {
     const eventToChange = this.repository.where("id", eventId).first();
 
     if(beforeEventId === null) {
       
-        eventToChange.orderNumber = this.getLastOrderNumberForEvent(eventToChange.status) + 1;
+    	eventToChange.orderNumber = this.getLastOrderNumberForEvent(eventToChange.status) + 1;
+			console.log(this.getLastOrderNumberForEvent(eventToChange.status))
       this.update(eventToChange.id, eventToChange);
       return;
     }
@@ -89,10 +111,10 @@ export default class SavedEventManager {
   }
 
   private static getLastOrderNumberForEvent(status: string) {
-    const projects = this.repository.where('status', status).get();
-    if(projects.length == 1) {
+    const events = this.repository.where('status', status).get();
+    if(events.length == 1) {
       return -1;
     }
-    return projects[0].orderNumber;
+    return events[0].orderNumber;
   }
 }

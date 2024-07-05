@@ -21,9 +21,8 @@ export default class EventManager {
     return this.repository.find(id)
   }
 
-  static async update(id: number, object: any) {
-    const rest = _.omit(object, ['id']);
-    const event = await EventApi.updateEvent(id, rest);
+  static async update(id: number, eventRequest: EventRequest) {
+    const event = await EventApi.updateEvent(id, eventRequest);
     this.repository.where('id', id).update(event);
   }
 

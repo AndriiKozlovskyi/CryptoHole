@@ -10,6 +10,6 @@ export default interface EventResponse {
     src: string;
     tasks: TaskResponse[];
     saved: boolean;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
 }

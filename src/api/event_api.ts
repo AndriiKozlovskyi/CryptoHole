@@ -31,6 +31,10 @@ export default class EventApi {
     return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/participate`, AuthManager.getToken());
   }
 
+  public static async unparticipateEvent(id: number) {
+    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/unparticipate`, AuthManager.getToken());
+  }
+
   public static async updateEvent(id: number, eventRequest: EventRequest): Promise<BaseApiResponse<ProjectResponse>> {
     return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, eventRequest);
   }

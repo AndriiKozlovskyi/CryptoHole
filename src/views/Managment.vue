@@ -2,7 +2,7 @@
   <div class="relative overscroll-y-none flex flex-col">
     <div class="flex flex-col space-y-5">
       <div class="w-full flex flex-row gap-1 overflow-y-hidden">
-        <ProgressBar
+        <EventStatusContainer
           v-for="status in statusContainers"
           :events="status.events"
           :key="status.id"
@@ -20,7 +20,7 @@
 
 <script setup>
 import { provide, ref, computed } from 'vue'
-import ProgressBar from '@/components/project_components/ProjectStatusContainer.vue'
+import EventStatusContainer from '@/components/project_components/EventStatusContainer.vue'
 import SavedEventManager from '@/manager/saved_event_manager';
 
 const events = computed(() => SavedEventManager.all());

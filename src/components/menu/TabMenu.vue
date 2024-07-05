@@ -1,7 +1,7 @@
 <template>
 	<div class="flex flex-col h-[10rem]">
 		<div class="w-[5rem] flex flex-row">
-			<TabMenuItem name="Events" path="/home/projects">
+			<TabMenuItem name="Events" path="/home/events">
 			</TabMenuItem>
 			<TabMenuItem name="Calendar" path="/home/calendar">
 				<i class="pi pi-calendar"/>

@@ -7,6 +7,6 @@ export default interface SavedEventResponse {
     status: string;
     accounts: AccountResponse[];
     orderNumber: number;
-    startDate: Date;
-    endDate: Date;
+    startDate: string;
+    endDate: string;
 }

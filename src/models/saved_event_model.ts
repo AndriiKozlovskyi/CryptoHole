@@ -26,4 +26,6 @@ export default class SavedEvent extends Model {
   declare status: string
   declare accounts: Array<Account>
   declare orderNumber: number
+  declare startDate: string
+  declare endDate: string
 }
