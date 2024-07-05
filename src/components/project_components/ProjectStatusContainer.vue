@@ -9,29 +9,29 @@
       <p>{{ amountOfProjects }}</p>
     </div>
     <DropZone :id="id">
-      <DragCon class="relative top-0 left-0" v-for="project in projects" :key="project.name" :id="project.id">
-        <Project @drag-switch="dragSwitch()" :id="project.id"/>
+      <DragCon class="relative top-0 left-0" v-for="event in events" :key="event.name" :id="event.id">
+        <SavedProject @drag-switch="dragSwitch()" :id="event.id"/>
       </DragCon>
     </DropZone>
   </div>
 </template>
 <script setup>
 import DropZone from '@/components/draggable_containers/DropZone.vue'
-import Project from '@/components/project_components/SavedProject.vue'
+import SavedProject from '@/components/project_components/SavedProject.vue'
 import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
-import { ref, provide, computed, onMounted } from 'vue'
-import SavedProjectManager from '@/manager/saved_project_manager'
+import { ref, provide, computed } from 'vue'
+import SavedEventManager from '@/manager/saved_event_manager'
 
 const hovered = ref(false)
 
 const props = defineProps({
   name: String,
   id: String,
-  projects: Array,
+  events: Array,
   amountOfProjects: Number
 })
 
-const amountOfProjects = computed(() => SavedProjectManager.all().filter(
+const amountOfProjects = computed(() => SavedEventManager.all().filter(
       (project) => project.status === props.id
     ).length);
 

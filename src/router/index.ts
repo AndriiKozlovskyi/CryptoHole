@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import AdminView from '@/views/AdminView.vue'
-import SavedProjects from '@/views/SavedProjects.vue'
+import Managment from '@/views/Managment.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
 import CreateProject from '@/components/admin_components/CreateProject.vue'
@@ -14,6 +14,8 @@ import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
 import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
 import TagManager from '@/manager/tag_manager'
+import EventManager from '@/manager/event_manager'
+import SavedEventManager from '@/manager/saved_event_manager'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,22 +37,22 @@ const router = createRouter({
       ]
     },
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: BasicLayout,
       children: [
         {
-          path: '/projects',
+          path: 'projects',
           name: 'projects',
           component: MainView
         },
         {
-          path: '/saved_projects',
-          name: 'saved_projects',
-          component: SavedProjects
+          path: 'managment',
+          name: 'managment',
+          component: Managment
         },
         {
-          path: '/:name/project_description',
+          path: ':name/project_description',
           name: 'project_description',
           component: ProjectDescriptionView,
           props: true,
@@ -60,8 +62,8 @@ const router = createRouter({
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
         }
-        await ProjectManager.loadAll();
-        await SavedProjectManager.loadAll();
+        await EventManager.loadAll();
+        await SavedEventManager.loadAll();
       }
     },
     {

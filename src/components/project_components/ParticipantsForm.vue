@@ -1,14 +1,13 @@
 <template>
-  <div class="flex flex-row space-x-3 items-center">
+  <div class="flex flex-row space-x-1 items-center">
     <img
       class="rounded-full"
-      width="28px"
-      height="28px"
+      width="30px"
+      height="30px"
       src="https://masterpiecer-images.s3.yandex.net/65782260a05d11eebe3ad20dae950626:upscaled"
     />
-    <div class="flex flex-col">
-      <p class="text-[14px] text-white">{{ participants }}K</p>
-      <p class="text-[12px] text-secondary-text-color">Participants</p>
+    <div class="absolute left-8 mt-5 flex opacity-75 flex-col bg-background-color px-2 rounded-full">
+      <p class="text-[14px] text-white">{{ participants }}</p>
     </div>
   </div>
 </template>

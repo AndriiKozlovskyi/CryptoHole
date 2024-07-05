@@ -1,4 +1,4 @@
-import { useRepo, type Collection } from 'pinia-orm'
+import { useRepo } from 'pinia-orm'
 import store from '../store/store'
 import SavedProject from '@/models/saved_project_model';
 import SavedProjectApi from "@/api/saved_project_api";
@@ -57,7 +57,6 @@ export default class SavedProjectManager {
     await SavedProjectApi.unsaveProject(id);
 
   }
-
 
   private static getFormatedProjects(projects: Array<SavedProjectResponse>) {
     const _this = this

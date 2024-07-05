@@ -1,8 +1,7 @@
 <template>
   <div class="h-full flex flex-col">
-    <div class="flex flex-col items-center mt-[6rem]">
-      <div class="flex flex-col items-center space-y-6">
-        <p class="font-semibold text-2xl self-start text-white">New Projects</p>
+    <div class="flex flex-col items-center">
+      <div class="flex flex-col w-full items-center space-y-6">
         <ProjectsContainer />
         <HelpButton />
       </div>

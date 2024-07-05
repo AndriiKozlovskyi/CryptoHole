@@ -1,39 +1,43 @@
 <template>
-  <div
-    :class="
-      itemActive === true
-        ? 'scale-[1.02] bg-primary-item-color text-white'
-        : 'text-secondary-text-color hover:bg-hover-primary-item-color hover:text-white'
-    "
-    class="flex flex-row justify-between hover:scale-[1.02] rounded-lg items-center text-[16px] px-4 py-3 cursor-pointer"
-    @click="$router.push(`${path}`)"
-  >
-    <div class="flex flex-row items-center space-x-3">
-      <slot></slot>
-      <p>{{ name }}</p>
+    <div
+      :class="
+			itemActive === true
+			? 'bg-primary-item-color text-white'
+			: 'text-secondary-text-color hover:bg-[#4c12b2] hover:text-white hover:scale-[1.02]'
+      "
+      class="flex flex-row justify-between items-center text-[16px] px-4 py-3 cursor-pointer"
+      @click="$router.push(`${path}`)"
+    >
+      <div class="flex flex-row items-center space-x-3">
+        <slot></slot>
+        <p>{{ name }}</p>
+      </div>
     </div>
-    <p class="text-sm">{{ countOfItemsInside }}</p>
-  </div>
-</template>
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+  </template>
+  <script setup lang="ts">
+  import { computed } from 'vue'
+  import { useRoute } from 'vue-router'
+  
+  const props = defineProps({
+    name: {
+      name: String,
+      required: true
+    },
+    path: {
+      type: String,
+      required: true
+    }
+  })
+  
 
-const props = defineProps({
-  name: {
-    name: String,
-    required: true
-  },
-  countOfItemsInside: {
-    type: Number,
-    required: false
-  },
-  path: {
-    type: String,
-    required: true
-  }
-})
+  const router = useRoute()
+  const _path = computed(() => router.matched[0].name ) //[0] first one
 
-const router = useRoute()
-const itemActive = computed(() => props.path === router.path)
-</script>
+  const itemActive = computed(() => {
+    console.log(_path.value)
+    if(props.path === _path.value) {
+      return true;
+    }return false;
+  })
+  </script>
+  

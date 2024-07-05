@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card group overflow-hidden w-full basis-full h-[20rem] flex-col rounded-lg tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
+    class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card rounded-lg group overflow-hidden basis-full h-[17.875rem] w-full flex-col tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
     @click="goToProjectDescription"
@@ -8,24 +8,33 @@
     <div class="h-[10rem] w-full grow">
       <img
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
-        :src="project?.src"
+        :src="event?.src"
       />
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
       <div class="flex flex-col space-y-1">
-        <Tag v-for="tag in project?.tags" :key="tag.id" :tag="tag.name" />
+        <Tag v-for="tag in event?.tags" :key="tag.id" :tag="tag.name" />
       </div>
-      <SaveButton v-if="hovered" :condition="project.saved && hovered" @save="save" @unsave="unsave" />
+      <SaveButton v-if="hovered" :condition="event.saved && hovered" @save="save" @unsave="unsave" />
     </div>
 
-    <div class="flex flex-col gap-5 mt-2 px-5">
-      <p class="text-white text-[20px]">
-        {{ project?.name }}
-      </p>
+    <div class="flex flex-col gap-2 mt-2 px-5">
+      <div class="flex flex-row justify-between w-full rounded-full">
+        <p class="text-white text-[17px] apple-font">
+          {{ event?.name.toLocaleUpperCase() }}
+        </p>
+        <div class="h-full flex items-center">
+          <i class="pi pi-share-alt text-secondary-text-color"/>
+        </div>
+
+      </div>
       <hr class="w-full border-secondary-text-color opacity-25" />
-      <div class="flex flex-row justify-between w-full mb-5 rounded-full">
-        <ParticipantsForm :participants="project?.participants" />
-        <ExpensesForm :expenses="project?.expenses" />
+      <div class="flex flex-row justify-between w-full mb-3 rounded-full">
+        <ParticipantsForm :participants="event?.participants.length" />
+        <div class="h-full flex items-center text-secondary-text-color font-medium text-[14px] space-x-1">
+          <p>{{ new Date(event.startDate).toLocaleDateString() }} - {{ new Date(event.endDate).toLocaleDateString() }}</p>
+        </div>
+
       </div>
     </div>
   </div>
@@ -35,12 +44,11 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
-import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
 import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue'
 import Tag from '@/components/project_components/Tag.vue'
 import SaveButton from '@/components/project_components/SaveButton.vue'
-import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
+import EventManager from '@/manager/event_manager'
 
 const toast = useToast()
 const router = useRouter()
@@ -50,21 +58,21 @@ const props = defineProps({
 
 const hovered = ref(false)
 
-const project = computed(() => ProjectManager.getById(props.id))
-const savedProject = computed(() => ProjectManager.getById(props.id))
+const event = computed(() => EventManager.getById(props.id))
+const savedEvent = computed(() => EventManager.getById(props.id))
 
 const save = () => {
-  if (project.value !== undefined) SavedProjectManager.saveProject(props.id)
+  if (event.value !== undefined) SavedProjectManager.saveProject(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 }
 
 const unsave = () => {
-  if (savedProject.value !== undefined) SavedProjectManager.unsaveProject(props.id)
+  if (savedEvent.value !== undefined) SavedProjectManager.unsaveProject(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")
 }
 
 const goToProjectDescription = () => {
-  router.push({ name: 'project_description', params: { name: project.value.name } })
+  router.push({ name: 'project_description', params: { name: event.value.name } })
 }
 
 </script>

@@ -8,7 +8,7 @@
 
 <script setup>
 import { onMounted, ref, inject } from 'vue'
-import SavedProjectManager from '@/manager/saved_project_manager';
+import SavedEventManager from '@/manager/saved_event_manager';
 
 let container = null
 let el = null
@@ -182,21 +182,21 @@ const insertElementIntoDropZone = async (closestDropZone, cursorY) => {
     }
   }
 
-  const project = SavedProjectManager.getById(el.id);
-  project.status = closestDropZone.id;
-  await SavedProjectManager.update(project.id, project);
+  const event = SavedEventManager.getById(el.id);
+  event.status = closestDropZone.id;
+  await SavedEventManager.update(event.id, event);
   resetElementStyles(el)
   el.classList.remove(d)
 
   if(insertBeforeElement == null) {
-    SavedProjectManager.updateOrderNumber(project.id, null);
+    SavedEventManager.updateOrderNumber(event.id, null);
     return;
 
   }
 
   const childBeforeId = insertBeforeElement.children[0].id;
 
-  SavedProjectManager.updateOrderNumber(project.id, childBeforeId)
+  SavedEventManager.updateOrderNumber(event.id, childBeforeId)
 }
 
 const resetElementStyles = (el) => {

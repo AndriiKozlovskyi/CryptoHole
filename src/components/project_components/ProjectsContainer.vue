@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row justify-center">
-    <div class="w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
+  <div class="flex flex-row justify-center w-full">
+    <div class="w-full grid grid-cols-3 gap-10 overflow-y-hidden">
       <Project v-for="project in projects" :key="project.name" :id="project.id" />
     </div>
   </div>
@@ -8,9 +8,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import Project from '@/components/project_components/Project.vue'
-import ProjectManager from '@/manager/project_manager';
+import EventManager from '@/manager/event_manager';
 
-const projects = computed(() => ProjectManager.all())
+const projects = computed(() => EventManager.all())
 </script>
 
 <style>

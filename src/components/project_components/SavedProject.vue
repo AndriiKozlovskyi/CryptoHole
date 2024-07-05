@@ -8,7 +8,7 @@
   >
     <div class="flex flex-row justify-between px-3">
       <div v-if="!isEditing" class="apple-font text-white mt-1 text-[16px]">
-        {{ project?.name }}
+        {{ event?.name }}
       </div>
       <MyInput
         v-if="isEditing"
@@ -29,32 +29,9 @@
     <div class="flex flex-col mt-3 space-y-1 ml-3">
       <div class="flex flex-row items-center space-x-2">
         <i class="pi pi-user secondary-text-color" />
-        <button class="px-1" @click="decreaseAccs" @mousedown.stop v-if="hovered && !isEditing">
-          -
-        </button>
-        <p v-if="!isEditing" class="text-[14px] text-white">{{ project?.amountOfAccs }}</p>
-        <MyInput
-          v-if="isEditing"
-          v-model="amountOfAccs"
-          type="text"
-          @focus.stop
-          @mousedown.stop
-          class="w-[7.5rem] apple-font text-white text-sm font-medium"
-        />
-        <button class="px-1" @click="increaseAccs" @mousedown.stop v-if="hovered && !isEditing">
-          +
-        </button>
+        <p v-if="!isEditing" class="text-[14px] text-white">{{ event?.accounts.length }}</p>
       </div>
-      <ExpensesForm v-if="!isEditing" :expenses="expenses" />
       <div v-if="isEditing" class="flex flex-row space-x-2 items-center">
-        <i class="pi pi-wallet text-secondary-text-color" />
-        <MyInput
-          v-model="expenses"
-          type="text"
-          @focus.stop
-          @mousedown.stop
-          class="w-[7.5rem] text-[14px] apple-font text-white"
-        />
       </div>
       <div class="flex flex-row text-[14px] space-x-2 items-center">
         <i class="pi pi-clock" />
@@ -67,47 +44,29 @@
 import { computed, ref } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
-import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
-import SavedProjectManager from '@/manager/saved_project_manager'
+import SavedEventManager from '@/manager/saved_event_manager'
 
 const props = defineProps({
   id: Number
 });
 
 const hovered = ref(false)
-const project = computed(() => SavedProjectManager.getById(props.id));
-const name = ref(project.value?.name)
-const amountOfAccs = ref(project.value?.amountOfAccs)
-const expenses = ref(project.value?.expenses)
+const event = computed(() => SavedEventManager.getById(props.id));
+const name = ref(event.value?.name)
 
 const isEditing = ref(false)
 
 const emit = defineEmits(['dragSwitch'])
-
-const increaseAccs = () => {
-  emit('dragSwitch')
-  project.value!.amountOfAccs = project.value!.amountOfAccs + 1
-  SavedProjectManager.update(props.id, project.value);
-  emit('dragSwitch')
-}
+34
 
 const stopEditing = () => {
   isEditing.value = false
 }
 
 const updateProject = () => {
-  project.value.name = name.value
-  project.value.amountOfAccs = amountOfAccs.value
-  project.value.expenses = expenses.value
-  SavedProjectManager.update(props.id, project.value);
+  event.value.name = name.value
+  SavedEventManager.update(props.id, event.value);
   isEditing.value = false
 }
 
-const decreaseAccs = () => {
-  emit('dragSwitch')
-  if (project.value!.amountOfAccs <= 1) return
-  project.value!.amountOfAccs = project.value!.amountOfAccs - 1
-  SavedProjectManager.update(props.id, project.value);
-  emit('dragSwitch')
-}
 </script>
