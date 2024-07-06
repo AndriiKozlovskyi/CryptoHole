@@ -15,8 +15,8 @@ export default class Event extends Model {
       src: this.string(''),
       tasks: this.attr(Array<Task>),
       saved: this.boolean(false),
-      startDate: this.attr(null),
-      endDate: this.attr(null),
+      startDate: this.string(''),
+      endDate: this.string(''),
     }
   }
 

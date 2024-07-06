@@ -15,8 +15,8 @@ export default class SavedEvent extends Model {
       status: this.string(''),
       accounts: this.attr(Array<Account>),
       orderNumber: this.number(0),
-      startDate: this.attr(null),
-      endDate: this.attr(null),
+      startDate: this.string(''),
+      endDate: this.string(''),
     }
   }
 
@@ -26,6 +26,6 @@ export default class SavedEvent extends Model {
   declare status: string
   declare accounts: Array<Account>
   declare orderNumber: number
-  declare startDate: string
-  declare endDate: string
+  declare startDate: String
+  declare endDate: String
 }
