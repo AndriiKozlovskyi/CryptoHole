@@ -14,6 +14,22 @@ export default class SavedEventManager {
     return useRepo(SavedEvent, store)
   }
 
+  static getEventsByStartDate(startDate: string) {
+    return this.repository.all().filter(event => {
+      const _startDate: String = String(event.startDate);
+  
+      return _startDate.startsWith(startDate)
+    });
+  }
+
+  static getEventsByEndDate(endDate: string) {
+    return this.repository.all().filter(event => {
+      const _endDate: String = String(event.endDate);
+  
+      return _endDate.startsWith(endDate)
+    });  
+  }
+
   static all(): Collection<SavedEvent> {
     return this.repository.all().sort((a, b) => a.orderNumber - b.orderNumber)
   }

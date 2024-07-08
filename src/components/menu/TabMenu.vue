@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-col h-[10rem]">
-		<div class="w-[5rem] flex flex-row">
+		<div class="w-[5rem] flex flex-row space-x-2">
 			<TabMenuItem name="Events" path="/home/events">
 			</TabMenuItem>
 			<TabMenuItem name="Calendar" path="/home/calendar">

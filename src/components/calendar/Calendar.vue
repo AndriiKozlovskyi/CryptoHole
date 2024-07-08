@@ -1,15 +1,15 @@
 <template>
     <div class="flex flex-col items-center">
-      <div class="flex items-center w-full max-w-md mb-4">
-        <button @click="changeMonth(-1)" class="bg-[#4c12b2] text-white p-1 rounded-full">
+      <div class="flex items-center">
+        <button @click="changeMonth(-1)" class="absolute bg-[#1c1d20] text-white items-center justify-center px-1 shadow-lg rounded-full hover:bg-[#4619bd]">
             <i class="pi pi-angle-left"/>
         </button>
-        <div class="flex flex-col items-center flex-grow">
-            <div class="mt-4 text-xl text-white font-bold">
+        <div class="flex flex-col items-start flex-grow">
+            <div class="mt-4 text-xl ml-3 text-white font-bold apple-font">
             {{ currentYear }} - {{ currentMonthName }}
           </div>
-          <div class="grid grid-cols-7 grid-rows-7 gap-2">
-            <div v-for="(day, index) in daysOfWeek" :key="index" class="text-white flex items-center justify-center font-bold">
+          <div class="grid grid-cols-7 grid-rows-7 ">
+            <div v-for="(day, index) in daysOfWeek" :key="index" class="text-secondary-text-color apple-font flex items-center justify-center">
               {{ day }}
             </div>
             <CalendarItem
@@ -20,25 +20,28 @@
               :isOtherMonth="day.isOtherMonth"
               :startEventsCount="day.startEventsCount"
               :endEventsCount="day.endEventsCount"
+              @click="$emit('selectDate', selectedDate, day.number)"
             />
           </div>
      
         </div>
-        <button @click="changeMonth(1)" class="bg-[#4c12b2] text-white p-1 rounded-full">
+        <button @click="changeMonth(1)" class="absolute ml-[23rem] bg-[#1c1d20] text-white px-1 shadow-lg rounded-full hover:bg-[#4619bd]">
             <i class="pi pi-angle-right"/>
         </button>
       </div>
-    </div>
-  </template>
+    </div>  
+</template>
   
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import CalendarItem from './CalendarItem.vue';
 import SavedEventManager from "@/manager/saved_event_manager.ts"
+import DateUtils from '@/utils/date_utils';
+
+defineEmits(["selectDate"]);
+
 const currentDate = ref(new Date());
 const selectedDate = ref(new Date());
-
-const events = computed(() => SavedEventManager.all())
 
 const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -58,21 +61,13 @@ const changeMonth = (delta) => {
 };
 
 const getStartEventsCountForDate = (date) => {
-  const dateString = date.toISOString().split('T')[0];
-  return events.value.filter(event => {
-    const startDate: String = String(event.startDate);
-
-    return startDate.startsWith(dateString)
-    }).length;
+  const dateString = DateUtils.converDateToString(date);
+  return SavedEventManager.getEventsByStartDate(dateString).length;
 };
 
 const getEndEventsCountForDate = (date) => {
-  const dateString = date.toISOString().split('T')[0];
-  return events.value.filter(event => {
-    const endDate: String = String(event.endDate);
-
-    return endDate.startsWith(dateString)
-    }).length;
+  const dateString = DateUtils.converDateToString(date);
+  return SavedEventManager.getEventsByEndDate(dateString).length;
 };
 
 const days = computed(() => {

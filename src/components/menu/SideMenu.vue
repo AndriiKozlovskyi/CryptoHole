@@ -1,7 +1,8 @@
 <template>
-	<div class="flex flex-col h-screen w-[17rem] bg-[#24262B] top-0 justify-between">
-    <div class="text-white p-4 text-[23px] apple-font">
-      CryptoArchive
+	<div class="flex flex-col h-screen w-[17rem] bg-[#1c1d20] top-0 i9tems justify-between">
+    <div class="flex flex-col items-center justify-center w-full">
+      <img src="/Logo.png" width="100px" height="100px"/>
+      <p class="text-white text-[30px]">WIPE</p>
     </div>
     <div class="flex flex-col mb-[12rem]">
       <MenuItem1 name="News"  path="news">
@@ -15,7 +16,6 @@
         <i class="pi pi-home"/>
       </MenuItem1>
     </div>
-
     <div class="flex flex-row p-4 items-center space-x-2 text-secondary-text-color hover:text-white cursor-pointer">
       <i class="pi pi-sign-out"/>
       <p>Logout</p>

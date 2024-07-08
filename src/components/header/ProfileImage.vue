@@ -2,10 +2,10 @@
   <div
     class="flex flex-col items-center justify-center w-[70px] cursor-pointer"
   >
-    <img
+    <!-- <img
       class="circle-image1"
       src="https://masterpiecer-images.s3.yandex.net/ae360eac8a1c11ee951b7a2f0d1382ba:upscaled"
-    />
+    /> -->
     <p class="text-[18px] text-secondary-text-color apple-font">Andrew</p> 
   </div>
 </template>

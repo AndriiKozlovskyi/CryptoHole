@@ -8,8 +8,8 @@
       class="flex flex-row justify-between items-center text-[16px] px-4 py-3 cursor-pointer"
       @click="$router.push(`${path}`)"
     >
-      <div class="flex flex-row items-center space-x-3">
-        <slot></slot>
+      <div class="flex flex-row items-center space-x-3 ">
+        <slot class="text-purple-500 "></slot>
         <p>{{ name }}</p>
       </div>
     </div>
