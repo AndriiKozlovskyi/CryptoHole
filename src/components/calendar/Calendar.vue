@@ -60,14 +60,12 @@ const changeMonth = (delta) => {
   }
 };
 
-const getStartEventsCountForDate = (date) => {
-  const dateString = DateUtils.converDateToString(date);
-  return SavedEventManager.getEventsByStartDate(dateString).length;
+const getStartEventsCountForDate = (date: Date) => {
+  return SavedEventManager.getEventsByStartDate(date).length;
 };
 
-const getEndEventsCountForDate = (date) => {
-  const dateString = DateUtils.converDateToString(date);
-  return SavedEventManager.getEventsByEndDate(dateString).length;
+const getEndEventsCountForDate = (date: Date) => {
+  return SavedEventManager.getEventsByEndDate(date).length;
 };
 
 const days = computed(() => {
@@ -85,14 +83,15 @@ const days = computed(() => {
 
   // Add days from the current month
   for (let i = 1; i <= daysInMonth; i++) {
-    const date = new Date(currentYear.value, currentMonth.value, i+1);
-    const isCurrentDay = i === selectedDate.value.getDate() && new Date().getMonth() === currentMonth.value && new Date().getFullYear() === currentYear.value;
+    const date = new Date(currentYear.value, currentMonth.value, i);
+    console.log(i + " " + new Date().getDate())
+    const isCurrentDay = i == selectedDate.value.getDate() && new Date().getMonth() == currentMonth.value && new Date().getFullYear() == currentYear.value;
     daysArray.push({ number: i, isCurrentDay, isOtherMonth: false, startEventsCount: getStartEventsCountForDate(date), endEventsCount: getEndEventsCountForDate(date) });
   }
 
   // Add days from the next month
-  for (let i = 1; daysArray.length < 42; i++) {
-    const date = new Date(currentYear.value, currentMonth.value + 1, i+1);
+  for (let i = 0; daysArray.length < 42; i++) {
+    const date = new Date(currentYear.value, currentMonth.value + 1, i);
     daysArray.push({ number: i, isCurrentDay: false, isOtherMonth: true, startEventsCount: getStartEventsCountForDate(date), endEventsCount: getEndEventsCountForDate(date)  });
   }
   return daysArray;

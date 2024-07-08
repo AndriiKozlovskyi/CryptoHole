@@ -1,24 +1,21 @@
 export default class DateUtils {
     public static converNumberToWeekDay(day: number) {
         switch(day) {
-            case 0:
-                return "Mon";
             case 1:
-                return "Tue";
+                return "Mon";
             case 2:
-                return "Wed";
+                return "Tue";
             case 3:
-                return "Thu";
+                return "Wed";
             case 4:
-                return "Fri";
+                return "Thu";
             case 5:
-                return "Sat";    
+                return "Fri";
             case 6:
+                return "Sat";    
+            case 0:
                 return "Sun";  
         }
     }
 
-    public static converDateToString(date: Date) {
-        return date.toISOString().split('T')[0];
-    }
 }

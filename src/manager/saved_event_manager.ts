@@ -14,19 +14,23 @@ export default class SavedEventManager {
     return useRepo(SavedEvent, store)
   }
 
-  static getEventsByStartDate(startDate: string) {
+  static getEventsByStartDate(startDate: Date) {
     return this.repository.all().filter(event => {
-      const _startDate: String = String(event.startDate);
+      const _startDate: Date = new Date(String(event.startDate));
   
-      return _startDate.startsWith(startDate)
+      return _startDate.getDate() === startDate?.getDate()
+       && _startDate.getMonth() === startDate?.getMonth()
+        && _startDate.getFullYear() === startDate?.getFullYear();
     });
   }
 
-  static getEventsByEndDate(endDate: string) {
+  static getEventsByEndDate(endDate: Date) {
     return this.repository.all().filter(event => {
-      const _endDate: String = String(event.endDate);
+      const _endDate: Date = new Date(String(event.endDate));
   
-      return _endDate.startsWith(endDate)
+      return _endDate.getDate() === endDate?.getDate()
+       && _endDate.getMonth() === endDate?.getMonth()
+        && _endDate.getFullYear() === endDate?.getFullYear();
     });  
   }
 
