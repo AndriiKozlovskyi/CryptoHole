@@ -1,37 +1,41 @@
 <template>
-    <div class="fixed flex flex-col p-3 shadow-xl space-y-3 w-[24rem] justify-between rounded-lg bg-hover-primary-item-color h-[15rem]"
+    <div class="fixed flex flex-col p-2 shadow-xl space-y-2 w-[24rem] justify-between rounded-lg bg-hover-primary-item-color h-[16rem]"
     @keypress.enter="save">
+    <div class="flex flex-row items-center justify-center">
+        <p class="text-white">Create Event</p>
+    </div>
       <div class="flex flex-row rounded-md">
         <MyInput v-model="name" placeholder="event name"/>
       </div>
       <div class="flex flex-row justify-between text-secondary-text-color">
-        <div class="flex flex-col items-center space-y-2">
+        <div class="flex flex-col items-center">
             <MyButton 
                 :class="{ [`inner-shadow`]: startSelecting }"
                 text="select start date"
-                @onClick="startSelecting = true; endSelecting = false;"/>
+                @onClick="startSelecting = !startSelecting; endSelecting = false;"/>
             <p>{{ startDate?.toLocaleDateString() }}</p>
             <div class="flex flex-row items-center">
-                <TimePicker :hour="hour" :minute="minute" @update:hour="updateHour" @update:minute="updateMinute" />
+                <TimePicker :hour="startHour" :minute="startMinute" @update:hour="updateStartHour" @update:minute="updateStartMinute" />
             </div>
         </div>
 
-        <div class="flex flex-col items-center space-y-2">
+        <div class="flex flex-col items-center">
             <MyButton 
                 :class="{ [`inner-shadow`]: endSelecting }"
                 text="select end date"  
-                @onClick="endSelecting = true; startSelecting = false;"/>
+                @onClick="endSelecting = !endSelecting; startSelecting = false;"/>
             <p>{{ endDate?.toLocaleDateString() }}</p>
 
             <div class="flex flex-row items-center">
-                <TimePicker :hour="hour" :minute="minute" @update:hour="updateHour" @update:minute="updateMinute" />
+                <TimePicker :hour="endHour" :minute="endMinute" @update:hour="updateEndHour" @update:minute="updateEndMinute" />
             </div>
         </div>
       </div>
-      <!-- <div class="flex flex-row justify-between">
-        <MyButton text="Disacrd"/>
-        <MyButton text="Save"/>
-      </div> -->
+      <div class="flex flex-row justify-between">
+        <MyButton text="Disacrd" class="bg-primary-item-color" @onClick="emptyForm"/>
+        <MyButton text="Save" class="bg-primary-item-color" @onClick="save"/>
+
+      </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -45,8 +49,11 @@ const props = defineProps({
     date: Date,
 });
 
-const hour = ref(12);
-const minute = ref(0);
+const startHour = ref(12);
+const startMinute = ref(0);
+
+const endHour = ref(12);
+const endMinute = ref(0);
 
 const startDate = ref();
 const endDate = ref();
@@ -64,12 +71,20 @@ watch(() => props.date, (newDate) => {
     console.log("Ok");
 });
 
-const updateHour = (newHour: number) => {
-  hour.value = newHour;
+const updateStartHour = (newHour: number) => {
+  startHour.value = newHour;
 };
 
-const updateMinute = (newMinute: number) => {
-  minute.value = newMinute;
+const updateStartMinute = (newMinute: number) => {
+  startMinute.value = newMinute;
+};
+
+const updateEndHour = (newHour: number) => {
+  endHour.value = newHour;
+};
+
+const updateEndMinute = (newMinute: number) => {
+  endMinute.value = newMinute;
 };
 
 const name = ref();
@@ -94,20 +109,30 @@ function formatDate(date) {
 }
 
 const save = () => {
-    console.log(new Date(props.date.getFullYear(), props.date.getMonth(), props.date.getDate(), hour.value, minute.value, 0))
+    console.log(new Date(startDate.value.getFullYear(), startDate.value.getMonth(), startDate.value.getDate(), startHour.value, startMinute.value, 0))
     SavedEventManager.createSavedEvent({
         name: name.value,
-        startDate: formatDate(new Date(props.date.getFullYear(), props.date.getMonth(), props.date.getDate(), hour.value, minute.value, 0)),
+        startDate: formatDate(new Date(startDate.value.getFullYear(), startDate.value.getMonth(), startDate.value.getDate(), startHour.value, startMinute.value, 0)),
         status: "todo",
         orderNumber: 1,
-        endDate: ""
+        endDate: formatDate(new Date(endDate.value.getFullYear(), endDate.value.getMonth(), endDate.value.getDate(), endHour.value, endMinute.value, 0)),
     })
+    emptyForm();
+}
+
+const emptyForm = () => {
+    startDate.value = null;
+    endDate.value = null;
+    startMinute.value = null;
+    endMinute.value = null;
+    startHour.value = null;
+    endHour.value = null;
+    name.value = null;
 }
 
 </script>
 <style>
 .inner-shadow {
-    /* box-shadow: rgb(16, 15, 24) 0px 0px 10px 5px inset; */
     box-shadow: rgb(16, 15, 24) 0px 3px 3px 0px inset;
 }
 </style>

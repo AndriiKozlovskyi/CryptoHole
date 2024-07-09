@@ -64,7 +64,6 @@ const currentMonthName = computed(() =>
 const selectedDayNumber = ref();
 
 const selected = (day) => {
-  console.log(day.isOtherMonth == false)
   return day.number == selectedDayNumber.value && day.isOtherMonth == false
 }
 

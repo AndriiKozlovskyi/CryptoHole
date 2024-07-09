@@ -3,13 +3,13 @@
     {{ day }}
     <div
       v-if="startEventsCount > 0"
-      class="shadow-xl absolute mb-8 bg-opacity-50 mr-6 px-2 font-light rounded-full text-white text-sm bg-[#436b3c]"
+      class="shadow-xl absolute mb-8 bg-opacity-70 mr-6 px-1 font-light rounded-full text-white text-[10px] bg-[#436b3c]"
     >
       {{ startEventsCount }}
     </div>
     <div
       v-if="endEventsCount > 0"
-      class="shadow-xl absolute mb-8 ml-6 bg-opacity-50 px-2 font-light rounded-full text-white text-sm bg-[#8b3434]"
+      class="shadow-xl absolute mb-8 ml-6 bg-opacity-70 px-1 font-light rounded-full text-white text-[10px] bg-[#8b3434]"
     >
       {{ endEventsCount }}
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed} from 'vue'
 const emits = defineEmits(['onClick', 'changeMonth']);
 const props = defineProps({
   day: {
@@ -59,9 +59,11 @@ const itemClicked = () => {
 
 const itemClass = computed(() => {
   let baseClass =
-    'flex flex-col items-center justify-center w-10 h-10 rounded-full m-2 font-bold hover:bg-[#4619bd]'
+    'flex flex-col items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-[#4619bd]'
   if (props.isCurrentDay) {
-    baseClass += ' bg-[#6b6c72] text-white'
+    // baseClass += ' bg-[#6b6c72] text-white'
+        baseClass += ' bg-white text-black'
+
   } else if (props.selected) {
     baseClass += ' text-white hover:bg-[#4619bd] bg-[#4c12b2] inner-shadow'
   } else if (props.isOtherMonth) {
