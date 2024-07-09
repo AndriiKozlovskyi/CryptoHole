@@ -31,8 +31,7 @@
         <i class="pi pi-user secondary-text-color" />
         <p v-if="!isEditing" class="text-[14px] text-white">{{ event?.accounts.length }}</p>
       </div>
-      <div v-if="isEditing" class="flex flex-row space-x-2 items-center">
-      </div>
+      <div v-if="isEditing" class="flex flex-row space-x-2 items-center"></div>
       <div class="flex flex-row text-[14px] space-x-2 items-center">
         <i class="pi pi-clock" />
         <p class="w-[10rem] rounded-lg text-white">10h before</p>
@@ -48,10 +47,10 @@ import SavedEventManager from '@/manager/saved_event_manager'
 
 const props = defineProps({
   id: Number
-});
+})
 
 const hovered = ref(false)
-const event = computed(() => SavedEventManager.getById(props.id));
+const event = computed(() => SavedEventManager.getById(props.id))
 const name = ref(event.value?.name)
 
 const isEditing = ref(false)
@@ -64,8 +63,7 @@ const stopEditing = () => {
 
 const updateProject = () => {
   event.value.name = name.value
-  SavedEventManager.update(props.id, event.value);
+  SavedEventManager.update(props.id, event.value)
   isEditing.value = false
 }
-
 </script>

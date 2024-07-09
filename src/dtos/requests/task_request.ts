@@ -1,4 +1,4 @@
 export default interface TaskRequest {
-    header: string;
-    description: string;
+  header: string
+  description: string
 }

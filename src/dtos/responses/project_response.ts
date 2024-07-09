@@ -1,4 +1,4 @@
-import TagResponse from "./tag_response"
+import TagResponse from './tag_response'
 
 export interface ProjectResponse {
   id: number

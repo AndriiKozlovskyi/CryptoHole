@@ -6,30 +6,33 @@ import TagResponse from '@/dtos/responses/tag_response'
 import TagRequest from '@/dtos/requests/tag_request'
 
 export default class TagApi {
-    static baseUrl = 'http://localhost:8080/api/v1/tag'
-  
-    static getOptions(): ApiOptions {
-      return {
-        ...defaultApiOptions,
-        baseUrl: this.baseUrl,
-        useAuth: true,
-        getAccessToken: async () => AuthManager.getToken()
-      }
-    }
-  
-    public static async getAllTags(): Promise<BaseApiResponse<TagResponse[]>> {
-      return await ApiFactory.getInstance(this.getOptions()).get('')
-    }
-  
-    public static async createTag(tag: TagRequest): Promise<BaseApiResponse<TagResponse>> {
-      return await ApiFactory.getInstance(this.getOptions()).post('', tag)
-    }
-      
-    public static async updateTag(id: number, tag: TagRequest): Promise<BaseApiResponse<TagResponse>> {
-      return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, tag)
-    }
+  static baseUrl = 'http://localhost:8080/api/v1/tag'
 
-    public static async deleteTag(id: number) {
-      return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+  static getOptions(): ApiOptions {
+    return {
+      ...defaultApiOptions,
+      baseUrl: this.baseUrl,
+      useAuth: true,
+      getAccessToken: async () => AuthManager.getToken()
     }
   }
+
+  public static async getAllTags(): Promise<BaseApiResponse<TagResponse[]>> {
+    return await ApiFactory.getInstance(this.getOptions()).get('')
+  }
+
+  public static async createTag(tag: TagRequest): Promise<BaseApiResponse<TagResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).post('', tag)
+  }
+
+  public static async updateTag(
+    id: number,
+    tag: TagRequest
+  ): Promise<BaseApiResponse<TagResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, tag)
+  }
+
+  public static async deleteTag(id: number) {
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
+  }
+}

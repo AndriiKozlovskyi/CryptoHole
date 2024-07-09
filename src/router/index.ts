@@ -9,7 +9,7 @@ import ProjectDescriptionAdminView from '@/views/ProjectDescriptionAdminView.vue
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AuthManager from '@/manager/auth_manager'
-import BasicLayout from "@/views/BasicLayout.vue";
+import BasicLayout from '@/views/BasicLayout.vue'
 import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
 import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
@@ -61,25 +61,25 @@ const router = createRouter({
           path: ':name/project_description',
           name: 'project_description',
           component: ProjectDescriptionView,
-          props: true,
-        },
+          props: true
+        }
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
         }
-        await EventManager.loadAll();
-        await SavedEventManager.loadAll();
+        await EventManager.loadAll()
+        await SavedEventManager.loadAll()
       }
     },
     {
-      path: "/admin",
-      name: "admin",
+      path: '/admin',
+      name: 'admin',
       children: [
         {
-          path: "",
-          name: "base_admin",
-          component: AdminView,
+          path: '',
+          name: 'base_admin',
+          component: AdminView
         },
         {
           path: 'create_project',
@@ -90,15 +90,15 @@ const router = createRouter({
           path: ':name/project_description',
           name: 'admin_project_description',
           component: ProjectDescriptionAdminView
-        },
+        }
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
         }
-        await ProjectManager.loadAll();
-        await SavedProjectManager.loadAll();
-        await TagManager.loadAll();
+        await ProjectManager.loadAll()
+        await SavedProjectManager.loadAll()
+        await TagManager.loadAll()
       }
     },
     {
@@ -110,8 +110,7 @@ const router = createRouter({
       path: '/news',
       name: 'news',
       component: NewsView
-    },
-    
+    }
   ]
 })
 

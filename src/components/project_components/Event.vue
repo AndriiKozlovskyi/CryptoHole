@@ -15,7 +15,12 @@
       <div class="flex flex-col space-y-1">
         <Tag v-for="tag in event?.tags" :key="tag.id" :tag="tag.name" />
       </div>
-      <SaveButton v-if="hovered" :condition="event.saved && hovered" @save="save" @unsave="unsave" />
+      <SaveButton
+        v-if="hovered"
+        :condition="event.saved && hovered"
+        @save="save"
+        @unsave="unsave"
+      />
     </div>
 
     <div class="flex flex-col gap-2 mt-2 px-5">
@@ -24,17 +29,20 @@
           {{ event?.name }}
         </p>
         <div class="h-full flex items-center">
-          <i class="pi pi-share-alt text-secondary-text-color"/>
+          <i class="pi pi-share-alt text-secondary-text-color" />
         </div>
-
       </div>
       <hr class="w-full border-secondary-text-color opacity-25" />
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
-        <div class="h-full flex items-center text-secondary-text-color font-medium text-[14px] space-x-1">
-          <p>{{ new Date(event.startDate).toLocaleDateString() }} - {{ new Date(event.endDate).toLocaleDateString() }}</p>
+        <div
+          class="h-full flex items-center text-secondary-text-color font-medium text-[14px] space-x-1"
+        >
+          <p>
+            {{ new Date(event.startDate).toLocaleDateString() }} -
+            {{ new Date(event.endDate).toLocaleDateString() }}
+          </p>
         </div>
-
       </div>
     </div>
   </div>
@@ -74,7 +82,6 @@ const unsave = () => {
 const goToProjectDescription = () => {
   router.push({ name: 'project_description', params: { name: event.value.name } })
 }
-
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');

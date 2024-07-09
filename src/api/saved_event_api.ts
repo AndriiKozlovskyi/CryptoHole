@@ -21,15 +21,20 @@ export default class SavedEventApi {
     return await ApiFactory.getInstance(this.getOptions()).get('')
   }
 
-  public static async createSavedEvent(savedEventRequest: SavedEventRequest): Promise<BaseApiResponse<SavedEventResponse>> {
+  public static async createSavedEvent(
+    savedEventRequest: SavedEventRequest
+  ): Promise<BaseApiResponse<SavedEventResponse>> {
     return await ApiFactory.getInstance(this.getOptions()).post('', savedEventRequest)
   }
 
-  public static async updateSavedEvent(id: number, savedEventRequest: SavedEventRequest): Promise<BaseApiResponse<SavedEventResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, savedEventRequest);
+  public static async updateSavedEvent(
+    id: number,
+    savedEventRequest: SavedEventRequest
+  ): Promise<BaseApiResponse<SavedEventResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, savedEventRequest)
   }
 
   public static async deleteSavedEvent(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
   }
 }

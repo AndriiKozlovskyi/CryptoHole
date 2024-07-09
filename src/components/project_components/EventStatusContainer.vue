@@ -6,11 +6,16 @@
   >
     <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
       <p class="text-[14px] apple-font">{{ name }}</p>
-      <p>{{ amountOfProjects }}</p>
+      <p class="text-[14px] apple-font">{{ amountOfProjects }}</p>
     </div>
-    <DropZone :id="id">
-      <DragCon class="relative top-0 left-0" v-for="event in events" :key="event.name" :id="event.id">
-        <SavedEvent @drag-switch="dragSwitch()" :id="event.id"/>
+    <DropZone class="space-y-1 mb-2" :id="id">
+      <DragCon
+        class="relative shadow-xl top-0 left-0"
+        v-for="event in events"
+        :key="event.name"
+        :id="event.id"
+      >
+        <SavedEvent @drag-switch="dragSwitch()" :id="event.id" />
       </DragCon>
     </DropZone>
   </div>
@@ -31,9 +36,9 @@ const props = defineProps({
   amountOfProjects: Number
 })
 
-const amountOfProjects = computed(() => SavedEventManager.all().filter(
-      (project) => project.status === props.id
-    ).length);
+const amountOfProjects = computed(
+  () => SavedEventManager.all().filter((project) => project.status === props.id).length
+)
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)

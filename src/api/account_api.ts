@@ -17,19 +17,30 @@ export default class AccountApi {
     }
   }
 
-  public static async allAccounts(savedEventId: number): Promise<BaseApiResponse<AccountResponse[]>> {
-    return await ApiFactory.getInstance(this.getOptions()).get(`?savedEventId=${savedEventId}`);
+  public static async allAccounts(
+    savedEventId: number
+  ): Promise<BaseApiResponse<AccountResponse[]>> {
+    return await ApiFactory.getInstance(this.getOptions()).get(`?savedEventId=${savedEventId}`)
   }
 
-  public static async createAccount(savedEventId: number, accountRequest: AccountRequest): Promise<BaseApiResponse<AccountResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).post(`?savedEventId=${savedEventId}`, accountRequest)
+  public static async createAccount(
+    savedEventId: number,
+    accountRequest: AccountRequest
+  ): Promise<BaseApiResponse<AccountResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).post(
+      `?savedEventId=${savedEventId}`,
+      accountRequest
+    )
   }
 
-  public static async updateAccount(id: number, accountRequest: AccountRequest): Promise<BaseApiResponse<AccountResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, accountRequest);
+  public static async updateAccount(
+    id: number,
+    accountRequest: AccountRequest
+  ): Promise<BaseApiResponse<AccountResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, accountRequest)
   }
 
   public static async deleteAccount(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
   }
 }

@@ -16,7 +16,7 @@ export default class SavedEvent extends Model {
       accounts: this.attr(Array<Account>),
       orderNumber: this.number(0),
       startDate: this.string(''),
-      endDate: this.string(''),
+      endDate: this.string('')
     }
   }
 

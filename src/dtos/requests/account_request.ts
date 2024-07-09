@@ -1,5 +1,5 @@
 export default interface AccountRequest {
-    name: string;
-    outcome: number;
-    income: number;
+  name: string
+  outcome: number
+  income: number
 }

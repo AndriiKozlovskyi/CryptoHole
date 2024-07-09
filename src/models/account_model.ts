@@ -8,7 +8,7 @@ export default class Account extends Model {
       id: this.number(null),
       name: this.string(''),
       outcome: this.number(0),
-      income: this.number(0),
+      income: this.number(0)
     }
   }
 

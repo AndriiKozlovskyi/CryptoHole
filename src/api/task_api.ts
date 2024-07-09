@@ -20,18 +20,24 @@ export default class TaskApi {
   }
 
   public static async allTasks(eventId: number): Promise<BaseApiResponse<TaskResponse[]>> {
-    return await ApiFactory.getInstance(this.getOptions()).get(`?eventId=${eventId}`);
+    return await ApiFactory.getInstance(this.getOptions()).get(`?eventId=${eventId}`)
   }
 
-  public static async createTask(eventId: number, taskRequest: TaskRequest): Promise<BaseApiResponse<TaskResponse>> {
+  public static async createTask(
+    eventId: number,
+    taskRequest: TaskRequest
+  ): Promise<BaseApiResponse<TaskResponse>> {
     return await ApiFactory.getInstance(this.getOptions()).post(`?eventId=${eventId}`, taskRequest)
   }
 
-  public static async updateTask(id: number, taskRequest: TaskRequest): Promise<BaseApiResponse<TaskResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, taskRequest);
+  public static async updateTask(
+    id: number,
+    taskRequest: TaskRequest
+  ): Promise<BaseApiResponse<TaskResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, taskRequest)
   }
 
   public static async deleteTask(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
   }
 }

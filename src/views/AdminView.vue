@@ -6,7 +6,7 @@
         <p class="font-semibold text-2xl self-start text-white">All Projects</p>
         <div class="flex flex-row space-x-4">
           <AdminProjectContainer />
-          </div>
+        </div>
       </div>
     </div>
   </div>

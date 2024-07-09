@@ -22,19 +22,27 @@ export default class CategoryApi {
     return await ApiFactory.getInstance(this.getOptions()).get('')
   }
 
-  public static async updateProject(id: number, project: ProjectRequest): Promise<BaseApiResponse<ProjectResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, project);
+  public static async updateProject(
+    id: number,
+    project: ProjectRequest
+  ): Promise<BaseApiResponse<ProjectResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, project)
   }
 
-  public static async createProject(project: ProjectRequest): Promise<BaseApiResponse<ProjectResponse>> {
+  public static async createProject(
+    project: ProjectRequest
+  ): Promise<BaseApiResponse<ProjectResponse>> {
     return await ApiFactory.getInstance(this.getOptions()).post('', project)
   }
 
   public static async saveProject(id: number): Promise<BaseApiResponse<SavedProjectResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/save`, AuthManager.getToken());
+    return await ApiFactory.getInstance(this.getOptions()).post(
+      `/${id}/save`,
+      AuthManager.getToken()
+    )
   }
 
   public static async deleteProject(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
   }
 }

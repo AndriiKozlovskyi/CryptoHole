@@ -6,7 +6,7 @@ export default class User extends Model {
   static fields() {
     return {
       id: this.number(null),
-      username: this.string(''),
+      username: this.string('')
     }
   }
 

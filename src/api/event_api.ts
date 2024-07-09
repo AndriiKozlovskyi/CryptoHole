@@ -23,23 +23,34 @@ export default class EventApi {
     return await ApiFactory.getInstance(this.getOptions()).get('')
   }
 
-  public static async createEvent(eventRequest: EventRequest): Promise<BaseApiResponse<EventResponse>> {
+  public static async createEvent(
+    eventRequest: EventRequest
+  ): Promise<BaseApiResponse<EventResponse>> {
     return await ApiFactory.getInstance(this.getOptions()).post('', eventRequest)
   }
 
   public static async participateEvent(id: number): Promise<BaseApiResponse<SavedEventResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/participate`, AuthManager.getToken());
+    return await ApiFactory.getInstance(this.getOptions()).post(
+      `/${id}/participate`,
+      AuthManager.getToken()
+    )
   }
 
   public static async unparticipateEvent(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/unparticipate`, AuthManager.getToken());
+    return await ApiFactory.getInstance(this.getOptions()).post(
+      `/${id}/unparticipate`,
+      AuthManager.getToken()
+    )
   }
 
-  public static async updateEvent(id: number, eventRequest: EventRequest): Promise<BaseApiResponse<ProjectResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, eventRequest);
+  public static async updateEvent(
+    id: number,
+    eventRequest: EventRequest
+  ): Promise<BaseApiResponse<ProjectResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, eventRequest)
   }
 
   public static async deleteEvent(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`);
+    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
   }
 }

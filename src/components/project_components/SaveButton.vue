@@ -4,7 +4,7 @@
       v-if="condition"
       class="pi pi-bookmark-fill text-white"
       style="font-size: 1.5rem"
-       @click.stop="$emit('unsave')"
+      @click.stop="$emit('unsave')"
     ></i>
     <i
       v-if="!condition"
@@ -27,7 +27,6 @@ const toggleSave = () => {
     emit('unsave')
   } else {
     emit('save')
-}
+  }
 }
 </script>
-
