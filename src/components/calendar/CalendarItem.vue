@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-import { computed} from 'vue'
-const emits = defineEmits(['onClick', 'changeMonth']);
+import { computed } from 'vue'
+const emits = defineEmits(['onClick', 'changeMonth'])
 const props = defineProps({
   day: {
     type: [Number, String],
@@ -39,7 +39,7 @@ const props = defineProps({
   selected: {
     type: Boolean,
     default: false,
-    required: true,
+    required: true
   },
   endEventsCount: {
     type: Number,
@@ -47,14 +47,11 @@ const props = defineProps({
   }
 })
 
-
-
 const itemClicked = () => {
-  if(props.isOtherMonth) {
-    emits('changeMonth');
+  if (props.isOtherMonth) {
+    emits('changeMonth')
   }
-  emits('onClick');
-
+  emits('onClick')
 }
 
 const itemClass = computed(() => {
@@ -62,8 +59,7 @@ const itemClass = computed(() => {
     'flex flex-col items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-[#4619bd]'
   if (props.isCurrentDay) {
     // baseClass += ' bg-[#6b6c72] text-white'
-        baseClass += ' bg-white text-black'
-
+    baseClass += ' bg-white text-black'
   } else if (props.selected) {
     baseClass += ' text-white hover:bg-[#4619bd] bg-[#4c12b2] inner-shadow'
   } else if (props.isOtherMonth) {
@@ -76,6 +72,7 @@ const itemClass = computed(() => {
 </script>
 <style>
 .inner-shadow-calendar {
-    /* box-shadow: rgb(16, 15, 24) 0px 0px 10px 5px inset; */
-    box-shadow: rgb(139, 134, 134) 0px 0px 10px 5px inset;
-}</style>
+  /* box-shadow: rgb(16, 15, 24) 0px 0px 10px 5px inset; */
+  box-shadow: rgb(139, 134, 134) 0px 0px 10px 5px inset;
+}
+</style>

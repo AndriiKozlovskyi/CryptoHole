@@ -26,7 +26,7 @@ export default class SavedEventManager {
     })
   }
 
-  static getEventsByEndDate(endDate: Date): SavedEvent[]  {
+  static getEventsByEndDate(endDate: Date): SavedEvent[] {
     return this.repository.all().filter((event) => {
       const _endDate: Date = new Date(String(event.endDate))
 

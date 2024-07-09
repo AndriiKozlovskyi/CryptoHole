@@ -29,7 +29,10 @@
             :endEventsCount="day.endEventsCount"
             :selected="selected(day)"
             @changeMonth="defineMonthChangeDirection(day.number)"
-            @onClick="$emit('selectDate', selectedDate, day.number); selectedDayNumber = day.number"
+            @onClick="
+              $emit('selectDate', selectedDate, day.number)
+              selectedDayNumber = day.number
+            "
           />
         </div>
       </div>
@@ -61,7 +64,7 @@ const currentMonthName = computed(() =>
   currentDate.value.toLocaleString('default', { month: 'long' })
 )
 
-const selectedDayNumber = ref();
+const selectedDayNumber = ref()
 
 const selected = (day) => {
   return day.number == selectedDayNumber.value && day.isOtherMonth == false
@@ -83,11 +86,10 @@ const changeMonth = (delta) => {
 }
 
 const defineMonthChangeDirection = (day: number) => {
-  if(day > 15) {
-    changeMonth(-1);
-  }
-  else {
-    changeMonth(1);
+  if (day > 15) {
+    changeMonth(-1)
+  } else {
+    changeMonth(1)
   }
 }
 
