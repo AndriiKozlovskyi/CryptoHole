@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center fixed">
     <div class="flex items-center">
       <button
         @click="changeMonth(-1)"
@@ -27,7 +27,9 @@
             :isOtherMonth="day.isOtherMonth"
             :startEventsCount="day.startEventsCount"
             :endEventsCount="day.endEventsCount"
-            @click="$emit('selectDate', selectedDate, day.number)"
+            :selected="selected(day)"
+            @changeMonth="defineMonthChangeDirection(day.number)"
+            @onClick="$emit('selectDate', selectedDate, day.number); selectedDayNumber = day.number"
           />
         </div>
       </div>
@@ -46,7 +48,7 @@ import { ref, computed } from 'vue'
 import CalendarItem from './CalendarItem.vue'
 import SavedEventManager from '@/manager/saved_event_manager.ts'
 
-defineEmits(['selectDate'])
+const emit = defineEmits(['selectDate'])
 
 const currentDate = ref(new Date())
 const selectedDate = ref(new Date())
@@ -59,9 +61,17 @@ const currentMonthName = computed(() =>
   currentDate.value.toLocaleString('default', { month: 'long' })
 )
 
+const selectedDayNumber = ref();
+
+const selected = (day) => {
+  console.log(day.isOtherMonth == false)
+  return day.number == selectedDayNumber.value && day.isOtherMonth == false
+}
+
 const changeMonth = (delta) => {
   const newDate = new Date(currentYear.value, currentMonth.value + delta, 1)
   currentDate.value = newDate
+  selectedDayNumber.value = null
 
   if (
     new Date().getFullYear() === newDate.getFullYear() &&
@@ -70,6 +80,15 @@ const changeMonth = (delta) => {
     selectedDate.value = new Date()
   } else {
     selectedDate.value = newDate
+  }
+}
+
+const defineMonthChangeDirection = (day: number) => {
+  if(day > 15) {
+    changeMonth(-1);
+  }
+  else {
+    changeMonth(1);
   }
 }
 
@@ -103,7 +122,6 @@ const days = computed(() => {
   // Add days from the current month
   for (let i = 1; i <= daysInMonth; i++) {
     const date = new Date(currentYear.value, currentMonth.value, i)
-    console.log(i + ' ' + new Date().getDate())
     const isCurrentDay =
       i == selectedDate.value.getDate() &&
       new Date().getMonth() == currentMonth.value &&
@@ -118,7 +136,7 @@ const days = computed(() => {
   }
 
   // Add days from the next month
-  for (let i = 0; daysArray.length < 42; i++) {
+  for (let i = 1; daysArray.length < 42; i++) {
     const date = new Date(currentYear.value, currentMonth.value + 1, i)
     daysArray.push({
       number: i,

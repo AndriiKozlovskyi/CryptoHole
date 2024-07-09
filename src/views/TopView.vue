@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-rows-2 grid-flow-col justify-between h-[12rem]">
+  <div class="fixed grid grid-rows-2 grid-flow-col w-full justify-between py-3 h-[12rem]">
     <div class="col-span-2 text-white text-[30px] font-semibold">
       {{ capitalizedName }}
     </div>

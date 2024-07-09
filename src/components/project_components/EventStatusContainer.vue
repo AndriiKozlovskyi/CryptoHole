@@ -4,7 +4,7 @@
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
   >
-    <div class="flex flex-row items-center text-secondary-text-color justify-between p-3">
+    <div class="sticky flex flex-row items-center text-secondary-text-color justify-between p-3">
       <p class="text-[14px] apple-font">{{ name }}</p>
       <p class="text-[14px] apple-font">{{ amountOfProjects }}</p>
     </div>

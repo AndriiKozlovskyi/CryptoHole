@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-center flex-row bg-primary-item-color rounded-full">
+  <div class="flex w-full items-center flex-row bg-primary-item-color rounded-lg">
     <input
       :placeholder="placeholder"
       :type="type"

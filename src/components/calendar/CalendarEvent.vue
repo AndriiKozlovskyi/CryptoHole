@@ -1,10 +1,12 @@
 <template>
-  <div class="flex flex-col p-3 w-full shadow-xl justify-between rounded-lg bg-hover-primary-item-color h-[8rem]">
-    <div class="flex flex-row rounded-md ">
-      <p class="text-white text-[14px] apple-font">{{ name }}</p>
-      <span v-if="tip == 'ends'" class=" h-1 w-1 rounded-full bg-[#8b3434]"></span>
-      <span v-if="tip == 'starts'" class=" h-1 w-1 rounded-full bg-[#436b3c]"></span>
-
+  <div class="flex flex-col p-3 w-full shadow-xl justify-between rounded-lg bg-hover-primary-item-color h-[5rem]">
+    <div class="flex flex-row rounded-md justify-between">
+      <div class="flex flex-row">
+        <p class="text-white text-[14px] apple-font">{{ event?.name }}</p>
+        <span v-if="tip == 'ends'" class=" h-1 w-1 rounded-full bg-[#8b3434]"></span>
+        <span v-if="tip == 'starts'" class=" h-1 w-1 rounded-full bg-[#436b3c]"></span>
+      </div>
+      <i class="pi pi-external-link"/>
     </div>
     <div class="flex flex-row items-center space-x-3">
       <i v-if="tip == 'ends'" class="pi pi-clock"/>
@@ -15,9 +17,13 @@
   </div>
 </template>
 <script setup lang="ts">
+import SavedEvent from '@/models/saved_event_model';
+import {PropType} from "vue";
 defineProps({
-  name: String,
+  event: Object as PropType<SavedEvent>,
   tip: String,
   date: String,
 })
+
+
 </script>

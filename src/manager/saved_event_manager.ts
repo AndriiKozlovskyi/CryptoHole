@@ -14,7 +14,7 @@ export default class SavedEventManager {
     return useRepo(SavedEvent, store)
   }
 
-  static getEventsByStartDate(startDate: Date) {
+  static getEventsByStartDate(startDate: Date): SavedEvent[] {
     return this.repository.all().filter((event) => {
       const _startDate: Date = new Date(String(event.startDate))
 
@@ -26,7 +26,7 @@ export default class SavedEventManager {
     })
   }
 
-  static getEventsByEndDate(endDate: Date) {
+  static getEventsByEndDate(endDate: Date): SavedEvent[]  {
     return this.repository.all().filter((event) => {
       const _endDate: Date = new Date(String(event.endDate))
 

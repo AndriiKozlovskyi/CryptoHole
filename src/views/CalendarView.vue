@@ -1,14 +1,14 @@
 <template>
-  <div class="flex flex-row w-full justify-between h-full mb-3">
-    <div class="flex flex-row mb-12">
+  <div class="flex flex-row w-full justify-between">
+    <div class="realtive flex flex-col">
       <Calendar @select-date="selectDate" />
+      <CreationCalendarEvent class="mt-[29rem]" :date="selectedDate?.date"/>
+
     </div>
-    <div class="flex flex-row space-x-2">
+    <div class="relative flex flex-row space-x-2 h-[100%] mb-3 overscroll-y-auto">
       <CalendarEventContainer :date="previousDate"/>
-
       <CalendarEventContainer :date="selectedDate ?? currentDate"/>
-
-     <CalendarEventContainer :date="nextDate"/>
+      <CalendarEventContainer :date="nextDate"/>
     </div>
   </div>
 </template>
@@ -17,6 +17,7 @@ import Calendar from '@/components/calendar/Calendar.vue'
 import CalendarEventContainer from '@/components/calendar/CalendarEventContainer.vue'
 import DateUtils from '@/utils/date_utils'
 import { computed, onBeforeMount, ref } from 'vue'
+import CreationCalendarEvent from "@/components/calendar/CreationCalendarEvent.vue";
 
 const currentDate = ref()
 const previousDate = ref<{ date: Date; weekDay: string }>()
