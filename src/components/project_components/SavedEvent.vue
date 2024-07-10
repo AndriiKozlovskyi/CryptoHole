@@ -1,29 +1,29 @@
 <template>
   <div
-    class="flex bg-hover-primary-item-color h-[5rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
+    class="flex bg-hover-primary-item-color h-[5.5rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
     v-on-click-outside="stopEditing"
     @keyup.enter="updateProject"
     @click="show"
   >
-    <div class="flex flex-row space-x-2 px-3">
-      <div v-if="!isEditing" class="apple-font text-white mt-1 text-[16px]">
+    <div class="flex flex-row space-x-2">
+      <div v-if="!isEditing" class="apple-font text-white px-3 py-2 text-[16px]">
         {{ event?.name }}
       </div>
       <i
         v-if="hovered && !isEditing"
         class="pi pi-pencil mt-2 text-white"
         @mousedown.stop
-        @click="isEditing = true"
+        @click.stop="isEditing = true"
       />
       <MyInput
         v-if="isEditing"
         v-model="name"
         type="text"
-        @focus.stop
         @mousedown.stop
-        class="w-[9rem] apple-font mt-1 text-white text-[14px]"
+        @click.stop
+        class="w-[9rem] apple-font text-white text-[14px]"
       />
     </div>
 

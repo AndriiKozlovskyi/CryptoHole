@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center text-secondary-text-color space-y-2 px-2 rounded-md bg-primary-item-color w-[16.25rem]"
+    class="flex flex-col items-center text-secondary-text-color space-y-2 px-2 py-2 rounded-md bg-primary-item-color w-[16.25rem]"
   >
     <div
       class="sticky top-[12rem] flex flex-row w-full mt-2 text-secondary-text-color px-2 py-2 bg-primary-item-color justify-between"

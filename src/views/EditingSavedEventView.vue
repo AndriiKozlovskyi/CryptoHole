@@ -1,33 +1,96 @@
 <template>
     <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center z-[1002]">
-        <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md">
-            <div class="absolute right-1 top-1" @click="$emit('close')">
-                <i class="text-secondary-text-color cursor-pointer pi pi-times"/>
-            </div>
-            <div class="flex flex-row justify-center p-3 items-center">
-                <p class="text-white text-[20px] apple-font">{{event?.name}}</p>
-            </div>
-            <div class="flex flex-col justify-center space-y-2 p-3 items-start">
-                <div class="flex w-full flex-col space-y-2" v-for="account in event.accounts" :key="account.id">
-                    <AccountForm  :account="account"/>
+        <div class="fixed w-3/4 flex flex-col bg-primary-item-color rounded-md h-[35rem]">
+            <div class="flex flex-row w-full p-3 items-center rounded-t-md bg-hover-primary-item-color">
+                <div class="flex flex-row w-1/3 justify-start">
+                    <div v-if="event.event === null" class="bg-blue-600 rounded-lg px-3 bg-opacity-80">                    
+                        <p class="apple-font text-white">Custom</p>
+                    </div>
+                    <div v-if="event.event !== null" class="flex flex-row cursor-pointer items-center space-x-3 bg-green-600 hover:bg-green-700 rounded-lg px-3 bg-opacity-80" @click=goToDescription>                    
+                        <p class="apple-font text-white">Go to description</p>
+                        <i class="text-white pi pi-external-link"/>
+                    </div>
                 </div>
-                <AccountCreationForm :id="id"/>
+                <div class="flex flex-row w-1/3 justify-center" @click="$emit('close')">
+                    <p class="text-white text-[25px] apple-font">{{ event?.name }}</p>
+                </div>
+                <div class="flex flex-row w-1/3 justify-end" @click="$emit('close')">
+                    <i class="text-secondary-text-color cursor-pointer pi pi-times" style="font-size: 1.2rem;" @click="$emit('close')"/>
+                </div>
+
+            </div>
+            <div class="flex flex-row justify-between items-center w-1/2">
+                <Select :status="event.status" @update-status="updateStatus" class="ml-10 py-5"/>
+                <div class="flex flex-row cursor-pointer bg-[#35343a] bg-opacity-70 space-x-3 rounded-lg px-6 mr-10 h-[28px] items-center hover:bg-hover-primary-item-color justify-start" @click="showCreationForm = true">
+                    <i class="text-white pi pi-plus"/>
+                    <p class="text-white apple-font">add account</p>
+                </div>
+            </div>
+            <div class="flex flex-row w-full h-[20rem]">
+                <div class="flex flex-col overflow-y-auto space-y-2 px-10 w-1/2">
+                    <table class="w-full ">
+                        <thead>
+                            <tr>
+                                <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'paid' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
+                                <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]`">Deposit</th>
+                                <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'paid'">Withdraw</th>
+                                <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'paid'">Income</th>
+                            </tr>
+                        </thead>
+                        <tbody v-on-click-outside="clickOutside">
+                            <AccountCreationForm v-if="showCreationForm"  :id="id"/>
+                            <AccountForm v-for="account in event.accounts" :key="account.id" :account="account" :event="event"/>
+                        </tbody>
+                    </table>
+                </div>
+                <Note class="flex flex-col px-10 items-start w-1/2"/>
+            </div>
+            <div class="w-full m-10 flex flex-row justify-between">
+                <div class="flex flex-row space-x-3 items-center">
+                    <i class="text-white pi pi-clock"/>
+                    <p class="text-white apple-font">{{ new Date(String(event?.endDate)).toLocaleDateString() }} - {{ new Date(String(event?.endDate)).toLocaleDateString()  }}</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center bg-hover-primary-item-color opacity-50 z-[1001]">
+    <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center bg-black opacity-50 z-[1001]">
     </div>
 </template>
+
 <script setup lang="ts">
 import SavedEventManager from '@/manager/saved_event_manager';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import AccountForm from "@/components/project_components/AccountForm.vue";
 import AccountCreationForm from '@/components/project_components/AccountCreationForm.vue';
+import { vOnClickOutside } from '@vueuse/components'
+import Note from "@/components/project_components/Note.vue";
+import Select from "@/components/basic_components/Select.vue";
+import { useRouter } from 'vue-router'
+import EventManager from '@/manager/event_manager';
+
+const router = useRouter()
+
 const props = defineProps({
   id: Number
 })
 
 defineEmits(['close']);
 
-const event = computed(() => SavedEventManager.getById(props.id))
+const showCreationForm = ref(true);
+
+const clickOutside = () => {
+    showCreationForm.value = false;
+}
+
+const event = computed(() => SavedEventManager.getById(props.id));
+const updateStatus = (status: string) => {
+  event.value.status = status;
+  SavedEventManager.update(props.id, event.value)
+}
+
+const goToDescription = () => {
+    const parentEvent = EventManager.getById(event.value.event);
+    router.push({ name: 'project_description', params: { name: parentEvent.name } })
+}
+
 </script>

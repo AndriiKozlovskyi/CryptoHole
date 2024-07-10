@@ -5,6 +5,7 @@ import Account from '@/models/account_model'
 import AccountApi from '@/api/account_api'
 import AccountResponse from '@/dtos/responses/account_response'
 import AccountRequest from '@/dtos/requests/account_request'
+import SavedEventManager from './saved_event_manager'
 
 export default class AccountManager {
   protected static get repository() {
@@ -22,6 +23,7 @@ export default class AccountManager {
   static async update(id: number, object: any) {
     const rest = _.omit(object, ['id'])
     const account = await AccountApi.updateAccount(id, rest)
+    await SavedEventManager.loadAll();
     this.repository.where('id', id).update(account)
   }
 
@@ -36,6 +38,7 @@ export default class AccountManager {
     const accountResponse = await AccountApi.createAccount(savedEventId, account)
     const accountResult = this.getFormattedAccount(accountResponse.data)
 
+    await SavedEventManager.loadAll();
     this.repository.save(accountResult)
   }
 

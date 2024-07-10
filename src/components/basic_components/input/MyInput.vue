@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-center flex-row rounded-lg">
+  <div class="flex w-full items-center flex-row">
     <input
       :placeholder="placeholder"
       :type="type"
@@ -8,8 +8,8 @@
       :value="modelValue"
       ref="input"
       class="bg-hover-primary-item-color text-[16px] apple-font rounded-lg w-full text-white px-3 py-2"
-      @focusout="$emit('focusout')"
-      @focusin="$emit('focusin')"
+      @focusout.self="$emit('focusout')"
+      @focusin.self="$emit('focusin')"
     />
     <slot></slot>
   </div>

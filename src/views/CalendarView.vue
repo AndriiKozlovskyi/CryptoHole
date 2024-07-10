@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row w-full justify-between">
     <div class="realtive flex flex-col">
-      <Calendar @select-date="selectDate" />
+      <Calendar @select-date="selectDate"/>
       <CreationCalendarEvent v-show="selected" class="mt-[29rem]" :date="selectedDate?.date" />
     </div>
     <div class="relative flex flex-row space-x-2 h-[100%] overscroll-y-auto">
@@ -48,7 +48,7 @@ const moveBackward = () => {
   nextDate.value = getPreviousDate(nextDate.value?.date);
 }
 
-const selectDate = computed(() => (currentDate: Date, day: number) => {
+const selectDate = (currentDate: Date, day: number) => {
   selected.value = true;
   const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day)
 
@@ -56,7 +56,7 @@ const selectDate = computed(() => (currentDate: Date, day: number) => {
   nextDate.value = getNextDate(date);
 
   selectedDate.value = { date: date, weekDay: DateUtils.converNumberToWeekDay(date.getDay()) }
-})
+};
 
 const getPreviousDate = (date: Date) => {
   const previousDate = new Date(date.valueOf() - 1000 * 60 * 60 * 24)
