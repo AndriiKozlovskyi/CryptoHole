@@ -29,10 +29,7 @@
             :endEventsCount="day.endEventsCount"
             :selected="selected(day)"
             @changeMonth="defineMonthChangeDirection(day.number)"
-            @onClick="
-              $emit('selectDate', selectedDate, day.number)
-              selectedDayNumber = day.number
-            "
+            @onClick="$emit('selectDate', selectedDate, day.number); selectedDayNumber = day.number"
           />
         </div>
       </div>

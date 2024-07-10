@@ -6,7 +6,7 @@ import AccountResponse from '@/dtos/responses/account_response'
 import AccountRequest from '@/dtos/requests/account_request'
 
 export default class AccountApi {
-  static baseUrl = 'http://localhost:8080/api/v1/account'
+  static baseUrl = 'http://localhost:8080/api/v1/'
 
   static getOptions(): ApiOptions {
     return {
@@ -20,15 +20,15 @@ export default class AccountApi {
   public static async allAccounts(
     savedEventId: number
   ): Promise<BaseApiResponse<AccountResponse[]>> {
-    return await ApiFactory.getInstance(this.getOptions()).get(`?savedEventId=${savedEventId}`)
+    return await ApiFactory.getInstance(this.getOptions()).get(`account?savedEventId=${savedEventId}`)
   }
 
   public static async createAccount(
     savedEventId: number,
     accountRequest: AccountRequest
   ): Promise<BaseApiResponse<AccountResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).post(
-      `?savedEventId=${savedEventId}`,
+
+    return await ApiFactory.getInstance(this.getOptions()).post(`account?savedEventId=${savedEventId}`,
       accountRequest
     )
   }
@@ -37,10 +37,10 @@ export default class AccountApi {
     id: number,
     accountRequest: AccountRequest
   ): Promise<BaseApiResponse<AccountResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, accountRequest)
+    return await ApiFactory.getInstance(this.getOptions()).put(`account/${id}`, accountRequest)
   }
 
   public static async deleteAccount(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).delete(`/${id}`)
+    return await ApiFactory.getInstance(this.getOptions()).delete(`account/${id}`)
   }
 }

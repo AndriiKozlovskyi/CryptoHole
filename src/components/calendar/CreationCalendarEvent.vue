@@ -1,26 +1,27 @@
 <template>
   <div
-    class="fixed flex flex-col p-2 shadow-xl space-y-2 w-[24rem] justify-between rounded-lg bg-hover-primary-item-color h-[16rem]"
+    class="fixed flex flex-col px-3 py-2 shadow-xl space-y-3 w-[24rem] rounded-lg bg-primary-item-color h-[16rem]"
     @keypress.enter="save"
   >
     <div class="flex flex-row items-center justify-center">
-      <p class="text-white">Create Event</p>
+      <p class="text-white apple-font">Create Event</p>
     </div>
-    <div class="flex flex-row rounded-md">
-      <MyInput v-model="name" placeholder="event name" />
-    </div>
+    <MyInput v-model="name" placeholder="event name" />
     <div class="flex flex-row justify-between text-secondary-text-color">
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col space-y-1 items-center">
         <MyButton
+          v-if="startDate == null"
           :class="{ [`inner-shadow`]: startSelecting }"
           text="select start date"
-          @onClick="
-            startSelecting = !startSelecting
-            endSelecting = false
+          @onClick="startSelecting = !startSelecting; endSelecting = false
           "
         />
-        <p>{{ startDate?.toLocaleDateString() }}</p>
-        <div class="flex flex-row items-center">
+        <div 
+        class="flex bg-hover-primary-item-color rounded-lg text-white cursor-pointer px-2"
+        :class="{ [`inner-shadow`]: startSelecting }"
+        @click="startSelecting = true; endSelecting = false;"
+        >{{ startDate?.toLocaleDateString() }}</div>
+        <div class="flex flex-row items-center space-y-2">
           <TimePicker
             :hour="startHour"
             :minute="startMinute"
@@ -30,18 +31,20 @@
         </div>
       </div>
 
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col space-y-1 items-center">
         <MyButton
+          v-if="endDate == null"
           :class="{ [`inner-shadow`]: endSelecting }"
           text="select end date"
-          @onClick="
-            endSelecting = !endSelecting
-            startSelecting = false
-          "
+          @onClick="endSelecting = !endSelecting; startSelecting = false"
         />
-        <p>{{ endDate?.toLocaleDateString() }}</p>
+        <div
+            :class="{ [`inner-shadow`]: endSelecting }"
+            class="flex bg-hover-primary-item-color rounded-lg text-white cursor-pointer px-2"
+            @click="startSelecting = false; endSelecting = true;"
+        >{{ endDate?.toLocaleDateString() }}</div>
 
-        <div class="flex flex-row items-center">
+        <div class="flex flex-row items-center space-y-2">
           <TimePicker
             :hour="endHour"
             :minute="endMinute"
@@ -52,7 +55,7 @@
       </div>
     </div>
     <div class="flex flex-row justify-between">
-      <MyButton text="Disacrd" class="bg-primary-item-color" @onClick="emptyForm" />
+      <MyButton text="Discard" class="bg-primary-item-color" @onClick="emptyForm" />
       <MyButton text="Save" class="bg-primary-item-color" @onClick="save" />
     </div>
   </div>
@@ -74,8 +77,8 @@ const startMinute = ref(0)
 const endHour = ref(12)
 const endMinute = ref(0)
 
-const startDate = ref()
-const endDate = ref()
+const startDate = ref(props.date)
+const endDate = ref(null)
 
 const startSelecting = ref(false)
 const endSelecting = ref(false)
@@ -83,13 +86,12 @@ const endSelecting = ref(false)
 watch(
   () => props.date,
   (newDate) => {
-    if (startSelecting.value) {
+    if (!endSelecting.value) {
       startDate.value = newDate
     }
     if (endSelecting.value) {
       endDate.value = newDate
     }
-    console.log('Ok')
   }
 )
 
@@ -112,6 +114,9 @@ const updateEndMinute = (newMinute: number) => {
 const name = ref()
 
 function formatDate(date) {
+    if(date === null) {
+        return "";
+    }
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
@@ -133,21 +138,22 @@ function formatDate(date) {
 const save = () => {
   console.log(
     new Date(
-      startDate.value.getFullYear(),
-      startDate.value.getMonth(),
-      startDate.value.getDate(),
+      startDate.value?.getFullYear(),
+      startDate.value?.getMonth(),
+      startDate.value?.getDate(),
       startHour.value,
       startMinute.value,
       0
     )
   )
+
   SavedEventManager.createSavedEvent({
     name: name.value,
     startDate: formatDate(
       new Date(
-        startDate.value.getFullYear(),
-        startDate.value.getMonth(),
-        startDate.value.getDate(),
+        startDate.value?.getFullYear(),
+        startDate.value?.getMonth(),
+        startDate.value?.getDate(),
         startHour.value,
         startMinute.value,
         0
@@ -157,9 +163,9 @@ const save = () => {
     orderNumber: 1,
     endDate: formatDate(
       new Date(
-        endDate.value.getFullYear(),
-        endDate.value.getMonth(),
-        endDate.value.getDate(),
+        endDate.value?.getFullYear(),
+        endDate.value?.getMonth(),
+        endDate.value?.getDate(),
         endHour.value,
         endMinute.value,
         0

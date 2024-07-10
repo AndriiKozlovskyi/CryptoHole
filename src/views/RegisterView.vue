@@ -14,10 +14,7 @@
           v-model="credentials.username"
           placeholder="Username"
           @focusout="usernameValidate"
-          @focusin="
-            usernameExists = false
-            usernameEmpty = false
-          "
+          @focusin="usernameExists = false; usernameEmpty = false"
         />
       </div>
       <div class="flex flex-col h-[2.5rem] justify-end">
@@ -31,10 +28,7 @@
           v-model="credentials.email"
           placeholder="Email"
           @focusout="emailValidate"
-          @focusin="
-            emailExists = false
-            emailEmpty = false
-          "
+          @focusin="emailExists = false; emailEmpty = false;"
         >
           <i class="pi pi-exclamation-circle text-red-600 px-3" v-if="!emailValid" />
         </MyInput>
@@ -49,10 +43,7 @@
         <PasswordInput
           v-model="credentials.password"
           placeholder="Password"
-          @focusin="
-            passwordEmpty = false
-            passwordValid = true
-          "
+          @focusin="passwordEmpty = false; passwordValid = true"
         />
       </div>
       <div class="flex flex-col h-[2.5rem] justify-end">
@@ -65,10 +56,7 @@
         <PasswordInput
           placeholder="Repeat password"
           v-model="credentials.repeatedPassword"
-          @focusin="
-            repeatedPasswordEmpty = false
-            passwordsMatch = true
-          "
+          @focusin="repeatedPasswordEmpty = false; passwordsMatch = true"
         />
       </div>
       <MyButton class="w-1/3" text="Register" @onClick="tryRegister" />

@@ -56,7 +56,7 @@ const itemClicked = () => {
 
 const itemClass = computed(() => {
   let baseClass =
-    'flex flex-col items-center justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-[#4619bd]'
+    'flex flex-col items-center cursor-pointer justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-[#4619bd]'
   if (props.isCurrentDay) {
     // baseClass += ' bg-[#6b6c72] text-white'
     baseClass += ' bg-white text-black'

@@ -8,23 +8,21 @@
       <p class="text-[14px] apple-font">{{ name }}</p>
       <p class="text-[14px] apple-font">{{ amountOfProjects }}</p>
     </div>
-    <DropZone class="space-y-1 mb-2" :id="id">
-      <DragCon
-        class="relative shadow-xl top-0 left-0"
+    <div class="space-y-2 mb-2 w-[16.25rem] px-3">
+      <div
+        class="relative top-0 left-0"
         v-for="event in events"
         :key="event.name"
         :id="event.id"
       >
-        <SavedEvent @drag-switch="dragSwitch()" :id="event.id" />
-      </DragCon>
-    </DropZone>
+        <SavedEvent :id="event.id" />
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
-import DropZone from '@/components/draggable_containers/DropZone.vue'
 import SavedEvent from '@/components/project_components/SavedEvent.vue'
-import DragCon from '@/components/draggable_containers/DraggableContainer.vue'
-import { ref, provide, computed } from 'vue'
+import { ref, computed } from 'vue'
 import SavedEventManager from '@/manager/saved_event_manager'
 
 const hovered = ref(false)
@@ -39,11 +37,4 @@ const props = defineProps({
 const amountOfProjects = computed(
   () => SavedEventManager.all().filter((project) => project.status === props.id).length
 )
-
-const isDragAvailable = ref(true)
-provide('dragAvailable', isDragAvailable)
-
-const dragSwitch = () => {
-  isDragAvailable.value = !isDragAvailable.value
-}
 </script>

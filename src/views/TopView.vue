@@ -3,7 +3,7 @@
     <div class="col-span-2 text-white text-[30px] font-semibold">
       {{ capitalizedName }}
     </div>
-    <div class="col-span-2">
+    <div class="">
       <TabMenu />
     </div>
     <div class="row-span-2 text-white">

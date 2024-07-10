@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center space-x-4 p-4">
+  <div class="flex items-center justify-center space-x-2">
     <div class="flex flex-col items-center">
       <button @click="incrementHour" class="text-[14px] font-bold">
         <i class="pi pi-angle-up" />
