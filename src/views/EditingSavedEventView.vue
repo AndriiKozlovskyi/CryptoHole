@@ -3,23 +3,22 @@
         <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
             <SavedEventHeader :event="event" @close="$emit('close')"/>
             <div class="flex flex-row justify-between items-center px-4 ">
-                <!-- <Select :status="event.status" @update-status="updateStatus" class=""/> -->
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.event === null">
+                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'paid'">
                     <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
                 </div>
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.event != null">
+                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'paid'">
                     <p class="text-white apple-font">Event Inome: {{ calculateIncomeSum() }} $</p>
                 </div>
             </div>
             <div class="flex flex-row w-full py-10 px-4">
                 <AccountContainer :event="event"/>
             </div>
-            <!-- <div class="w-full m-10 flex flex-row justify-between">
+            <div class="w-full m-10 flex flex-row justify-between">
                 <div class="flex flex-row space-x-3 items-center">
                     <i class="text-white pi pi-clock"/>
                     <p class="text-white apple-font">{{ new Date(String(event?.endDate)).toLocaleDateString() }} - {{ new Date(String(event?.endDate)).toLocaleDateString()  }}</p>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center bg-black opacity-50 z-[1001]">
@@ -28,9 +27,7 @@
 
 <script setup lang="ts">
 import SavedEventManager from '@/manager/saved_event_manager';
-import { computed, ref } from 'vue';
-import Note from "@/components/event_components/Note.vue";
-import Select from "@/components/basic_components/Select.vue";
+import { computed } from 'vue';
 import SavedEventHeader from '@/components/event_components/SavedEventHeader.vue';
 import AccountContainer from '@/components/event_components/AccountContainer.vue';
 
@@ -60,9 +57,9 @@ const calculateIncomeSum = () => {
     return incomeGeneral;
 }
 
-const updateStatus = (status: string) => {
+const updateStatus = async (status: string) => {
   event.value.status = status;
-  SavedEventManager.update(props.id, event.value)
+  await SavedEventManager.update(props.id, event.value)
 }
 
 

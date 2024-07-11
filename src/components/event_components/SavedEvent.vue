@@ -15,7 +15,7 @@
         v-if="hovered && !isEditing"
         class="pi pi-pencil mt-2 text-white"
         @mousedown.stop
-        @click.stop="isEditing = true"
+        @click.stop="edit"
       />
       <MyInput
         v-if="isEditing"
@@ -23,6 +23,7 @@
         type="text"
         @mousedown.stop
         @click.stop
+        ref="editNameRef"
         class="w-[9rem] apple-font text-white text-[14px]"
       />
     </div>
@@ -38,7 +39,7 @@
   <EditingSavedInfoView @close="showEventInfo = false" v-if="showEventInfo" :id="id"/>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, nextTick } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEventManager from '@/manager/saved_event_manager'
@@ -57,9 +58,16 @@ const name = ref(event.value?.name)
 const isEditing = ref(false)
 const showEventInfo = ref(false);
 
+const editNameRef = ref(null);
+
 const show = () => {
   showEventInfo.value = true;
-  console.log("sSSew")
+}
+
+const edit = async () => {
+  isEditing.value = true;
+  await nextTick();
+  editNameRef.value.focus();
 }
 
 const stopEditing = () => {
