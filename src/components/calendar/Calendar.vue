@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import CalendarItem from './CalendarItem.vue'
-import SavedEventManager from '@/manager/saved_event_manager.ts'
+import SavedEventManager from '@/manager/saved_event_manager'
 
 const emit = defineEmits(['selectDate'])
 

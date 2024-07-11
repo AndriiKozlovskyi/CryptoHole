@@ -22,8 +22,8 @@
 </template>
 <script setup lang="ts">
 import { PropType, ref } from 'vue';
-import AccountForm from "@/components/project_components/AccountForm.vue";
-import AccountCreationForm from '@/components/project_components/AccountCreationForm.vue';
+import AccountForm from "@/components/event_components/AccountForm.vue";
+import AccountCreationForm from '@/components/event_components/AccountCreationForm.vue';
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEvent from '@/models/saved_event_model';
 

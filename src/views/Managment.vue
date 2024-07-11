@@ -20,7 +20,7 @@
 
 <script setup>
 import { provide, ref, computed } from 'vue'
-import EventStatusContainer from '@/components/project_components/EventStatusContainer.vue'
+import EventStatusContainer from '@/components/event_components/EventStatusContainer.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
 
 const events = computed(() => SavedEventManager.all())

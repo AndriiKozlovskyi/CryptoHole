@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import Event from '@/components/project_components/Event.vue'
+import Event from '@/components/event_components/Event.vue'
 import EventManager from '@/manager/event_manager'
 
 const events = computed(() => EventManager.all())

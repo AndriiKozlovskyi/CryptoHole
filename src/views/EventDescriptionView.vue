@@ -62,12 +62,12 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
-import SaveButton from '@/components/project_components/SaveButton.vue'
-import Tag from '@/components/project_components/Tag.vue'
-import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue'
-import DescriptionAside from '@/components/project_description/DescriptionAside.vue'
+import SaveButton from '@/components/event_components/SaveButton.vue'
+import Tag from '@/components/event_components/Tag.vue'
+import ParticipantsForm from '@/components/event_components/ParticipantsForm.vue'
+import DescriptionAside from '@/components/event_description/DescriptionAside.vue'
 import ToastManager from '@/manager/toaster_manager'
-import TaskMain from '@/components/project_description/TaskMain.vue'
+import TaskMain from '@/components/event_description/TaskMain.vue'
 import EventManager from '@/manager/event_manager'
 
 const props = defineProps({
@@ -139,14 +139,14 @@ onMounted(() => {
 })
 
 const save = () => {
-  if (project.value !== undefined)
+  if (event.value !== undefined)
     // LocalStorageManager.saveProject(project.value)
     saved.value = true
   ToastManager.showSuccessToast(toast, "You've been successfully saved a project")
 }
 const unsave = () => {
   //  const savedProject = LocalStorageManager.getSavedProjectByName(project?.value.name);
-  if (project.value !== undefined)
+  if (event.value !== undefined)
     // LocalStorageManager.unsaveProject(savedProject)
     saved.value = false
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved a project")

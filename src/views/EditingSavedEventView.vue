@@ -29,10 +29,10 @@
 <script setup lang="ts">
 import SavedEventManager from '@/manager/saved_event_manager';
 import { computed, ref } from 'vue';
-import Note from "@/components/project_components/Note.vue";
+import Note from "@/components/event_components/Note.vue";
 import Select from "@/components/basic_components/Select.vue";
-import SavedEventHeader from '@/components/project_components/SavedEventHeader.vue';
-import AccountContainer from '@/components/project_components/AccountContainer.vue';
+import SavedEventHeader from '@/components/event_components/SavedEventHeader.vue';
+import AccountContainer from '@/components/event_components/AccountContainer.vue';
 
 const props = defineProps({
   id: Number

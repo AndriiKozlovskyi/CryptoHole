@@ -9,7 +9,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import EventsContainer from '@/components/project_components/EventsContainer.vue'
+import EventsContainer from '@/components/event_components/EventsContainer.vue'
 import HelpButton from '@/components/HelpButton.vue'
 </script>
 <style>

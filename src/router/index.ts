@@ -4,14 +4,10 @@ import AdminView from '@/views/AdminView.vue'
 import Managment from '@/views/Managment.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
-import CreateProject from '@/components/admin_components/CreateProject.vue'
-import ProjectDescriptionAdminView from '@/views/ProjectDescriptionAdminView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AuthManager from '@/manager/auth_manager'
 import BasicLayout from '@/views/BasicLayout.vue'
-import ProjectManager from '@/manager/project_manager'
-import SavedProjectManager from '@/manager/saved_project_manager'
 import EventDescriptionView from '@/views/EventDescriptionView.vue'
 import CalendarView from '@/views/CalendarView.vue'
 import TagManager from '@/manager/tag_manager'
@@ -76,28 +72,14 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       children: [
-        {
-          path: '',
-          name: 'base_admin',
-          component: AdminView
-        },
-        {
-          path: 'create_project',
-          name: 'create_project',
-          component: CreateProject
-        },
-        {
-          path: ':name/project_description',
-          name: 'admin_project_description',
-          component: ProjectDescriptionAdminView
-        }
+
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
         }
-        await ProjectManager.loadAll()
-        await SavedProjectManager.loadAll()
+        await EventManager.loadAll()
+        await SavedEventManager.loadAll()
         await TagManager.loadAll()
       }
     },

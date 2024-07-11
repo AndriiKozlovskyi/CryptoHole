@@ -28,10 +28,10 @@
   </div>
 </template>
 <script setup>
-import SavedEvent from '@/components/project_components/SavedEvent.vue'
+import SavedEvent from '@/components/event_components/SavedEvent.vue'
 import { ref, computed } from 'vue'
 import SavedEventManager from '@/manager/saved_event_manager'
-import SavedEventCreationForm from "@/components/project_components/SavedEventCreationForm.vue";
+import SavedEventCreationForm from "@/components/event_components/SavedEventCreationForm.vue";
 import { vOnClickOutside } from '@vueuse/components'
 
 const hovered = ref(false)
@@ -46,7 +46,6 @@ const props = defineProps({
 const creationFormVisible = ref(false);
 
 const save = () => {
-  console.log("aaaa")
   creationFormVisible.value = false;
 }
 
