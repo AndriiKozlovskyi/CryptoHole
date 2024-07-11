@@ -40,14 +40,14 @@ const moveForward = () => {
   selectedDate.value = getNextDate(selectedDate.value?.date ?? currentDate.value.date);
   previousDate.value = getNextDate(previousDate.value?.date);
   nextDate.value = getNextDate(nextDate.value?.date);
-  emitter.emit("selectedDateChange", selectedDate.value.date);
+  emitter.emit("changeSelectedDate", selectedDate.value.date);
 }
 
 const moveBackward = () => {
   selectedDate.value = getPreviousDate(selectedDate.value?.date ?? currentDate.value.date);
   previousDate.value = getPreviousDate(previousDate.value?.date);
   nextDate.value = getPreviousDate(nextDate.value?.date);
-  emitter.emit("selectedDateChange", selectedDate.value.date);
+  emitter.emit("changeSelectedDate", selectedDate.value.date);
 }
 
 const selectDate = (currentDate: Date, day: number) => {

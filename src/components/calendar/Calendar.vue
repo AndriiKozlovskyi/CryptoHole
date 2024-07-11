@@ -55,7 +55,7 @@ import { emitter } from '@/event_bus';
 const emit = defineEmits(['selectDate'])
 
 onMounted(() => {
-  emitter.on("selectedDateChange", (date: Date) => {
+  emitter.on("changeSelectedDate", (date: Date) => {
     currentDate.value = date;
     selectedDayNumber.value = date.getDate();
     })

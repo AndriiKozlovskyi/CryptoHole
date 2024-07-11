@@ -1,7 +1,7 @@
 import mitt from 'mitt'
 
 type Events = {
-    selectedDateChange: Date
+    changeSelectedDate: Date
 }
 
 export const emitter = mitt<Events>()
