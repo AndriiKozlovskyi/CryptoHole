@@ -12,7 +12,7 @@ import AuthManager from '@/manager/auth_manager'
 import BasicLayout from '@/views/BasicLayout.vue'
 import ProjectManager from '@/manager/project_manager'
 import SavedProjectManager from '@/manager/saved_project_manager'
-import ProjectDescriptionView from '@/views/ProjectDescriptionView.vue'
+import EventDescriptionView from '@/views/EventDescriptionView.vue'
 import CalendarView from '@/views/CalendarView.vue'
 import TagManager from '@/manager/tag_manager'
 import EventManager from '@/manager/event_manager'
@@ -58,9 +58,9 @@ const router = createRouter({
           component: CalendarView
         },
         {
-          path: ':name/project_description',
-          name: 'project_description',
-          component: ProjectDescriptionView,
+          path: ':id/event_description',
+          name: 'event_description',
+          component: EventDescriptionView,
           props: true
         }
       ],

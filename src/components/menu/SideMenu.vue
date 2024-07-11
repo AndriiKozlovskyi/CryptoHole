@@ -8,9 +8,9 @@
       <MenuItem1 name="Home" path="home">
         <i class="pi pi-home" />
       </MenuItem1>
-      <MenuItem1 name="Marketplace" path="saved_projects">
+      <!-- <MenuItem1 name="Marketplace" path="saved_projects">
         <i class="pi pi-shop" />
-      </MenuItem1>
+      </MenuItem1> -->
       <MenuItem1 name="Guides" path="guides">
         <i class="pi pi-book" />
       </MenuItem1>

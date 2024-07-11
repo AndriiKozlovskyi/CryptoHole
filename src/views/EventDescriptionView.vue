@@ -1,15 +1,15 @@
 <template>
   <Toast />
-  <div class="flex h-100% w-full flex-row justify-start items-center">
-    <main class="w-full h-full flex justify-between font">
-      <article class="absolute h-100% flex flex-col mt-[1rem] space-y-10 ml-[5rem] max-w-[40rem]">
+  <div class="flex w-full flex-row">
+    <main class="w-full flex flex-col mt-[12rem] justify-between font">
+      <article class="flex flex-col space-y-10 max-w-[40rem]">
         <header
-          class="text-white z-[50] text-3xl ml-16 font-extrabold mb-10 relative top-[3.5rem] p-4"
+          class="text-white z-[50] text-3xl ml-16 font-extrabold relative p-4"
         >
           Step-by-step guide
         </header>
         <div
-          class="top-0 bottom-0 fixed left-[7.1rem] transform translate-x-1 w-1 bg-gray-500 z-0"
+          class="top-0 bottom-0 fixed left-[25.5rem] transform translate-x-1 w-1 bg-gray-500 z-0"
         ></div>
 
         <TaskMain
@@ -24,16 +24,16 @@
     </main>
 
     <aside
-      class="w-[32rem] h-[47rem] flex flex-col rounded-lg self-center fixed left-[55rem] top-[5.5rem]"
+      class="w-[45rem] h-[45rem] flex flex-col rounded-lg sticky top-[14rem]"
     >
-      <div class="mt-10 ml-auto mr-auto">
+      <div class="">
         <i
           class="pi pi-arrow-left text-secondary-text-color text-2xl top-[1rem] right-[0.7rem] absolute hover:cursor-pointer transition-transform duration-300 hover:-translate-x-2"
           @click="router.go(-1)"
         ></i>
 
         <section class="relative">
-          <img :src="project?.src" alt="Logo" class="w-full h-auto" />
+          <img :src="event?.src" alt="Logo" class="w-full h-auto" />
           <Tag class="absolute top-3 left-3" :tag="tag" />
         </section>
 
@@ -51,7 +51,6 @@
             @unsave="unsave"
           />
           <ParticipantsForm class="text-white" :participants="participants" />
-          <ExpensesForm :expenses="expenses" />
           <DescriptionAside :description="description" />
         </section>
       </div>
@@ -64,16 +63,20 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import SaveButton from '@/components/project_components/SaveButton.vue'
-import ExpensesForm from '@/components/project_components/ExpensesForm.vue'
 import Tag from '@/components/project_components/Tag.vue'
 import ParticipantsForm from '@/components/project_components/ParticipantsForm.vue'
 import DescriptionAside from '@/components/project_description/DescriptionAside.vue'
 import ToastManager from '@/manager/toaster_manager'
 import TaskMain from '@/components/project_description/TaskMain.vue'
+import EventManager from '@/manager/event_manager'
+
+const props = defineProps({
+  id: Number,
+})
 
 const router = useRouter()
 const toast = useToast()
-const project = ref()
+const event = ref(EventManager.getById(props.id))
 
 const saved = ref(false)
 const tasks = [
@@ -108,10 +111,20 @@ const tasks = [
     taskNumber: 5,
     taskTitle: 'Start doing',
     taskDescription: 'With your account funded, you can now start trading on the Drift exchange.'
+  },
+  {
+    taskNumber: 5,
+    taskTitle: 'Start doing',
+    taskDescription: 'With your account funded, you can now start trading on the Drift exchange.'
+  },
+  {
+    taskNumber: 5,
+    taskTitle: 'Start doing',
+    taskDescription: 'With your account funded, you can now start trading on the Drift exchange.'
   }
 ]
 
-const participants = ref()
+const participants = ref(event.value.participants.length)
 const expenses = ref()
 const tag = ref()
 const description = ref(

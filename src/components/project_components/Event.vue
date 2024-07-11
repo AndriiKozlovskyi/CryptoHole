@@ -80,7 +80,7 @@ const unsave = () => {
 }
 
 const goToProjectDescription = () => {
-  router.push({ name: 'project_description', params: { name: event.value.name } })
+  router.push({ name: 'event_description', params: { id: event.value.id } })
 }
 </script>
 <style>

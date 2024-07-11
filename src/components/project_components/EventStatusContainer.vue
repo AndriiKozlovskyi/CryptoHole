@@ -17,6 +17,13 @@
       >
         <SavedEvent :id="event.id" />
       </div>
+      <SavedEventCreationForm :status="id" v-if="creationFormVisible" @save="save" v-on-click-outside="hideCreationForm"/>
+      <div 
+        @click="createProject"
+        class="flex flex-row apple-font hover:bg-[#4619bd] space-x-3 cursor-pointer items-center justify-center w-full h-[2rem] text-center text-white py-1" v-if="hovered">
+        <i class="pi pi-plus"/>
+        <p>create event</p>
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +31,8 @@
 import SavedEvent from '@/components/project_components/SavedEvent.vue'
 import { ref, computed } from 'vue'
 import SavedEventManager from '@/manager/saved_event_manager'
+import SavedEventCreationForm from "@/components/project_components/SavedEventCreationForm.vue";
+import { vOnClickOutside } from '@vueuse/components'
 
 const hovered = ref(false)
 
@@ -33,6 +42,21 @@ const props = defineProps({
   events: Array,
   amountOfProjects: Number
 })
+
+const creationFormVisible = ref(false);
+
+const save = () => {
+  console.log("aaaa")
+  creationFormVisible.value = false;
+}
+
+const createProject = async () => {
+  creationFormVisible.value = true; 
+}
+
+const hideCreationForm = () => {
+  creationFormVisible.value = false;
+}
 
 const amountOfProjects = computed(
   () => SavedEventManager.all().filter((project) => project.status === props.id).length
