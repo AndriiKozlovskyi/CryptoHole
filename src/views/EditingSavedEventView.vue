@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center z-[1002]">
         <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
-            <SavedEventHeader :event="event" @close="$emit('close')"/>
+            <SavedEventHeader :event="event" @close="close"/>
             <div class="flex flex-row justify-between items-center px-4 ">
                 <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'paid'">
                     <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
@@ -30,12 +30,17 @@ import SavedEventManager from '@/manager/saved_event_manager';
 import { computed } from 'vue';
 import SavedEventHeader from '@/components/event_components/SavedEventHeader.vue';
 import AccountContainer from '@/components/event_components/AccountContainer.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const props = defineProps({
   id: Number
 })
 
-defineEmits(['close']);
+const close = () => {
+    router.push({name: "managment" });
+}
 
 const event = computed(() => SavedEventManager.getById(props.id));
 

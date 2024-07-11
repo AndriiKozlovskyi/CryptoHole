@@ -16,13 +16,15 @@
       />
     </div>
   </div>
+  <RouterView />
+
 </template>
 
 <script setup>
 import { provide, ref, computed } from 'vue'
 import EventStatusContainer from '@/components/event_components/EventStatusContainer.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
-
+import { RouterView } from 'vue-router';
 const events = computed(() => SavedEventManager.all())
 
 const todoEvents = computed(() => events.value.filter((event) => event.status === 'todo'))

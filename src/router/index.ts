@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
-import AdminView from '@/views/AdminView.vue'
 import Managment from '@/views/Managment.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
@@ -13,6 +12,7 @@ import CalendarView from '@/views/CalendarView.vue'
 import TagManager from '@/manager/tag_manager'
 import EventManager from '@/manager/event_manager'
 import SavedEventManager from '@/manager/saved_event_manager'
+import EditingSavedEventView from '@/views/EditingSavedEventView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,7 +46,15 @@ const router = createRouter({
         {
           path: 'managment',
           name: 'managment',
-          component: Managment
+          component: Managment,
+          children: [
+            {
+              path: ':id/event_info',
+              name: 'event_info',
+              component: EditingSavedEventView,
+              props: true
+            },
+          ]
         },
         {
           path: 'calendar',
@@ -58,7 +66,8 @@ const router = createRouter({
           name: 'event_description',
           component: EventDescriptionView,
           props: true
-        }
+        },
+       
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {

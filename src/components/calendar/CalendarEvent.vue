@@ -8,7 +8,7 @@
         <span v-if="tip == 'ends'" class="h-1 w-1 rounded-full bg-[#8b3434]"></span>
         <span v-if="tip == 'starts'" class="h-1 w-1 rounded-full bg-[#436b3c]"></span>
       </div>
-      <i class="pi pi-external-link" />
+      <i class="pi pi-external-link cursor-pointer" @click="goToProjectManagment"/>
     </div>
     <div class="flex flex-row items-center space-x-3">
       <i v-if="tip == 'ends'" class="pi pi-clock" />
@@ -21,9 +21,18 @@
 <script setup lang="ts">
 import SavedEvent from '@/models/saved_event_model'
 import { PropType } from 'vue'
-defineProps({
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+
+const props = defineProps({
   event: Object as PropType<SavedEvent>,
   tip: String,
   date: String
 })
+
+const goToProjectManagment = () => {
+  router.push({ name: 'event_info', params: { id: props.event.id } })
+}
+
 </script>

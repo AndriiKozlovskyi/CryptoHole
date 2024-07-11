@@ -11,7 +11,6 @@
         <div
           class="top-0 bottom-0 fixed left-[25.5rem] transform translate-x-1 w-1 bg-gray-500 z-0"
         ></div>
-
         <TaskMain
           v-for="task in tasks"
           :taskTitle="task.taskTitle"
@@ -125,7 +124,6 @@ const tasks = [
 ]
 
 const participants = ref(event.value.participants.length)
-const expenses = ref()
 const tag = ref()
 const description = ref(
   'Drift is a fully on-chain perpetual and spot DEX built on Solana. The exchange offers traders the ability to trade pre-launch markets and launched tokens with up to 10x leverage. Beyond stablecoins, traders can use a wide range of assets as collateral, allowing for greater capital efficiency.'

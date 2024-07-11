@@ -13,7 +13,6 @@
         class="relative top-0 left-0"
         v-for="event in events"
         :key="event.name"
-        :id="event.id"
       >
         <SavedEvent :id="event.id" />
       </div>
@@ -27,21 +26,23 @@
     </div>
   </div>
 </template>
-<script setup>
+
+<script setup lang="ts">
 import SavedEvent from '@/components/event_components/SavedEvent.vue'
 import { ref, computed } from 'vue'
 import SavedEventManager from '@/manager/saved_event_manager'
 import SavedEventCreationForm from "@/components/event_components/SavedEventCreationForm.vue";
 import { vOnClickOutside } from '@vueuse/components'
+import SavedEventModel from '@/models/saved_event_model';
 
-const hovered = ref(false)
+const hovered = ref(false);
 
 const props = defineProps({
   name: String,
   id: String,
-  events: Array,
+  events: Array<SavedEventModel>,
   amountOfProjects: Number
-})
+});
 
 const creationFormVisible = ref(false);
 

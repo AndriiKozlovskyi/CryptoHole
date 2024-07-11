@@ -5,7 +5,7 @@
     @mouseleave="hovered = false"
     v-on-click-outside="stopEditing"
     @keyup.enter="updateProject"
-    @click="show"
+    @click="goToEventInfo"
   >
     <div class="flex flex-row space-x-2">
       <div v-if="!isEditing" class="apple-font text-white px-3 py-2 text-[16px]">
@@ -36,7 +36,6 @@
       <Select class="mr-3" @updateStatus="updateStatus" :status="event.status"/>
     </div>
   </div>
-  <EditingSavedInfoView @close="showEventInfo = false" v-if="showEventInfo" :id="id"/>
 </template>
 <script setup lang="ts">
 import { computed, ref, nextTick } from 'vue'
@@ -44,9 +43,9 @@ import MyInput from '@/components/basic_components/input/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEventManager from '@/manager/saved_event_manager'
 import Select from "@/components/basic_components/Select.vue";
-import EditingSavedInfoView from "@/views/EditingSavedEventView.vue";
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter();
 const props = defineProps({
   id: Number
 })
@@ -56,12 +55,11 @@ const event = computed(() => SavedEventManager.getById(props.id))
 const name = ref(event.value?.name)
 
 const isEditing = ref(false)
-const showEventInfo = ref(false);
 
 const editNameRef = ref(null);
 
-const show = () => {
-  showEventInfo.value = true;
+const goToEventInfo = () => {
+  router.push({ name: 'event_info', params: { id: event.value.id } })
 }
 
 const edit = async () => {
