@@ -13,7 +13,7 @@
     <div class="flex flex-row items-end justify-end text-normal font-medium text-white w-1/3">
       <ProfileImage />
     </div>
-    <button @click="logout" class="hover:text-secondary-text-color">logout</button> 
+    <button @click="logout" class="hover:text-secondary-text-color">logout</button>
   </div>
 </template>
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const logout = () => {
-  AuthManager.logout();
-  router.push('/auth/login');
+  AuthManager.logout()
+  router.push('/auth/login')
 }
 </script>
