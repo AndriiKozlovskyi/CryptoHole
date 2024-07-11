@@ -64,7 +64,7 @@ const editing = ref(false);
 const edit = async (event) => {
     editing.value = true;
     await nextTick();
-    if(event.target !== nameOrWalletRef.value.$refs.input && event.target !== outcomeRef.value.$refs.input && event.target !== outcomeRef.value.$refs.input ) {
+    if(event.target !== nameOrWalletRef.value.$refs.input && event.target !== outcomeRef.value.$refs.input && event.target !== incomeRef.value.$refs.input ) {
         nameOrWalletRef.value.focus();
     }
 }
