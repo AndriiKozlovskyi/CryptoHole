@@ -1,5 +1,6 @@
 <template>
   <div class="relative overscroll-y-none flex flex-col">
+    <RouterView class="absolute"/>
     <div class="flex flex-col space-y-5">
       <div class="w-full flex flex-row gap-2 overflow-y-hidden">
         <EventStatusContainer
@@ -16,8 +17,6 @@
       />
     </div>
   </div>
-  <RouterView />
-
 </template>
 
 <script setup>
