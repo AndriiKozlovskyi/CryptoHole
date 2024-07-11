@@ -16,12 +16,10 @@
         <Tag :tag="project?.tag" />
         <DeleteForm v-if="hovered" :project="project" @deleteProject="removeProject" />
       </div>
-  
       <div class="flex flex-col gap-5 mt-2 px-5 relative">
-        <EditForm v-if="hovered" />
-        <p class="text-white text-[20px]">
-          {{ project?.name }}
-        </p>
+        <EditForm v-if="hovered" :project="project" @click="isEditing = true"/>
+        <p class="text-white text-[20px]" v-if="!isEditing">{{ project.name }}</p>
+      <input v-if="isEditing" v-model="project.name" @click.stop="emit('updateProject')" @keyup.enter="save" type="text" placeholder="Name of the project"/>
         <hr class="w-full border-secondary-text-color opacity-25" />
         <div class="flex flex-row justify-between w-full mb-5 rounded-full">
           <ParticipantsForm :participants="project?.participants" />
@@ -45,12 +43,22 @@ import Project from '@/models/project_model'
 
 const router = useRouter()
 const hovered = ref(false)
-
+const isEditing = ref(false);
 const props = defineProps({
   project: Object as PropType<Project>
 });
+const save = async () => {
+    const project  = {
+        name: props.project.name,
+        src: props.project.src,
+        expenses: props.project.expenses,
+    };
+    emit('updateProject', project)
+    isEditing.value = false
+};
 
-const emit = defineEmits(['deleteProject'])
+
+const emit = defineEmits(['deleteProject','updateProject'])
 
 const removeProject = (project: Project) => {
   emit('deleteProject', project)

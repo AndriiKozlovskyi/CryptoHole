@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row justify-center">
     <div class="w-[56rem] grid grid-cols-3 gap-4 overflow-y-hidden">
-      <ProjectAdmin v-for="project in projects" :project="project" :key="project.name" @deleteProject="removeProject(project)" />
+      <ProjectAdmin v-for="project in projects" :project="project" :key="project.id" @deleteProject="removeProject(project)" @updateProject="editProject(project)"/>
       <CreateProjectButton @click="$router.push('/admin/create_project')"/>
     </div>
   </div>
@@ -17,6 +17,15 @@ const projects = computed(() => ProjectManager.all())
 
 const removeProject = async (project: Project) => {
   await ProjectManager.deleteProject(project.id)
+}
+const editProject = async (project: Project) => {
+  const updateProjectData = {
+    name: project.name,
+    image: project.src,
+    expenses: project.expenses,
+    tag: project.tags,
+  }
+  await ProjectManager.update(project.id, updateProjectData)
 }
 
 </script>
