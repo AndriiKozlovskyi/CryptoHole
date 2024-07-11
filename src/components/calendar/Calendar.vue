@@ -47,11 +47,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import CalendarItem from './CalendarItem.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
+import { emitter } from '@/event_bus';
 
 const emit = defineEmits(['selectDate'])
+
+onMounted(() => {
+  emitter.on("selectedDateChange", (date: Date) => {
+    currentDate.value = date;
+    selectedDayNumber.value = date.getDate();
+    })
+});
 
 const currentDate = ref(new Date())
 const selectedDate = ref(new Date())

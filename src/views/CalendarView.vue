@@ -17,8 +17,9 @@
 import Calendar from '@/components/calendar/Calendar.vue'
 import CalendarEventContainer from '@/components/calendar/CalendarEventContainer.vue'
 import DateUtils from '@/utils/date_utils'
-import { computed, onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import CreationCalendarEvent from '@/components/calendar/CreationCalendarEvent.vue'
+import { emitter } from '@/event_bus'
 
 const currentDate = ref()
 const previousDate = ref<{ date: Date; weekDay: string }>()
@@ -39,13 +40,14 @@ const moveForward = () => {
   selectedDate.value = getNextDate(selectedDate.value?.date ?? currentDate.value.date);
   previousDate.value = getNextDate(previousDate.value?.date);
   nextDate.value = getNextDate(nextDate.value?.date);
+  emitter.emit("selectedDateChange", selectedDate.value.date);
 }
 
 const moveBackward = () => {
-  console.log("SSSSSSSSSSSSS")
   selectedDate.value = getPreviousDate(selectedDate.value?.date ?? currentDate.value.date);
   previousDate.value = getPreviousDate(previousDate.value?.date);
   nextDate.value = getPreviousDate(nextDate.value?.date);
+  emitter.emit("selectedDateChange", selectedDate.value.date);
 }
 
 const selectDate = (currentDate: Date, day: number) => {

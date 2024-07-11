@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col p-3 w-full shadow-xl justify-between rounded-lg bg-hover-primary-item-color h-[5rem]"
+    @click=""
   >
     <div class="flex flex-row rounded-md justify-between">
       <div class="flex flex-row">
@@ -20,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import SavedEvent from '@/models/saved_event_model'
-import { PropType } from 'vue'
+import { PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
@@ -30,6 +31,12 @@ const props = defineProps({
   tip: String,
   date: String
 })
+
+const isEditing = ref(false);
+
+const edit = () => {
+
+}
 
 const goToProjectManagment = () => {
   router.push({ name: 'event_info', params: { id: props.event.id } })
