@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row ">
+    <div class="flex flex-row">
       <select class="my-select apple-font bg-[#35343a] bg-opacity-70 p-1 text-white bg-hover-primary-item-color cursor-pointer rounded-lg"
               id="status"
               v-model="selectedStatus"

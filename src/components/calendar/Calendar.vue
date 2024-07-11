@@ -1,15 +1,24 @@
 <template>
   <div class="flex flex-col items-center fixed">
     <div class="flex items-center">
-      <button
-        @click="changeMonth(-1)"
-        class="absolute bg-[#1c1d20] text-white items-center justify-center px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
-      >
-        <i class="pi pi-angle-left" />
-      </button>
+   
       <div class="flex flex-col items-start flex-grow">
-        <div class="mt-4 text-xl ml-3 text-white font-bold apple-font">
-          {{ currentYear }} - {{ currentMonthName }}
+        <div class="flex flex-row justify-between w-full mt-4 ml-3 text-xl text-white font-bold apple-font">
+          <p class="w-[12rem]">{{ currentYear }} - {{ currentMonthName }}</p>
+          <div class="flex flex-row space-x-3 mr-3">
+            <button
+              @click="changeMonth(-1)"
+              class="bg-[#1c1d20] text-white items-center justify-center px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
+            >
+              <i class="pi pi-angle-left" />
+            </button>
+            <button
+              @click="changeMonth(1)"
+              class="bg-[#1c1d20] text-white px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
+            >
+              <i class="pi pi-angle-right" />
+            </button>
+          </div>
         </div>
         <div class="grid grid-cols-7 grid-rows-7">
           <div
@@ -33,12 +42,6 @@
           />
         </div>
       </div>
-      <button
-        @click="changeMonth(1)"
-        class="absolute ml-[23rem] bg-[#1c1d20] text-white px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
-      >
-        <i class="pi pi-angle-right" />
-      </button>
     </div>
   </div>
 </template>
@@ -112,7 +115,7 @@ const days = computed(() => {
       number: previousMonthDays - i,
       isCurrentDay: false,
       isOtherMonth: true,
-      eventsCount: getStartEventsCountForDate(date),
+      startEventsCount: getStartEventsCountForDate(date),
       endEventsCount: getEndEventsCountForDate(date)
     })
   }

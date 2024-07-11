@@ -27,12 +27,12 @@
       />
     </div>
 
-    <div class="flex flex-row justify-between mt-3 space-y-1 ml-3">
+    <div class="flex flex-row items-center justify-between mt-3 ml-3">
       <div class="flex flex-row items-center space-x-2">
         <i class="pi pi-user secondary-text-color text-secondary-text-color" />
         <p class="text-[14px] text-white">{{ event?.accounts.length }}</p>
       </div>
-      <Select class="mb-2 mr-3" @updateStatus="updateStatus" :status="event.status"/>
+      <Select class="mr-3" @updateStatus="updateStatus" :status="event.status"/>
     </div>
   </div>
   <EditingSavedInfoView @close="showEventInfo = false" v-if="showEventInfo" :id="id"/>

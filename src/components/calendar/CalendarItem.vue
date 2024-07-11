@@ -2,17 +2,20 @@
   <div :class="itemClass" @click="itemClicked">
     {{ day }}
     <div
-      v-if="startEventsCount > 0"
-      class="shadow-xl absolute mb-8 bg-opacity-70 mr-6 px-1 font-light rounded-full text-white text-[10px] bg-[#436b3c]"
+      v-if="startEventsCount > 0 || endEventsCount > 0"
+      class="shadow-xl shadow-black absolute mb-8 bg-opacity-200 mr-6 px-2 rounded-full text-white text-[14px] bg-[#436b3c]"
+
     >
-      {{ startEventsCount }}
+    <!-- class="shadow-xl absolute mb-8 bg-opacity-70 mr-6 px-1 font-light rounded-full text-white text-[10px] bg-[#436b3c]" -->
+
+      {{ startEventsCount + endEventsCount }}
     </div>
-    <div
+    <!-- <div
       v-if="endEventsCount > 0"
       class="shadow-xl absolute mb-8 ml-6 bg-opacity-70 px-1 font-light rounded-full text-white text-[10px] bg-[#8b3434]"
     >
       {{ endEventsCount }}
-    </div>
+    </div> -->
   </div>
 </template>
 

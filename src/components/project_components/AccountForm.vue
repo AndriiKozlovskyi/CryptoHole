@@ -1,16 +1,28 @@
 <template>
-    <tr class="rounded-md border-b border-t w-full h-[3rem] border-secondary-text-color" @keypress.enter="save" v-on-click-outside="stopEdit">
-        <td class="text-secondary-text-color text-[18px] font-apple cursor-pointer hover:text-white px-2 py-2" @click="copy">{{ account?.name }}</td>
+    <tr 
+        class="rounded-md border-b border-t hover:bg-hover-primary-item-color cursor-pointer w-full h-[3rem] border-secondary-text-color"
+        :class="{ [`bg-hover-primary-item-color`]: editing }"
+        @keypress.enter="handleEnter" 
+        v-on-click-outside="stopEdit"
+        @click="edit">
+        <td>
+            <div class="flex flex-row space-x-4 items-center">
+                <p v-if="!editing" class="text-secondary-text-color text-[18px] font-apple cursor-pointer hover:text-white px-2 py-2" @click.stop="copy">
+                    {{ name }}
+                </p>
+                <MyInput ref="nameOrWalletRef" v-if="editing" v-model="name"/>
+            </div>
+        </td>
         <td class="px-2 py-2">
             <div class="flex flex-row space-x-4 items-center">
-                <p v-if="!showEditing" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple" @click.stop="edit">{{ account.outcome }} $</p>
-                <MyInput v-if="showEditing" v-model="outcome"/>
+                <p v-if="!editing" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ account.outcome }} $</p>
+                <MyInput ref="outcomeRef" v-if="editing" v-model="outcome"/>
             </div>
         </td>
         <td class="px-2 py-2" v-if="event.status === 'paid'">
             <div class="flex flex-row space-x-4 items-center" >
-                <p v-if="!showEditing" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple" @click.stop="edit">{{ account.income }} $</p>
-                <MyInput class="" v-if="showEditing" v-model="income"/>
+                <p v-if="!editing" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ account.income }} $</p>
+                <MyInput ref="incomeRef" v-if="editing" v-model="income"/>
             </div>
         </td>
         <td :class="`px-2 py-2 ${clearIncome < 0 ? 'bg-opacity-15 bg-red-500' : 'bg-opacity-20 bg-green-700'}`" v-if="event.status === 'paid'">
@@ -24,7 +36,7 @@
 <script setup lang="ts">
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
-import { PropType, computed, ref } from 'vue';
+import { PropType, computed, ref, nextTick } from 'vue';
 import MyInput from '../basic_components/input/MyInput.vue';
 import Account from '@/models/account_model';
 import { vOnClickOutside } from '@vueuse/components'
@@ -40,15 +52,25 @@ const toast = useToast()
 
 const outcome = ref(props.account?.outcome);
 const income = ref(props.account?.income);
+const name = ref(props.account?.name)
 const clearIncome = computed(() => income.value - outcome.value);
-const showEditing = ref(false);
 
-const edit = () => {
-    showEditing.value = true;
+const nameOrWalletRef = ref(null);
+const outcomeRef = ref(null);
+const incomeRef = ref(null);
+
+const editing = ref(false);
+
+const edit = async (event) => {
+    editing.value = true;
+    await nextTick();
+    if(event.target !== nameOrWalletRef.value.$refs.input && event.target !== outcomeRef.value.$refs.input && event.target !== outcomeRef.value.$refs.input ) {
+        nameOrWalletRef.value.focus();
+    }
 }
 
 const stopEdit = () => {
-    showEditing.value = false;
+    editing.value = false;
 }
 const save = async () => {
     const account = {
@@ -65,5 +87,17 @@ const copy = async () => {
     ToastManager.showInfoToast(toast, "address copied")
 }
 
+const handleEnter = async (event) => {
+    if (event.target === nameOrWalletRef.value.$refs.input && name.value) {
+        outcomeRef.value.$refs.input.focus();
+    } else if (event.target === outcomeRef.value.$refs.input && outcome.value && props.event.status === 'paid') {
+        incomeRef.value.$refs.input.focus();
+    } else if (event.target === outcomeRef.value.$refs.input && outcome.value && props.event.status !== 'paid'){
+        save();
+    }
+    else if (event.target === incomeRef.value.$refs.input && income.value && props.event.status === 'paid'){
+        save();
+    }
+};
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <tr class="rounded-md h-[3rem] bg-hover-primary-item-color" @keyup.enter="handleEnter">
+    <tr class="w-[100%] bg-hover-primary-item-color" @keyup.enter="handleEnter">
     <td>   
         <MyInput
         ref="nameOrWalletRef"
@@ -8,11 +8,12 @@
         v-model="nameOrWallet"
       /></td>
    
-      <td class="flex flex-row space-x-2 items-center">
+      <td >
         <MyInput
           ref="outcomeRef"
           class="w-8"
           v-model="outcome"
+          type="number"
           placeholder="deposited"
         />
     </td>
@@ -21,10 +22,12 @@
           ref="incomeRef"
           class=""
           v-model="income"
+          type="number"
           placeholder="withdrawed"
         />
     </td>
-        <td></td>
+    <td v-if="status === 'paid'">        
+    </td>
     </tr>
 </template>
 
@@ -61,9 +64,12 @@ cleanForm();
 const handleEnter = async (event) => {
     if (event.target === nameOrWalletRef.value.$refs.input && nameOrWallet.value) {
         outcomeRef.value.$refs.input.focus();
-    } else if (event.target === outcomeRef.value.$refs.input && outcome.value) {
+    } else if (event.target === outcomeRef.value.$refs.input && outcome.value && status.value === 'paid') {
         incomeRef.value.$refs.input.focus();
-    } else if (event.target === incomeRef.value.$refs.input) {
+    } else if (event.target === outcomeRef.value.$refs.input && outcome.value && status.value !== 'paid'){
+        save();
+    }
+    else if (event.target === incomeRef.value.$refs.input && income.value && status.value === 'paid'){
         save();
     }
 };

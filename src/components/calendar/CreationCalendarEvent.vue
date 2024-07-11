@@ -1,58 +1,57 @@
 <template>
   <div
-    class="fixed flex flex-col px-3 py-2 shadow-xl space-y-3 w-[24rem] rounded-lg bg-primary-item-color h-[16rem]"
+    class="fixed flex flex-col px-3 py-2 shadow-xl space-y-3 w-[24rem] rounded-lg bg-primary-item-color h-[17rem]"
     @keypress.enter="save"
   >
     <div class="flex flex-row items-center justify-center">
       <p class="text-white apple-font">Create Event</p>
     </div>
     <MyInput v-model="name" placeholder="event name" />
-    <div class="flex flex-row justify-between text-secondary-text-color">
-      <div class="flex flex-col space-y-1 items-center">
-        <MyButton
-          v-if="startDate == null"
-          :class="{ [`inner-shadow`]: startSelecting }"
-          text="select start date"
-          @onClick="startSelecting = !startSelecting; endSelecting = false
-          "
-        />
-        <div 
-        class="flex bg-hover-primary-item-color rounded-lg text-white cursor-pointer px-2"
+    <div class="flex flex-row justify-between text-secondary-text-color h-[2.5rem]">
+      <MyButton
+        v-if="startDate == null"
+        class="w-[9rem]"
+        :class="{ [`inner-shadow`]: startSelecting }"
+        text="select start date"
+        @onClick="startSelecting = !startSelecting; endSelecting = false
+        "
+      />
+      <MyButton 
+        v-if="startDate != null"
+        class="flex hover:bg-[#4619bd] bg-[#4c12b2] apple-font items-center justify-center rounded-lg text-white cursor-pointer w-[9rem]"
         :class="{ [`inner-shadow`]: startSelecting }"
         @click="startSelecting = true; endSelecting = false;"
-        >{{ startDate?.toLocaleDateString() }}</div>
-        <div class="flex flex-row items-center space-y-2">
-          <TimePicker
-            :hour="startHour"
-            :minute="startMinute"
-            @update:hour="updateStartHour"
-            @update:minute="updateStartMinute"
-          />
-        </div>
-      </div>
+        :text="startDate?.toLocaleDateString()"
 
-      <div class="flex flex-col space-y-1 items-center">
-        <MyButton
-          v-if="endDate == null"
-          :class="{ [`inner-shadow`]: endSelecting }"
-          text="select end date"
-          @onClick="endSelecting = !endSelecting; startSelecting = false"
-        />
-        <div
-            :class="{ [`inner-shadow`]: endSelecting }"
-            class="flex bg-hover-primary-item-color rounded-lg text-white cursor-pointer px-2"
-            @click="startSelecting = false; endSelecting = true;"
-        >{{ endDate?.toLocaleDateString() }}</div>
-
-        <div class="flex flex-row items-center space-y-2">
-          <TimePicker
-            :hour="endHour"
-            :minute="endMinute"
-            @update:hour="updateEndHour"
-            @update:minute="updateEndMinute"
-          />
-        </div>
-      </div>
+      />
+      <MyButton
+        v-if="endDate == null"
+        class="w-[9rem]"
+        :class="{ [`inner-shadow`]: endSelecting }"
+        text="select end date"
+        @onClick="endSelecting = !endSelecting; startSelecting = false"
+      />
+      <MyButton
+        v-if="endDate != null"
+        :class="{ [`inner-shadow`]: endSelecting }"
+        class="flex  items-center justify-center rounded-lg w-[9rem]"
+        @click="startSelecting = false; endSelecting = true;"
+        :text="endDate?.toLocaleDateString()"
+      />
+    </div>
+    <div class="flex flex-row items-center text-white justify-between px-10">
+      <TimePicker
+        :hour="endHour"
+        :minute="endMinute"
+        @update:hour="updateEndHour"
+        @update:minute="updateEndMinute"
+      />
+      <TimePicker
+        :hour="startHour"
+        :minute="startMinute"
+        @update:hour="updateStartHour"
+        @update:minute="updateStartMinute"
+      />
     </div>
     <div class="flex flex-row justify-between">
       <MyButton text="Discard" class="bg-primary-item-color" @onClick="emptyForm" />
@@ -114,7 +113,8 @@ const updateEndMinute = (newMinute: number) => {
 const name = ref()
 
 function formatDate(date) {
-    if(date === null) {
+  console.log(date)
+    if(date == 'Inavlid Date') {
         return "";
     }
   const year = date.getFullYear()
@@ -136,6 +136,17 @@ function formatDate(date) {
 }
 
 const save = () => {
+  let _endDate = "";
+  if(endDate.value != null) {
+    _endDate = formatDate(new Date(
+        endDate.value?.getFullYear(),
+        endDate.value?.getMonth(),
+        endDate.value?.getDate(),
+        endHour.value,
+        endMinute.value,
+        0
+      ));
+  }
   console.log(
     new Date(
       startDate.value?.getFullYear(),
@@ -161,16 +172,7 @@ const save = () => {
     ),
     status: 'todo',
     orderNumber: 1,
-    endDate: formatDate(
-      new Date(
-        endDate.value?.getFullYear(),
-        endDate.value?.getMonth(),
-        endDate.value?.getDate(),
-        endHour.value,
-        endMinute.value,
-        0
-      )
-    )
+    endDate: _endDate
   })
   emptyForm()
 }
