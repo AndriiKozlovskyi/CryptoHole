@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex bg-hover-primary-item-color h-[5.5rem] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
+    class="flex bg-hover-primary-item-color h-[5.5rem] hover:scale-[1.02] shadow-lg overflow-hidden w-full flex-col rounded-lg cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
     v-on-click-outside="stopEditing"

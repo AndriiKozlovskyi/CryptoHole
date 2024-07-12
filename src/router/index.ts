@@ -13,7 +13,8 @@ import TagManager from '@/manager/tag_manager'
 import EventManager from '@/manager/event_manager'
 import SavedEventManager from '@/manager/saved_event_manager'
 import EditingSavedEventView from '@/views/EditingSavedEventView.vue'
-
+import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
+import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,7 +60,20 @@ const router = createRouter({
         {
           path: 'calendar',
           name: 'calendar',
-          component: CalendarView
+          component: CalendarView,
+          children: [
+            {
+              path: ':id/edit_calendar_event',
+              name: 'edit_calendar_event',
+              component: EditingCalendarEventView,
+              props: true
+            },
+            {
+              path: 'create_calendar_event',
+              name: 'create_calendar_event',
+              component: CreationCalendarEventView,
+            },
+          ]
         },
         {
           path: ':id/event_description',

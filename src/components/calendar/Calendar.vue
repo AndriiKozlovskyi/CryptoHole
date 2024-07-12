@@ -52,7 +52,7 @@ import CalendarItem from './CalendarItem.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
 import { emitter } from '@/event_bus';
 
-const emit = defineEmits(['selectDate'])
+defineEmits(['selectDate'])
 
 onMounted(() => {
   emitter.on("changeSelectedDate", (date: Date) => {

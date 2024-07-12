@@ -41,16 +41,16 @@
     </div>
     <div class="flex flex-row items-center text-white justify-between px-10">
       <TimePicker
-        :hour="endHour"
-        :minute="endMinute"
-        @update:hour="updateEndHour"
-        @update:minute="updateEndMinute"
-      />
-      <TimePicker
         :hour="startHour"
         :minute="startMinute"
         @update:hour="updateStartHour"
         @update:minute="updateStartMinute"
+      />
+      <TimePicker
+        :hour="endHour"
+        :minute="endMinute"
+        @update:hour="updateEndHour"
+        @update:minute="updateEndMinute"
       />
     </div>
     <div class="flex flex-row justify-between">
@@ -60,15 +60,21 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import TimePicker from '@/components/basic_components/TimePicker.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
-import MyButton from '../basic_components/MyButton.vue'
+import MyButton from '@/components/basic_components/MyButton.vue'
+import { emitter } from '@/event_bus'
+import { useRouter } from 'vue-router';
 
-const props = defineProps({
-  date: Date
+const router = useRouter();
+
+onMounted(() => {
+  emitter.on("changeSelectedDate", (_date: Date) => {date.value = _date})
 })
+
+const date = ref();
 
 const startHour = ref(12)
 const startMinute = ref(0)
@@ -76,19 +82,18 @@ const startMinute = ref(0)
 const endHour = ref(12)
 const endMinute = ref(0)
 
-const startDate = ref(props.date)
+const startDate = ref(null)
 const endDate = ref(null)
 
 const startSelecting = ref(false)
 const endSelecting = ref(false)
 
-watch(
-  () => props.date,
+watch(date,
   (newDate) => {
     if (!endSelecting.value) {
       startDate.value = newDate
     }
-    if (endSelecting.value) {
+    else if (endSelecting.value) {
       endDate.value = newDate
     }
   }
@@ -113,10 +118,6 @@ const updateEndMinute = (newMinute: number) => {
 const name = ref()
 
 function formatDate(date) {
-  console.log(date)
-    if(date == 'Inavlid Date') {
-        return "";
-    }
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
@@ -135,7 +136,7 @@ function formatDate(date) {
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${timezone}`
 }
 
-const save = () => {
+const save = async () => {
   let _endDate = "";
   if(endDate.value != null) {
     _endDate = formatDate(new Date(
@@ -147,18 +148,7 @@ const save = () => {
         0
       ));
   }
-  console.log(
-    new Date(
-      startDate.value?.getFullYear(),
-      startDate.value?.getMonth(),
-      startDate.value?.getDate(),
-      startHour.value,
-      startMinute.value,
-      0
-    )
-  )
-
-  SavedEventManager.createSavedEvent({
+  await SavedEventManager.createSavedEvent({
     name: name.value,
     startDate: formatDate(
       new Date(
@@ -185,6 +175,7 @@ const emptyForm = () => {
   startHour.value = null
   endHour.value = null
   name.value = null
+  router.push({name: "calendar"});
 }
 </script>
 <style>

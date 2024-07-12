@@ -49,6 +49,7 @@ export default class SavedEventManager {
   static async update(id: number, _savedEvent: SavedEventRequest) {
     const event = await SavedEventApi.updateSavedEvent(id, _savedEvent)
     this.repository.where('id', id).update(event)
+    console.log(this.repository.where('id', id).first())
   }
 
   static async loadAll() {

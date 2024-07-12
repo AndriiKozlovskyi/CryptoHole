@@ -35,8 +35,7 @@ const props = defineProps({
 
 const router = useRoute()
 const itemActive = computed(() => {
-  console.log(props.path + ' ' + router.fullPath)
-  if (props.path === router.fullPath) {
+  if (router.fullPath.startsWith(props.path)) {
     return true
   }
   return false
