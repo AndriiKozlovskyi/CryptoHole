@@ -24,7 +24,8 @@ export default class AccountManager {
     const rest = _.omit(object, ['id'])
     const account = await AccountApi.updateAccount(id, rest)
     await SavedEventManager.loadAll();
-    this.repository.where('id', id).update(account)
+    const accountRequest: AccountRequest = account.data;
+    this.repository.where('id', id).update(accountRequest)
   }
 
   static async loadAll(savedEventId: number) {

@@ -21,7 +21,8 @@ export default class TaskManager {
   static async update(id: number, object: any) {
     const rest = _.omit(object, ['id'])
     const task = await TaskApi.updateTask(id, rest)
-    this.repository.where('id', id).update(task)
+    const taskRequest: TaskRequest = task.data;
+    this.repository.where('id', id).update(taskRequest)
   }
 
   static async loadAll(eventId: number) {

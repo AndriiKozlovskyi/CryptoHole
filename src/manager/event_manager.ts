@@ -23,7 +23,8 @@ export default class EventManager {
 
   static async update(id: number, eventRequest: EventRequest) {
     const event = await EventApi.updateEvent(id, eventRequest)
-    this.repository.where('id', id).update(event)
+    const evetReq: EventRequest = event.data;
+    this.repository.where('id', id).update(evetReq)
   }
 
   static async loadAll() {
