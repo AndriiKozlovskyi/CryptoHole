@@ -8,6 +8,7 @@ import SavedEventApi from '@/api/saved_event_api'
 import SavedEventRequest from '@/dtos/requests/saved_event_request'
 import EventApi from '@/api/event_api'
 import EventManager from './event_manager'
+import EventRequest from '@/dtos/requests/event_request'
 
 export default class SavedEventManager {
   protected static get repository() {
@@ -73,7 +74,7 @@ export default class SavedEventManager {
 
     const event = EventManager.getById(id)
     event.saved = true
-    EventManager.update(id, event)
+    EventManager.repository.where('id', event.id).update(event);
   }
 
   static async unparticipateEvent(id: number) {
@@ -91,7 +92,6 @@ export default class SavedEventManager {
 
     if (beforeEventId === null) {
       eventToChange.orderNumber = this.getLastOrderNumberForEvent(eventToChange.status) + 1
-      console.log(this.getLastOrderNumberForEvent(eventToChange.status))
       this.update(eventToChange.id, eventToChange)
       return
     }
@@ -106,7 +106,7 @@ export default class SavedEventManager {
 
   static async deleteSavedEvent(id: number) {
     await SavedEventApi.deleteSavedEvent(id)
-
+    EventManager.loadAll();
     this.repository.destroy(id)
   }
 

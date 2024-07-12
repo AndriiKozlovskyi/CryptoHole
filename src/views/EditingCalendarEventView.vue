@@ -74,7 +74,6 @@ const props = defineProps({
 })
 
 const event = computed(() => {
-  console.log(SavedEventManager.getById(props.id));
   return SavedEventManager.getById(props.id)
 });
 
@@ -126,16 +125,9 @@ watch(event, (newEvent) => {
   startHour.value = start.getHours();
   startMinute.value = start.getMinutes();
 
-  console.log(startHour)
-  console.log(endMinute)
-
-
   const end = new Date(newEvent.endDate);
   endHour.value = end.getHours();
   endMinute.value = end.getMinutes();
-
-
-  console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 });
 
 const updateStartHour = (newHour: number) => { startHour.value = newHour };

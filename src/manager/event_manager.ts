@@ -9,7 +9,7 @@ import EventResponse from '@/dtos/responses/event_response'
 import UserManager from './user_manager'
 import TaskManager from './task_manager'
 export default class EventManager {
-  protected static get repository() {
+  static get repository() {
     return useRepo(Event, store)
   }
 

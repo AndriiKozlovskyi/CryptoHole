@@ -73,7 +73,6 @@ watch(hour, (newHour) => {
 });
 
 watch(minute, (newMinute) => {
-  console.log("SSSSSSSSSSS")
   emit('update:minute', newMinute)
 });
 

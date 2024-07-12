@@ -66,16 +66,18 @@ const props = defineProps({
 
 const hovered = ref(false)
 
-const event = computed(() => EventManager.getById(props.id))
+const event = computed(() => {
+  return EventManager.getById(props.id)
+})
 const savedEvent = computed(() => SavedEventManager.getById(props.id))
 
-const save = () => {
-  if (event.value !== undefined) SavedEventManager.participateEvent(props.id)
-  ToastManager.showSuccessToast(toast, "You've been successfully saved am event")
+const save = async () => {
+  if (event.value !== undefined) await SavedEventManager.participateEvent(props.id)
+  ToastManager.showSuccessToast(toast, "You've been successfully saved an event")
 }
 
-const unsave = () => {
-  if (savedEvent.value !== undefined) SavedEventManager.unparticipateEvent(props.id)
+const unsave = async () => {
+  if (savedEvent.value !== undefined) await SavedEventManager.unparticipateEvent(props.id)
   ToastManager.showSuccessToast(toast, "You've been successfully unsaved an event")
 }
 

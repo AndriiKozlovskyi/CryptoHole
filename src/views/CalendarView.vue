@@ -41,7 +41,6 @@ const nextDate = ref<{ date: Date; weekDay: string }>()
 const selected = ref(false);
 
 const creationViewVisible = computed(() => {
-  console.log(route.fullPath)
   return route.fullPath != '/home/calendar'
 });
 

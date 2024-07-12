@@ -33,7 +33,6 @@ const router = useRoute()
 const _path = computed(() => router.matched[0].name) //[0] first one
 
 const itemActive = computed(() => {
-  console.log(_path.value)
   if (props.path === _path.value) {
     return true
   }
