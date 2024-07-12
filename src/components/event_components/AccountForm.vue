@@ -74,7 +74,7 @@ const stopEdit = () => {
 }
 const save = async () => {
     const account = {
-        name: props.account.name,
+        name: name.value,
         outcome: outcome.value,
         income: income.value,
     };
