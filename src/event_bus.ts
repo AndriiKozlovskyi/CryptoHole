@@ -1,7 +1,7 @@
 import mitt from 'mitt'
 
 type Events = {
-    changeSelectedDate: Date
+    changeSelectedDate: Date,
+    contextMenu: number,
 }
-
 export const emitter = mitt<Events>()

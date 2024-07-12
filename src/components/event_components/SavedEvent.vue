@@ -5,6 +5,7 @@
     @mouseleave="hovered = false"
     v-on-click-outside="stopEditing"
     @keyup.enter="updateProject"
+    @contextmenu.prevent="onEventRightClick($event)"
     @click="goToEventInfo"
   >
     <div class="flex flex-row space-x-2">
@@ -37,35 +38,38 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
-import { computed, ref, nextTick } from 'vue'
+import { computed, ref, nextTick, inject } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEventManager from '@/manager/saved_event_manager'
-import Select from "@/components/basic_components/Select.vue";
-import { useRouter } from 'vue-router';
+import Select from "@/components/basic_components/Select.vue"
+import { useRouter } from 'vue-router'
+import { emitter } from '@/event_bus'
 
-const router = useRouter();
+const router = useRouter()
 const props = defineProps({
   id: Number
 })
 
+const menu = ref(inject("contextMenu"));
+
 const hovered = ref(false)
 const event = computed(() => SavedEventManager.getById(props.id))
 const name = ref(event.value?.name)
-
 const isEditing = ref(false)
+const editNameRef = ref(null)
 
-const editNameRef = ref(null);
 
 const goToEventInfo = () => {
   router.push({ name: 'event_info', params: { id: event.value.id } })
 }
 
 const edit = async () => {
-  isEditing.value = true;
-  await nextTick();
-  editNameRef.value.focus();
+  isEditing.value = true
+  await nextTick()
+  editNameRef.value.focus()
 }
 
 const stopEditing = () => {
@@ -73,7 +77,7 @@ const stopEditing = () => {
 }
 
 const updateStatus = (status: string) => {
-  event.value.status = status;
+  event.value.status = status
   SavedEventManager.update(props.id, event.value)
 }
 
@@ -82,4 +86,10 @@ const updateProject = () => {
   SavedEventManager.update(props.id, event.value)
   isEditing.value = false
 }
+
+const onEventRightClick = (event) => {
+  menu.value.show(event)
+  emitter.emit("contextMenu", props.id);
+}
+
 </script>

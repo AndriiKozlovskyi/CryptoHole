@@ -2,7 +2,9 @@
   <div class="relative overscroll-y-none flex flex-col">
     <RouterView class="absolute"/>
     <div class="flex flex-col space-y-5">
-      <div class="w-full flex flex-row gap-2 overflow-y-hidden">
+      <div class="w-full flex flex-row gap-2 overflow-y-hidden" 
+      >
+        <ContextMenu :model="items" ref="contextMenu" />
         <EventStatusContainer
           v-for="status in statusContainers"
           :events="status.events"
@@ -19,11 +21,14 @@
   </div>
 </template>
 
-<script setup>
-import { provide, ref, computed } from 'vue'
+<script setup lang="ts">
+import { provide, ref, computed, onMounted } from 'vue'
 import EventStatusContainer from '@/components/event_components/EventStatusContainer.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
 import { RouterView } from 'vue-router';
+import ContextMenu from 'primevue/contextmenu'
+import { emitter } from '@/event_bus';
+
 const events = computed(() => SavedEventManager.all())
 
 const todoEvents = computed(() => events.value.filter((event) => event.status === 'todo'))
@@ -42,4 +47,23 @@ const statusContainers = ref([
 
 const isDragAvailable = ref(true)
 provide('dragAvailable', isDragAvailable)
+
+const contextMenu = ref(null)  // Declare the context menu ref
+provide('contextMenu', contextMenu)
+
+const eventIdForContextMenu = ref();
+
+onMounted(() => {
+  emitter.on("contextMenu", (value) => {
+    eventIdForContextMenu.value = value
+  })
+})
+
+const items = ref([
+  { label: 'Delete', icon: 'pi pi-trash', command: async () => onDelete() }
+])
+
+const onDelete = async () => {
+  await SavedEventManager.deleteSavedEvent(eventIdForContextMenu.value)
+}
 </script>
