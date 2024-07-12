@@ -9,7 +9,7 @@
         <span v-if="tip == 'ends'" class="h-1 w-1 rounded-full bg-[#8b3434]"></span>
         <span v-if="tip == 'starts'" class="h-1 w-1 rounded-full bg-[#436b3c]"></span>
       </div>
-      <i class="pi pi-external-link cursor-pointer" @click="goToEventManagment"/>
+      <i class="pi pi-external-link cursor-pointer hover:text-white" @click.stop="goToEventManagment"/>
     </div>
     <div class="flex flex-row items-center space-x-3">
       <i v-if="tip == 'ends'" class="pi pi-clock" />
