@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from 'vue'
+import { ref, watch, computed, onBeforeMount } from 'vue'
 import MyInput from '@/components/basic_components/input/MyInput.vue'
 import TimePicker from '@/components/basic_components/TimePicker.vue'
 import SavedEventManager from '@/manager/saved_event_manager'
@@ -73,17 +73,20 @@ const props = defineProps({
   id: Number,
 })
 
-const event = computed(() => SavedEventManager.getById(props.id));
-
-const startHour = ref(12)
-const startMinute = ref(0)
-const endHour = ref(12)
-const endMinute = ref(0)
+const event = computed(() => {
+  console.log(SavedEventManager.getById(props.id));
+  return SavedEventManager.getById(props.id)
+});
 
 const startDate = ref<Date | null>(null)
 const endDate = ref<Date | null>(null)
 const name = ref(event.value.name)
 const date = ref<Date | null>(null)
+
+const startHour = ref(new Date(String(event.value?.startDate))?.getHours() || 12)
+const startMinute = ref(new Date(String(event.value?.startDate))?.getMinutes() || 0)
+const endHour = ref(new Date(String(event.value?.endDate))?.getHours() || 12)
+const endMinute = ref(new Date(String(event.value?.endDate))?.getMinutes() || 0)
 
 const startSelecting = ref(false)
 const endSelecting = ref(false)
@@ -99,7 +102,7 @@ const initializeDate = (dateString: string | null) => {
   return null;
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   startDate.value = initializeDate(event.value.startDate);
   endDate.value = initializeDate(event.value.endDate);
   emitter.on("changeSelectedDate", (selectedDate: Date) => { date.value = selectedDate });
@@ -123,9 +126,16 @@ watch(event, (newEvent) => {
   startHour.value = start.getHours();
   startMinute.value = start.getMinutes();
 
+  console.log(startHour)
+  console.log(endMinute)
+
+
   const end = new Date(newEvent.endDate);
   endHour.value = end.getHours();
   endMinute.value = end.getMinutes();
+
+
+  console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
 });
 
 const updateStartHour = (newHour: number) => { startHour.value = newHour };
