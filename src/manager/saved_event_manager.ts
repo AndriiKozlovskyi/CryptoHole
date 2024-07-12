@@ -100,6 +100,10 @@ export default class SavedEventManager {
     })
   }
 
+  public static getSavedEventByEventId(id: number) {
+    return this.all().find(savedEvent => savedEvent.event === id);
+  }
+
   static getEventByName(name: string) {
     return this.repository.where('name', name).first()
   }

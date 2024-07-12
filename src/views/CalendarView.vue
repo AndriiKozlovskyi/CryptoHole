@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row w-full justify-between">
     <div class="realtive flex flex-col">
-      <Calendar @select-date="selectDate"/>
+      <CalendarBox @select-date="selectDate"/>
       <div 
         class="fixed mt-[27rem] w-[24rem] rounded-lg hover:bg-[#4619bd] bg-[#4c12b2] px-3 py-2 cursor-pointer" 
         @click="createNewEvent"
@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import Calendar from '@/components/calendar/Calendar.vue'
+import CalendarBox from '@/components/calendar/CalendarBox.vue'
 import CalendarEventContainer from '@/components/calendar/CalendarEventContainer.vue'
 import DateUtils from '@/utils/date_utils'
 import { computed, onBeforeMount, ref } from 'vue'

@@ -28,8 +28,8 @@
         <p class="text-white text-[17px] apple-font">
           {{ event?.name }}
         </p>
-        <div class="h-full flex items-center">
-          <i class="pi pi-share-alt text-secondary-text-color" />
+        <div class="h-full flex items-center cursor-pointer" @click.stop="goToEventManagment" v-if="event.saved">
+          <i class="pi pi-external-link text-secondary-text-color hover:text-white"/>
         </div>
       </div>
       <hr class="w-full border-secondary-text-color opacity-25" />
@@ -84,6 +84,11 @@ const unsave = async () => {
 const goToProjectDescription = () => {
   router.push({ name: 'event_description', params: { id: event.value.id } })
 }
+
+const goToEventManagment = () => {
+  router.push({ name: 'event_info', params: { id: SavedEventManager.getSavedEventByEventId(props.id).id } })
+}
+
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');

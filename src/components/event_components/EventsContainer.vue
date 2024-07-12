@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-row justify-center w-full">
     <div class="w-full grid grid-cols-3 gap-10 overflow-y-hidden">
-      <Event v-for="event in events" :key="event.name" :id="event.id" />
+      <EventBox v-for="event in events" :key="event.name" :id="event.id" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import Event from '@/components/event_components/Event.vue'
+import EventBox from '@/components/event_components/EventBox.vue'
 import EventManager from '@/manager/event_manager'
 
 const events = computed(() => EventManager.all())
