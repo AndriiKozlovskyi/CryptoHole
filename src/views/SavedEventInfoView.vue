@@ -16,7 +16,10 @@
             <div class="w-full m-10 flex flex-row justify-between">
                 <div class="flex flex-row space-x-3 items-center">
                     <i class="text-white pi pi-clock"/>
-                    <p class="text-white apple-font">{{ new Date(String(event?.endDate)).toLocaleDateString() }} - {{ new Date(String(event?.endDate)).toLocaleDateString()  }}</p>
+                    <MyButton text="Set Date" @on-click="goToCalendar" v-if="isButtonVisible(event)"/>
+                    <p v-if="!isButtonVisible(event) && !event.event" class="text-white cursor-pointer hover:text-gray-300 apple-font" @click="goToCalendar">{{ getStartDate(event) }} - {{ getEndDate(event) }}</p>
+                    <p v-if="!isButtonVisible(event) && event.event" class="text-white apple-font">{{ getStartDate(event) }} - {{ getEndDate(event) }}</p>
+
                 </div>
             </div>
         </div>
@@ -31,6 +34,7 @@ import { computed } from 'vue';
 import SavedEventHeader from '@/components/event_components/SavedEventHeader.vue';
 import AccountContainer from '@/components/event_components/AccountContainer.vue';
 import { useRouter } from 'vue-router';
+import MyButton from '@/components/basic_components/MyButton.vue';
 
 const router = useRouter();
 
@@ -62,10 +66,29 @@ const calculateIncomeSum = () => {
     return incomeGeneral;
 }
 
-const updateStatus = async (status: string) => {
-  event.value.status = status;
-  await SavedEventManager.update(props.id, event.value)
+const isButtonVisible = (event) => {
+    if (getStartDate(event) === null && getEndDate(event) === null) {
+        return true;
+    }
+    return false;
 }
 
+const getStartDate = (event) => {
+    if (event.startDate === null){
+        return null;
+    }
+    return new Date(String(event.startDate)).toLocaleDateString()
+}
+
+const getEndDate = (event) => {
+    if (event.endDate === null){
+        return null;
+    }
+    return new Date(String(event.endDate)).toLocaleDateString()
+}
+
+const goToCalendar = () => {
+    router.push({name: "edit_calendar_event", params: { id: props.id }})
+}
 
 </script>
