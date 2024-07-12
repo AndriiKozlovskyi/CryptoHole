@@ -4,6 +4,8 @@
     <div class="flex flex-col space-y-5">
       <div class="w-full flex flex-row gap-2 overflow-y-hidden" 
       >
+        <ConfirmDialog></ConfirmDialog>
+
         <ContextMenu :model="items" ref="contextMenu" />
         <EventStatusContainer
           v-for="status in statusContainers"
@@ -28,7 +30,12 @@ import SavedEventManager from '@/manager/saved_event_manager'
 import { RouterView } from 'vue-router';
 import ContextMenu from 'primevue/contextmenu'
 import { emitter } from '@/event_bus';
+import ConfirmDialog from 'primevue/confirmdialog';
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
 
+const confirm = useConfirm();
+const toast = useToast();
 const events = computed(() => SavedEventManager.all())
 
 const todoEvents = computed(() => events.value.filter((event) => event.status === 'todo'))
@@ -60,10 +67,33 @@ onMounted(() => {
 })
 
 const items = ref([
-  { label: 'Delete', icon: 'pi pi-trash', command: async () => onDelete() }
+  { label: 'Delete', icon: 'pi pi-trash', command: async () => confirm1() }
 ])
 
 const onDelete = async () => {
   await SavedEventManager.deleteSavedEvent(eventIdForContextMenu.value)
 }
+
+const confirm1 = () => {
+    confirm.require({
+        message: 'Are you sure you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Save'
+        },
+        accept: async () => {
+            await onDelete()
+            toast.add({ severity: 'info', summary: 'Deleted', detail: 'You have deleted saved event', life: 3000 });
+        },
+        reject: () => {
+            toast.add({ severity: 'info', summary: 'Rejected', detail: '', life: 3000 });
+        }
+    });
+};
 </script>
