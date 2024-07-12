@@ -19,7 +19,7 @@
       </MenuItem1>
     </div>
     <div
-      class="flex flex-row p-4 items-center space-x-2 text-secondary-text-color hover:text-white cursor-pointer"
+      class="flex flex-row p-4 items-center space-x-2 text-secondary-text-color hover:text-white cursor-pointer" @click="logout"
     >
       <i class="pi pi-sign-out" />
       <p>Logout</p>
@@ -28,4 +28,12 @@
 </template>
 <script setup lang="ts">
 import MenuItem1 from './MenuItem.vue'
+import AuthManager from '@/manager/auth_manager';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const logout = () => {
+  AuthManager.logout();
+  router.push({ name: 'login' });
+}
 </script>

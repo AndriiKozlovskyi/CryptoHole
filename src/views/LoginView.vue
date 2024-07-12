@@ -66,6 +66,6 @@ const tryLogin = async () => {
   }
   await AuthManager.login(credentials.identifier, credentials.password)
   ToastManager.showSuccessToast(toast, 'You have logged in!')
-  router.push('/home')
+  router.push('/home/events')
 }
 </script>

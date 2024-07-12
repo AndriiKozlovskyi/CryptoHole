@@ -106,9 +106,10 @@ onMounted(() => {
 });
 
 watch(date, (newDate) => {
-  if (!endSelecting.value) {
+  if (startSelecting.value) {
     startDate.value = newDate;
-  } else {
+  } 
+  if (endSelecting.value) {
     endDate.value = newDate;
   }
 });

@@ -12,7 +12,7 @@ import CalendarView from '@/views/CalendarView.vue'
 import TagManager from '@/manager/tag_manager'
 import EventManager from '@/manager/event_manager'
 import SavedEventManager from '@/manager/saved_event_manager'
-import EditingSavedEventView from '@/views/EditingSavedEventView.vue'
+import SavedEventInfoView from '@/views/SavedEventInfoView.vue'
 import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
 import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
 const router = createRouter({
@@ -52,7 +52,7 @@ const router = createRouter({
             {
               path: ':id/event_info',
               name: 'event_info',
-              component: EditingSavedEventView,
+              component: SavedEventInfoView,
               props: true
             },
           ]
