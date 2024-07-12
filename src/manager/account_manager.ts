@@ -45,6 +45,7 @@ export default class AccountManager {
 
   static async deleteAccount(id: number) {
     await AccountApi.deleteAccount(id)
+    SavedEventManager.loadAll();
 
     this.repository.destroy(id)
   }
