@@ -5,7 +5,7 @@
     </div>
     <div class="flex flex-col items-center w-full h-full overflow-auto">
       <div class="flex flex-col w-5/6 h-full">
-        <TopView class="z-[1001] bg-background-color" />
+        <TopView class="z-[100] bg-background-color" />
         <RouterView class="mt-[12rem]" />
       </div>
     </div>

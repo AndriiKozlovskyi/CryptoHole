@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col h-[21.3rem] overflow-y-auto w-full">
+        <ContextMenu :model="items" ref="contextMenu"/>
+
         <table>
             <thead class="top-0 bg-primary-item-color sticky w-full">
                 <tr>
@@ -21,17 +23,25 @@
     </div>
 </template>
 <script setup lang="ts">
-import { PropType, ref } from 'vue';
+import { PropType, onMounted, provide, ref } from 'vue';
 import AccountForm from "@/components/event_components/AccountForm.vue";
 import AccountCreationForm from '@/components/event_components/AccountCreationForm.vue';
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEvent from '@/models/saved_event_model';
+import ContextMenu from 'primevue/contextmenu'
+import { useConfirm } from "primevue/useconfirm";
+import { useToast } from "primevue/usetoast";
+import AccountManager from '@/manager/account_manager';
+import { emitter } from '@/event_bus';
 
 defineProps({
     event: Object as PropType<SavedEvent>,
 })
 
 defineEmits(['close', 'showCreation']);
+
+const confirm = useConfirm();
+const toast = useToast();
 
 const creationFormVisible = ref(false);
 
@@ -42,4 +52,46 @@ const hideCreationForm = () => {
     creationFormVisible.value = false;
 }
 
-</script>
+const contextMenu = ref(null)  // Declare the context menu ref
+provide('contextMenuForAccounts', contextMenu)
+
+const accountIdForContextMenu = ref();
+
+onMounted(() => {
+  emitter.on("contextMenu", (value) => {
+    accountIdForContextMenu.value = value
+  })
+})
+
+const items = ref([
+  { label: 'Delete', icon: 'pi pi-trash', command: async () => confirm1() }
+])
+
+
+const onDelete = async () => {
+  await AccountManager.deleteAccount(accountIdForContextMenu.value)
+}
+
+const confirm1 = () => {
+    confirm.require({
+        message: 'Are you sure you want to proceed?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Save'
+        },
+        accept: async () => {
+            await onDelete()
+            toast.add({ severity: 'info', summary: 'Deleted', detail: 'You have deleted account', life: 3000 });
+        },
+        reject: () => {
+        }
+    });
+};
+
+</script>onMounted, provide, import { emitter } from '@/event_bus';

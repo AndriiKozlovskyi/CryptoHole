@@ -4,6 +4,7 @@
         :class="{ [`bg-hover-primary-item-color`]: editing }"
         @keypress.enter="handleEnter" 
         v-on-click-outside="stopEdit"
+        @contextmenu.prevent="onEventRightClick($event)"
         @click="edit">
         <td>
             <div class="flex flex-row space-x-4 items-center">
@@ -36,17 +37,20 @@
 <script setup lang="ts">
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
-import { PropType, computed, ref, nextTick } from 'vue';
+import { PropType, computed, ref, nextTick, inject } from 'vue';
 import MyInput from '../basic_components/input/MyInput.vue';
 import Account from '@/models/account_model';
 import { vOnClickOutside } from '@vueuse/components'
 import AccountManager from '@/manager/account_manager';
 import SavedEvent from '@/models/saved_event_model';
+import { emitter } from '@/event_bus';
 
 const props = defineProps({
     account: Object as PropType<Account>,
     event: Object as PropType<SavedEvent>,
 });
+
+const menu = ref(inject("contextMenuForAccounts"));
 
 const toast = useToast()
 
@@ -99,5 +103,10 @@ const handleEnter = async (event) => {
         save();
     }
 };
+
+const onEventRightClick = (event) => {
+  menu.value.show(event)
+  emitter.emit("contextMenu", props.account.id);
+}
 
 </script>

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import ConfirmDialog from 'primevue/confirmdialog';
 </script>
 
 <template>
   <div class="bg-[#101114] h-full w-full">
     <Toast />
+    <ConfirmDialog></ConfirmDialog>
     <RouterView class="h-full" />
   </div>
 </template>
