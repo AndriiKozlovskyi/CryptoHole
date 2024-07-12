@@ -92,7 +92,6 @@ const confirm1 = () => {
             toast.add({ severity: 'info', summary: 'Deleted', detail: 'You have deleted saved event', life: 3000 });
         },
         reject: () => {
-            toast.add({ severity: 'info', summary: 'Rejected', detail: '', life: 3000 });
         }
     });
 };
