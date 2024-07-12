@@ -33,18 +33,22 @@ export default class AuthManager {
   }
 
   static async usernameExists(username: string): Promise<BaseApiResponse<Boolean>> {
-    return await authApi.usernameExists(username);
+    return await authApi.usernameExists(username)
   }
 
   static async emailExists(email: string): Promise<BaseApiResponse<Boolean>> {
-    return await authApi.emailExists(email);
+    return await authApi.emailExists(email)
   }
 
   static logout() {
     localStorage.removeItem('token')
   }
 
-  static async register(username: string, email: string, password: string): Promise<BaseApiResponse<String>> {
+  static async register(
+    username: string,
+    email: string,
+    password: string
+  ): Promise<BaseApiResponse<String>> {
     if (!username || !password || !email) {
       throw new Error('Not all credentials are provided')
     }

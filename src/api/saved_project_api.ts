@@ -18,14 +18,20 @@ export default class CategoryApi {
   }
 
   public static async getAllSavedProjects(): Promise<BaseApiResponse<SavedProjectResponse[]>> {
-    return await ApiFactory.getInstance(this.getOptions()).get('');
+    return await ApiFactory.getInstance(this.getOptions()).get('')
   }
 
-  public static async updateProject(id: number, savedProject: SavedProjectRequest): Promise<BaseApiResponse<SavedProjectResponse>> {
-    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, savedProject);
+  public static async updateProject(
+    id: number,
+    savedProject: SavedProjectRequest
+  ): Promise<BaseApiResponse<SavedProjectResponse>> {
+    return await ApiFactory.getInstance(this.getOptions()).put(`/${id}`, savedProject)
   }
 
   public static async unsaveProject(id: number) {
-    return await ApiFactory.getInstance(this.getOptions()).post(`/${id}/unsave`, AuthManager.getToken());
+    return await ApiFactory.getInstance(this.getOptions()).post(
+      `/${id}/unsave`,
+      AuthManager.getToken()
+    )
   }
 }

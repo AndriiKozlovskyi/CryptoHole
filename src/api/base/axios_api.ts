@@ -9,7 +9,7 @@ import ApiOptions, { defaultApiOptions } from './api_options'
 function convertAxiosResponse<T>(response: AxiosResponse<T>): BaseApiResponse<T> {
   return {
     data: response.data,
-    status: response.status
+    code: response.status
   }
 }
 

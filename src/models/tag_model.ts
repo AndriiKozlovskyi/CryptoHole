@@ -1,5 +1,5 @@
 import { Model } from 'pinia-orm'
-import Project from './project_model'
+import Event from "@/models/event_model";
 
 export default class Tag extends Model {
   static entity = 'tag'
@@ -8,11 +8,10 @@ export default class Tag extends Model {
     return {
       id: this.number(null),
       name: this.string(''),
-      projects: this.hasMany(Project, 'project_id')
+      events: this.hasMany(Event, 'event_id')
     }
   }
 
   declare id: number
   declare name: string
-  declare projects: Project[]
 }

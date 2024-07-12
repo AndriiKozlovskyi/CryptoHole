@@ -6,5 +6,4 @@ export default class LocalStorageManager {
   public static setItem(key: string, value: string) {
     localStorage.setItem(key, value)
   }
-
 }

@@ -19,7 +19,9 @@ class AuthApi {
   }
 
   async usernameExists(username: string): Promise<BaseApiResponse<Boolean>> {
-    return await ApiFactory.getInstance(this.getOptions()).get(`/checkUsername?username=${username}`)
+    return await ApiFactory.getInstance(this.getOptions()).get(
+      `/checkUsername?username=${username}`
+    )
   }
 
   async emailExists(email: string): Promise<BaseApiResponse<Boolean>> {
