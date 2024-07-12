@@ -15,6 +15,7 @@ import SavedEventManager from '@/manager/saved_event_manager'
 import SavedEventInfoView from '@/views/SavedEventInfoView.vue'
 import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
 import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [

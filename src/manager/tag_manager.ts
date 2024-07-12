@@ -1,9 +1,5 @@
 import { useRepo, type Collection } from 'pinia-orm'
 import store from '../store/store'
-import Project from '@/models/project_model'
-import ProjectApi from '@/api/project_api'
-import _ from 'lodash'
-import { ProjectRequest } from '@/dtos/requests/project_request'
 import Tag from '@/models/tag_model'
 import TagApi from '@/api/tag_api'
 import TagResponse from '@/dtos/responses/tag_response'
@@ -42,10 +38,16 @@ export default class TagManager {
     this.repository.destroy(id)
   }
 
-  public static getFormatedTags(projects: Array<TagResponse>) {
+  public static getFormatedTags(tags: Array<TagResponse>) {
     const _this = this
-    return projects.map((project) => {
-      return _this.getFormatedTag(project)
+    return tags.map((tag) => {
+      return _this.getFormatedTag(tag)
+    })
+  }
+
+  public static getTagsIds(tags: Array<TagResponse>): Array<number> {
+    return tags.map((tag) => {
+      return tag.id;
     })
   }
 

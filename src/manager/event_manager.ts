@@ -1,6 +1,5 @@
 import { useRepo, type Collection } from 'pinia-orm'
 import store from '../store/store'
-import _ from 'lodash'
 import TagManager from './tag_manager'
 import Event from '@/models/event_model'
 import EventRequest from '@/dtos/requests/event_request'
@@ -23,7 +22,8 @@ export default class EventManager {
 
   static async update(id: number, eventRequest: EventRequest) {
     const event = await EventApi.updateEvent(id, eventRequest)
-    const evetReq: EventRequest = event.data;
+    const evetReq: EventRequest = this.eventResponseToEventRequest(event.data);
+
     this.repository.where('id', id).update(evetReq)
   }
 
@@ -58,6 +58,16 @@ export default class EventManager {
     return this.repository.where('name', name).first()
   }
 
+  private static eventResponseToEventRequest(eventResponse: EventResponse): EventRequest {
+    return {
+      name: eventResponse.name,
+      tagsIds: TagManager.getTagsIds(eventResponse.tags),
+      src: eventResponse.src,
+      startDate: eventResponse.startDate,
+      endDate: eventResponse.endDate,
+    }
+  }
+
   private static getFormatedEvent(eventResponse: EventResponse) {
     return {
       id: eventResponse.id,
@@ -68,7 +78,7 @@ export default class EventManager {
       tasks: TaskManager.getFormatedTasks(eventResponse.tasks),
       saved: eventResponse.saved,
       startDate: eventResponse.startDate,
-      endDate: eventResponse.endDate
+      endDate: eventResponse.endDate,
     }
   }
 }

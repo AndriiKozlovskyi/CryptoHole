@@ -1,7 +1,4 @@
 import { Model } from 'pinia-orm'
-import Tag from './tag_model'
-import User from './user_model'
-import Task from './task_model'
 import Account from './account_model'
 
 export default class SavedEvent extends Model {
@@ -26,6 +23,6 @@ export default class SavedEvent extends Model {
   declare status: string
   declare accounts: Array<Account>
   declare orderNumber: number
-  declare startDate: String
-  declare endDate: String
+  declare startDate: string
+  declare endDate: string
 }

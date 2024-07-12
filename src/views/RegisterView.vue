@@ -120,7 +120,7 @@ const emailValid = computed(() => {
 
 const usernameValidate = async () => {
   if (credentials.username === '') {
-    return
+    return;
   }
   const exists = await AuthManager.usernameExists(credentials.username)
   usernameExists.value = <boolean>exists.data

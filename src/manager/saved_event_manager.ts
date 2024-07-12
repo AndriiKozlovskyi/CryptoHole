@@ -84,24 +84,7 @@ export default class SavedEventManager {
 
     const event = EventManager.getById(id)
     event.saved = false
-    EventManager.update(id, event)
-  }
-
-  static updateOrderNumber(eventId: number, beforeEventId: number) {
-    const eventToChange = this.repository.where('id', eventId).first()
-
-    if (beforeEventId === null) {
-      eventToChange.orderNumber = this.getLastOrderNumberForEvent(eventToChange.status) + 1
-      this.update(eventToChange.id, eventToChange)
-      return
-    }
-    const eventToBeReplaced = this.repository.where('id', beforeEventId).first()
-
-    eventToChange.orderNumber = eventToBeReplaced.orderNumber
-    eventToBeReplaced.orderNumber++
-
-    this.update(eventToChange.id, eventToChange)
-    this.update(eventToBeReplaced.id, eventToBeReplaced)
+    EventManager.repository.where('id', event.id).update(event);
   }
 
   static async deleteSavedEvent(id: number) {
@@ -132,13 +115,5 @@ export default class SavedEventManager {
       startDate: savedEventResponse.startDate,
       endDate: savedEventResponse.endDate
     }
-  }
-
-  private static getLastOrderNumberForEvent(status: string) {
-    const events = this.repository.where('status', status).get()
-    if (events.length == 1) {
-      return -1
-    }
-    return events[0].orderNumber
   }
 }
