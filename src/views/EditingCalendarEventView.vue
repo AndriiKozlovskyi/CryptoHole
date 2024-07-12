@@ -1,8 +1,9 @@
 <template>
-  <div
-    class="fixed flex flex-col px-3 py-2 shadow-xl space-y-3 w-[24rem] rounded-lg bg-primary-item-color h-[17rem]"
+  <div 
+    class="fixed flex flex-col px-3 py-2 shadow-xl w-[24rem] rounded-lg bg-primary-item-color h-[17rem]"
     @keypress.enter="save"
   >
+  <div class="flex flex-col space-y-3" v-if="event.event === null">
     <div class="flex flex-row items-center justify-center">
       <p class="text-white apple-font">Edit Event</p>
     </div>
@@ -55,6 +56,18 @@
       <MyButton text="Discard" class="bg-primary-item-color" @onClick="emptyForm" />
       <MyButton text="Save" class="bg-primary-item-color" @onClick="save" />
     </div>
+  </div>
+  <div class="grid grid-cols-1 gap-4 content-between place-content-center text-[16px] h-full text-white apple-font" v-else>
+    <div class="flex flex-row justify-center">
+      <p class="text-[16px]">{{ event.name }}</p>
+    </div>
+    <div class="flex flex-row justify-center">
+      <i class="text-secondary-text-color pi pi-lock" style="font-size: 4rem;"/>
+    </div>
+    <div class="flex flex-row justify-center">
+      <p class="text-secondary-text-color">You cannot edit this event, cause it's not custom.</p>
+    </div>
+  </div>
   </div>
 </template>
 
