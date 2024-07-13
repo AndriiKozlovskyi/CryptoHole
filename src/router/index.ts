@@ -15,6 +15,8 @@ import SavedEventManager from '@/manager/saved_event_manager'
 import SavedEventInfoView from '@/views/SavedEventInfoView.vue'
 import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
 import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
+import AdminView from '@/views/AdminView.vue'
+import CreateProject from '@/components/admin_components/CreateProject.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -32,6 +34,18 @@ const router = createRouter({
           name: 'register',
           component: RegisterView
         }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
+      children: [
+      {
+        path: 'create_project',
+        name: 'create_project',
+        component: CreateProject
+      }
       ]
     },
     {
@@ -95,7 +109,11 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       children: [
-
+      {
+        path: 'create_project',
+        name: 'create_project',
+        component: CreateProject
+      }
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
