@@ -8,9 +8,8 @@
 </template>
 <script lang="ts" setup>
 import { computed } from 'vue'
-import ProjectAdmin from './ProjectAdmin.vue';
-import CreateProjectButton from './CreateProjectButton.vue';
-import ProjectManager from '../../managers/ProjectManager';
+import ProjectAdmin from '@/components/admin_components/ProjectAdmin.vue';
+import CreateProjectButton from '@/components/admin_components/CreateProjectButton.vue';
 import Project from '../../models/Project';
 
 const projects = computed(() => ProjectManager.all())

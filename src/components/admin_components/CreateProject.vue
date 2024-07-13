@@ -24,7 +24,7 @@ import MyInput from "@/components/basic_components/input/MyInput.vue"
 import ToastManager from '@/manager/toaster_manager';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
-import ProjectManager from '@/manager/project_manager';
+import LocalStorageManager from '@/manager/local_storage_manager';
 import { ProjectRequest } from '@/dtos/requests/project_request';
 import TagManager from '@/manager/tag_manager';
  
@@ -83,7 +83,7 @@ const createProject = () => {
     src: image.value,
     participants: 0
   }
-  ProjectManager.createProject(project);
+  LocalStorageManager.createProject(project);
 
   ToastManager.showSuccessToast(toast, "You've been successfully created a project"); 
   resetForm();

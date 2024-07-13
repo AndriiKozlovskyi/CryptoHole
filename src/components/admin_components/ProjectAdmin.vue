@@ -29,19 +29,16 @@
     </div>
   </template>
   <script setup lang="ts">
-  
-import type { PropType } from 'vue'
-import { defineProps, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { defineEmits } from 'vue'
-import { Project } from '@/models/Project'
-import { DeleteForm } from './DeleteForm'
-import { EditForm } from './EditForm'
-import { ParticipantsForm } from './ParticipantsForm'
-import { ExpensesForm } from './ExpensesForm'
-import { Toast } from './Toast'
-import { Tag } from './Tag'
 
+  import DeleteForm  from '/src/components/admin_components/DeleteForm.vue'
+  import EditForm from '@/components/admin_components/EditForm.vue';
+  import ParticipantsForm from '@/components/event_components/ParticipantsForm.vue';
+  import ExpensesForm from '@/components/event_components/ExpensesForm.vue';
+  import { Project } from '@/types/Project';
+  import { ref, defineProps, defineEmits } from 'vue';
+  import { useRouter } from 'vue-router';
+  import Tag from '@/components/event_components/Tag.vue';
+  import Toast from '@/manager/toaster_manager.ts';
 
 const router = useRouter()
 const hovered = ref(false)
