@@ -10,8 +10,8 @@
 import { computed } from 'vue'
 import ProjectAdmin from './ProjectAdmin.vue';
 import CreateProjectButton from './CreateProjectButton.vue';
-import ProjectManager from '@/manager/project_manager';
-import Project from '@/models/project_model';
+import ProjectManager from '../../managers/ProjectManager';
+import Project from '../../models/Project';
 
 const projects = computed(() => ProjectManager.all())
 
