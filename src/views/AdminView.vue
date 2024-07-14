@@ -1,17 +1,20 @@
 <template>
-  <Toast />
-  <div class="h-full flex flex-col overflow-y-auto">
-    <div class="flex flex-col items-center mt-[6rem]">
-      <div class="flex flex-col items-center space-y-6">
-        <p class="font-semibold text-2xl self-start text-white">All Projects</p>
-        <div class="flex flex-row space-x-4">
-          <AdminProjectContainer />
-          </div>
+    <div class="h-full flex flex-col">
+      <div class="flex flex-col items-center">
+        <div class="flex flex-col w-full items-center space-y-6">
+          <EventsContainer />
+          <HelpButton />
+        </div>
       </div>
     </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import AdminProjectContainer from '@/components/admin_components/AdminProjectContainer.vue'
-</script>
+  </template>
+  <script setup lang="ts">
+  import EventsContainer from '@/components/event_components/EventsContainer.vue'
+  import HelpButton from '@/components/HelpButton.vue'
+  </script>
+  <style>
+  .main-view {
+    height: 100%;
+  }
+  </style>
+  
