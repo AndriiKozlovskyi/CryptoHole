@@ -1,7 +1,8 @@
 <template>
-        <div class="bg-primary-item-color flex items-center justify-center w-full hover:bg-hover-primary-item-color h-[20rem] rounded-lg cursor-pointer group">
-        <i class="pi pi-plus text-[rgb(152,152,157)] text-2xl group-hover:scale-125 transition-transform duration-100"></i>
+        <div class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card rounded-lg group overflow-hidden basis-full h-[17.875rem] w-full flex-col tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group">
+          <div class="flex items-center justify-center h-full">
+            <i class="pi pi-plus text-[rgb(152,152,157)] text-2xl group-hover:scale-125 transition-transform duration-100"></i>
+          </div>
         </div>
-</template>
-<script setup lang="ts">
-</script>
+      </template>
+      
