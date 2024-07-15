@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex justify-center items-center">
+<div class="h-full w-full flex justify-center items-center">
     <div class="bg-background-color justify-center items-center flex w-[22rem] h-[39rem] rounded-2xl flex-col space-y-2 relative">
       <div class="flex flex-row items-center justify-center mb-8">
         <button class="pi pi-arrow-left text-[#4619bd] text-[1.3rem] hover:text-[#4c12b2] duration-300 cursor-pointer absolute left-[0rem] flex self-center" @click="goToAdminPage"></button>
@@ -24,8 +24,9 @@ import MyInput from "@/components/basic_components/input/MyInput.vue"
 import ToastManager from '@/manager/toaster_manager';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
-import LocalStorageManager from '@/manager/local_storage_manager';
+import EventManager from '@/manager/event_manager';
 import TagManager from '@/manager/tag_manager';
+import EventRequest from '@/dtos/requests/event_request';
  
 const router = useRouter();
 const toast = useToast();
@@ -46,7 +47,7 @@ const resetForm = () => {
 }
 
 const goToAdminPage = () => {
-  router.push("/admin");
+  router.push("/admin/event_management");
 };
 
 const createEvent = () => {
@@ -78,11 +79,11 @@ const createEvent = () => {
   const event: EventRequest = {
     name: name.value,
     tagsIds: tagRequests,
-    expenses: Number(expenses.value),
+    expenses: expenses.value,
     src: image.value,
     participants: 0
   }
-  LocalStorageManager.createEvent(Event);
+  EventManager.createEvent(event);
 
   ToastManager.showSuccessToast(toast, "You've been successfully created an event"); 
   resetForm();
