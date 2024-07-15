@@ -1,4 +1,5 @@
 <template>
+  <Toast />
   <div
     class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card rounded-lg group overflow-hidden basis-full h-[17.875rem] w-full flex-col tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
@@ -55,6 +56,8 @@ import Tag from '@/components/event_components/Tag.vue'
 import DeleteForm from './DeleteForm.vue'
 import EditForm from './EditForm.vue'
 import EventModule from '@/models/event_model'
+import ToastManager from '@/manager/toaster_manager'
+import { useToast } from 'primevue/usetoast'
 
 const router = useRouter()
 const isEditing = ref(false);
@@ -63,12 +66,12 @@ const props = defineProps({
 })
 
 const hovered = ref(false)
+const toast = useToast();
 
 const save = async () => {
     const event  = {
         name: props.event.name,
         src: props.event.src,
-        expenses: props.event.expenses,
     };
     emit('updateEvent', event)
     isEditing.value = false
@@ -79,6 +82,7 @@ const emit = defineEmits(['deleteEvent','updateEvent'])
 
 const removeEvent = (event: Event) => {
   emit('deleteEvent', event)
+  ToastManager.showInfoToast(toast, "Event has been successfully deleted")
 }
 const goToAdminEventDescription = () => {
   router.push({ name: 'event_description', params: { id: event.value.id } })
