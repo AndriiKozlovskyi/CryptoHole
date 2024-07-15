@@ -17,7 +17,7 @@ import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
 import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
 import AdminLayout from '@/views/AdminLayout.vue'
 import AdminView from '@/views/AdminView.vue'
-import CreateProject from '@/components/admin_components/CreateProject.vue'
+import CreateProject from '@/components/admin_components/CreateEvent.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -35,24 +35,6 @@ const router = createRouter({
           name: 'register',
           component: RegisterView
         }
-      ]
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: AdminLayout,
-      children: [
-      {
-        path: 'events_management',
-        name: 'events_management',
-        component: AdminView
-
-      },
-      {
-        path: 'create_project',
-        name: 'create_project',
-        component: CreateProject
-      }
       ]
     },
     {
@@ -110,18 +92,25 @@ const router = createRouter({
         }
         await EventManager.loadAll()
         await SavedEventManager.loadAll()
+        await TagManager.loadAll()
       }
     },
-    {
-      path: '/admin',
-      name: 'admin',
-      children: [
       {
-        path: 'create_project',
-        name: 'create_project',
-        component: CreateProject
-      }
-      ],
+        path: '/admin',
+        name: 'admin',
+        component: AdminLayout,
+        children: [
+        {
+          path: 'events_management',
+          name: 'events_management',
+          component: AdminView
+        },
+        {
+          path: 'create_project',
+          name: 'create_project',
+          component: CreateProject
+        }
+        ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
