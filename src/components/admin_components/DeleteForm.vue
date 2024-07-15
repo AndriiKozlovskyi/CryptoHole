@@ -1,5 +1,5 @@
 <template>
-  <i class="pi pi-trash text-white hover:text-red-500 absolute top-5 right-5 cursor-pointer duration-300 " @click.stop="$emit('deleteEvent')" style="font-size: 1.5rem"></i>
+  <button class="pi pi-trash text-white absolute text-xl top-5 right-5 hover:text-red-500 duration-300" @click.stop="$emit('deleteEvent')" ></button>
 </template>
 
 <script setup lang="ts">

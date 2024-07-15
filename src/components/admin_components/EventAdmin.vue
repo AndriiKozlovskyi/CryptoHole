@@ -5,22 +5,22 @@
     @mouseleave="hovered = false"
     @click="goToAdminEventDescription"
   >
-    <div class="h-[10rem] w-full grow">
+    <div class="h-[10rem] w-full grow relative">
       <img
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
         :src="event?.src"
       />
+      <DeleteForm v-if="hovered" :event="event" @deleteEvent="removeEvent" />
+      <EditForm v-if="hovered" :event="event" @click="isEditing = true"/>
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
       <div class="flex flex-col space-y-1">
         <Tag v-for="tag in event?.tags" :key="tag.id" :tag="tag.name" />
-        <DeleteForm v-if="hovered" :event="event" @deleteEvent="removeEvent" />
       </div>
     </div>
 
     <div class="flex flex-col gap-2 mt-2 px-5">
       <div class="flex flex-row justify-between w-full rounded-full">
-        <EditForm v-if="hovered" :event="event" @click="isEditing = true"/>
         <p class="text-white text-[17px] apple-font" v-if="!isEditing">
           {{ event?.name }}
         </p>
