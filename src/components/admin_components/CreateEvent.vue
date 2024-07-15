@@ -3,7 +3,7 @@
     <div class="bg-background-color justify-center items-center flex w-[22rem] h-[39rem] rounded-2xl flex-col space-y-2 relative">
       <div class="flex flex-row items-center justify-center mb-8">
         <button class="pi pi-arrow-left text-[#4619bd] text-[1.3rem] hover:text-[#4c12b2] duration-300 cursor-pointer absolute left-[0rem] flex self-center" @click="goToAdminPage"></button>
-        <h1 class="text-white text-2xl font-semiboldn apple-font">Create a project</h1>
+        <h1 class="text-white text-2xl font-semiboldn apple-font">Create an event</h1>
       </div>
       <MyInput class="w-[20rem] h-[2.5rem] rounded-md" placeholder="Name" type="text" v-model="name" />
       <MultiSelect v-model="tag" :options="tags" optionLabel="name" filter placeholder="Select Tags" :maxSelectedLabels="3" class="text-white bg-primary-item-color w-full" />
@@ -11,7 +11,7 @@
       <MyInput class="w-[20rem] h-[2.5rem] rounded-md" placeholder="Image Link" type="text" v-model="image" />
       <div class="flex flex-row justify-between w-full">
         <button label="Clear" class="rounded-lg hover:bg-gray-600 px-6 py-2 apple-font bg-hover-primary-item-color text-white" @click="resetForm">Clear</button>
-        <button label="Save" class="rounded-lg hover:bg-[#4619bd] px-6 py-2 apple-font bg-[#4c12b2] text-white" @click="createProject">Save</button>
+        <button label="Save" class="rounded-lg hover:bg-[#4619bd] px-6 py-2 apple-font bg-[#4c12b2] text-white" @click="createEvent">Save</button>
       </div>
     </div>
   </div>
@@ -25,7 +25,6 @@ import ToastManager from '@/manager/toaster_manager';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import LocalStorageManager from '@/manager/local_storage_manager';
-import { ProjectRequest } from '@/dtos/requests/project_request';
 import TagManager from '@/manager/tag_manager';
  
 const router = useRouter();
@@ -50,7 +49,7 @@ const goToAdminPage = () => {
   router.push("/admin");
 };
 
-const createProject = () => {
+const createEvent = () => {
   const linkPattern = /^(https?:\/\/)?[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
   const numberPattern = /^[0-9]+(\.[0-9]+)?$/;
   const letterPattern = /^[a-zA-Z]+$/;
@@ -76,16 +75,16 @@ const createProject = () => {
   }
   const tagRequests: number[] = tag.value.map(_tag => _tag.id);
 
-  const project: ProjectRequest = {
+  const event: EventRequest = {
     name: name.value,
     tagsIds: tagRequests,
     expenses: Number(expenses.value),
     src: image.value,
     participants: 0
   }
-  LocalStorageManager.createProject(project);
+  LocalStorageManager.createEvent(Event);
 
-  ToastManager.showSuccessToast(toast, "You've been successfully created a project"); 
+  ToastManager.showSuccessToast(toast, "You've been successfully created an event"); 
   resetForm();
 }
 </script>
