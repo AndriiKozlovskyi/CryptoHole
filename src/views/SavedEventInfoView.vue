@@ -61,17 +61,22 @@ const link = ref()
 const calculateDepositsSum = () => {
     let depositGeneral = 0;
     for(let i = 0 ; i < event.value.accounts.length; i ++) {
-        const deposit = event.value.accounts[i].outcome;
-        depositGeneral += deposit;
+        const deposits = event.value.accounts[i].deposits;
+        for(let j = 0; j < deposits.length; j ++) {
+            depositGeneral += deposits[j].amount;
+        }
     }
     return depositGeneral;
 }
 
+
 const calculateIncomeSum = () => {
     let incomeGeneral = 0;
     for(let i = 0 ; i < event.value.accounts.length; i ++) {
-        const income = event.value.accounts[i].income - event.value.accounts[i].outcome;
-        incomeGeneral += income;
+        const incomes = event.value.accounts[i].incomes;
+        for(let j = 0; j < incomes.length; j ++) {
+            incomeGeneral += incomes[j].amount;
+        }
     }
     return incomeGeneral;
 }
@@ -100,7 +105,6 @@ const getEndDate = (event) => {
 const updateEventLink = async () => {
     const _event = event.value;
     _event.link = link.value;
-    console.log(_event)
 
     await SavedEventManager.update(_event.id, _event);
 }

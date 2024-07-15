@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
-import Managment from '@/views/Managment.vue'
+import ManagmentView from '@/views/ManagmentView.vue'
 import GuidesView from '@/views/GuidesView.vue'
 import NewsView from '@/views/NewsView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -48,7 +48,7 @@ const router = createRouter({
         {
           path: 'managment',
           name: 'managment',
-          component: Managment,
+          component: ManagmentView,
           children: [
             {
               path: ':id/event_info',
