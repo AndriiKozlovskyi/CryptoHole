@@ -59,12 +59,12 @@ const itemClicked = () => {
 
 const itemClass = computed(() => {
   let baseClass =
-    'flex flex-col items-center cursor-pointer justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-[#4619bd]'
+    'flex flex-col items-center cursor-pointer justify-center w-[2.5rem] h-[2.5rem] rounded-full m-2 font-bold hover:bg-hover-purple'
   if (props.isCurrentDay) {
     // baseClass += ' bg-[#6b6c72] text-white'
     baseClass += ' bg-white text-black'
   } else if (props.selected) {
-    baseClass += ' text-white hover:bg-[#4619bd] bg-[#4c12b2] inner-shadow'
+    baseClass += ' text-white hover:bg-hover-purple bg-purple inner-shadow'
   } else if (props.isOtherMonth) {
     baseClass += ' text-gray-400'
   } else {

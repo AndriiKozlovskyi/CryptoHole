@@ -5,17 +5,22 @@
         <table>
             <thead class="top-0 bg-primary-item-color sticky w-full">
                 <tr>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'paid' || 'waiting' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'monetized' || event.status ===  'rewarded' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
                     <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]`">Deposit</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'waiting'">Rewards</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'paid'">Withdraw</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'paid'">Income</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'rewarded'">
+                        <div class="flex flex-row items-center">
+                            <p>Rewards</p>
+                            <AccountInput placeholder="token"/>
+                        </div>
+                    </th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'monetized'">Withdraw</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'monetized'">Income</th>
                 </tr>
             </thead>
             <tbody>
                 <AccountForm v-for="account in event.accounts" :key="account.id" :account="account" :event="event"/>
                 <AccountCreationForm v-if="creationFormVisible" :id="event.id" v-on-click-outside="hideCreationForm"/>
-                <div class="flex flex-row cursor-pointer hover:bg-[#4619bd] items-center space-x-3 bg-opacity-70 w-full px-4 py-2" @click="showCreationForm">
+                <div class="flex flex-row cursor-pointer hover:bg-hover-purple items-center space-x-3 bg-opacity-70 w-full px-4 py-2" @click="showCreationForm">
                     <i class="text-white pi pi-plus"/>
                     <p class="text-white apple-font">add account</p>
                 </div>
@@ -34,6 +39,7 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import AccountManager from '@/manager/account_manager';
 import { emitter } from '@/event_bus';
+import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 
 defineProps({
     event: Object as PropType<SavedEvent>,
@@ -95,4 +101,4 @@ const confirm1 = () => {
     });
 };
 
-</script>onMounted, provide, import { emitter } from '@/event_bus';
+</script>

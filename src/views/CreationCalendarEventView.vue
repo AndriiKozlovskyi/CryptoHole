@@ -18,7 +18,7 @@
       />
       <MyButton 
         v-if="startDate != null"
-        class="flex hover:bg-[#4619bd] bg-[#4c12b2] apple-font items-center justify-center rounded-lg text-white cursor-pointer w-[9rem]"
+        class="flex hover:bg-hover-purple bg-purple apple-font items-center justify-center rounded-lg text-white cursor-pointer w-[9rem]"
         :class="{ [`inner-shadow`]: startSelecting }"
         @click="startSelecting = true; endSelecting = false;"
         :text="startDate?.toLocaleDateString()"
@@ -160,6 +160,7 @@ const save = async () => {
         0
       )
     ),
+    link: "",
     status: 'todo',
     orderNumber: 1,
     endDate: _endDate

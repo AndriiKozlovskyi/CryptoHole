@@ -8,13 +8,13 @@
           <div class="flex flex-row space-x-3 mr-3">
             <button
               @click="changeMonth(-1)"
-              class="bg-[#1c1d20] text-white items-center justify-center px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
+              class="bg-[#1c1d20] text-white items-center justify-center px-1 shadow-lg rounded-full hover:bg-hover-purple"
             >
               <i class="pi pi-angle-left" />
             </button>
             <button
               @click="changeMonth(1)"
-              class="bg-[#1c1d20] text-white px-1 shadow-lg rounded-full hover:bg-[#4619bd]"
+              class="bg-[#1c1d20] text-white px-1 shadow-lg rounded-full hover:bg-hover-purple"
             >
               <i class="pi pi-angle-right" />
             </button>

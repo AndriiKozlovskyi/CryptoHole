@@ -1,10 +1,11 @@
 <template>
     <div class="flex flex-row">
       <select class="my-select apple-font bg-[#424149] bg-opacity-70 p-1 text-white hover:bg-[#35343a] cursor-pointer rounded-lg"
-              id="status"
-              v-model="selectedStatus"
-              @change="updateValue"
-              @click.stop>
+        id="status"
+        v-model="selectedStatus"
+        @change="updateValue"
+        @click.stop
+      >
         <option v-for="_status in statuses" :key="_status" :value="_status">
           {{ _status }}
         </option>
@@ -22,9 +23,9 @@
   
   const statuses = [
     'todo',
-    'progress',
-    'waiting',
-    'paid',
+    'deposited',
+    'rewarded',
+    'revenue',
     'failed'
   ];
   

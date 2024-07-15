@@ -2,10 +2,14 @@
     <td class="px-2 py-2" v-on-click-outside="hideDepositInput" @keyup.enter="newDeposit">
         <div class="flex flex-col h-full items-start ">
 
-            <div class="flex flex-row space-x-4 items-center" v-if="!showAll">
+            <div class="flex flex-row space-x-2 items-center" v-if="!showAll">
                 <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalDepositAmount }} $</p>
-                <AccountInput v-if="depositInputVisible" type="number" placeholder="new deposit" v-model="deposit"/>
-                <i class="pi pi-plus text-white" @click.stop="showDepositInput" v-if="!depositInputVisible"/>
+                <AccountInput ref="depositInputRef" v-if="depositInputVisible" type="number" placeholder="new deposit" v-model="deposit"/>
+                <i 
+                    class="pi pi-plus px-1 py-1 text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 
+                    @click.stop="showDepositInput" v-if="!depositInputVisible"
+                    style="font-size: 0.8rem;"
+                />
             </div>
             <table>
                 <tbody v-if="showAll">
@@ -20,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, computed } from 'vue';
+import { defineProps, defineEmits, ref, computed, nextTick } from 'vue';
 import DateUtils from '@/utils/date_utils';
 import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 import DepositResponse from '@/dtos/responses/deposit_response';
@@ -35,12 +39,15 @@ const props = defineProps({
 
 const emit = defineEmits(['toggleInput', 'updateDeposit', 'newDeposit']);
 
-const totalDepositAmount = computed(() => props.deposits!.reduce((sum, deposit) => sum + (deposit.amount || 0), 0));
+const totalDepositAmount = computed(() => props.deposits?.reduce((sum, deposit) => sum + (deposit.amount || 0), 0));
 const deposit = ref();
 const depositInputVisible = ref(false);
+const depositInputRef = ref(null);
 
-const showDepositInput = () => {
+const showDepositInput = async () => {
     depositInputVisible.value = true;
+    await nextTick();
+    depositInputRef.value.focus();
 };
 
 const hideDepositInput = () => {

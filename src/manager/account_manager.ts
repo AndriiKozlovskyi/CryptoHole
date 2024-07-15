@@ -61,7 +61,8 @@ export default class AccountManager {
       id: accountResponse.id,
       name: accountResponse.name,
       deposits: accountResponse.deposits,
-      incomes: accountResponse.incomes
+      withdraws: accountResponse.withdraws,
+      rewards: accountResponse.rewards,
     }
   }
 }

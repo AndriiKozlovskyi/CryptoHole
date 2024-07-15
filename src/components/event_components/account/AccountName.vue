@@ -30,4 +30,6 @@ const edit = () => emit('edit');
 const copy = async () => {
     await navigator.clipboard.writeText(props.name!);
     ToastManager.showInfoToast(toast, "address copied")
-}</script>
+}
+
+</script>

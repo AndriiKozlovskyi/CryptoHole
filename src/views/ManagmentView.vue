@@ -36,16 +36,16 @@ const toast = useToast();
 const events = computed(() => SavedEventManager.all())
 
 const todoEvents = computed(() => events.value.filter((event) => event.status === 'todo'))
-const progressEvents = computed(() => events.value.filter((event) => event.status === 'progress'))
-const waitingEvents = computed(() => events.value.filter((event) => event.status === 'waiting'))
-const paidEvents = computed(() => events.value.filter((event) => event.status === 'paid'))
+const progressEvents = computed(() => events.value.filter((event) => event.status === 'deposited'))
+const waitingEvents = computed(() => events.value.filter((event) => event.status === 'rewarded'))
+const paidEvents = computed(() => events.value.filter((event) => event.status === 'revenue'))
 const failedEvents = computed(() => events.value.filter((event) => event.status === 'failed'))
 
 const statusContainers = ref([
   { id: 'todo', name: 'TODO', events: todoEvents },
-  { id: 'progress', name: 'DEPOSITED', events: progressEvents },
-  { id: 'waiting', name: 'OBTAINED REWARDS', events: waitingEvents },
-  { id: 'paid', name: 'MONETIZED', events: paidEvents },
+  { id: 'deposited', name: 'DEPOSITED', events: progressEvents },
+  { id: 'rewarded', name: 'REWARDED', events: waitingEvents },
+  { id: 'revenue', name: 'REVENUE', events: paidEvents },
   { id: 'failed', name: 'FAILED', events: failedEvents }
 ])
 

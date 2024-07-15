@@ -17,11 +17,21 @@
             placeholder="deposited"
             />
         </td>
+
+        <td v-if="status === 'waiting'" >
+            <MyInput
+            ref="rewardRef"
+            class="w-8"
+            v-model="reward"
+            type="number"
+            placeholder="reward"
+            />
+        </td>
         <td v-if="status === 'paid'">        
             <MyInput
-            ref="incomeRef"
+            ref="withdrawRef"
             class=""
-            v-model="income"
+            v-model="withdraw"
             type="number"
             placeholder="withdrawed"
             />
@@ -44,11 +54,13 @@ const props = defineProps({
 
 const nameOrWallet = ref('');
 const deposit = ref();
-const income = ref();
+const withdraw = ref();
+const reward = ref();
 
 const nameOrWalletRef = ref(null);
 const outcomeRef = ref(null);
-const incomeRef = ref(null);
+const rewardRef = ref(null);
+const withdrawRef = ref(null);
 const event = computed(() =>  SavedEventManager.getById(props.id));
 const status = ref(event.value.status);
 
@@ -56,7 +68,7 @@ const save = async () => {
 const account = {
     name: nameOrWallet.value,
     deposits: [{amount: deposit.value, date: DateUtils.formatDate(new Date())}],
-    incomes: [{amount: income.value, date: DateUtils.formatDate(new Date())}],
+    withdraws: [{amount: withdraw.value, date: DateUtils.formatDate(new Date())}],
 };
 await AccountManager.createAccount(props.id, account);
 cleanForm();
@@ -68,6 +80,8 @@ const handleEnter = async (event) => {
     } else if (event.target === outcomeRef.value.$refs.input && deposit.value && status.value === 'paid') {
         incomeRef.value.$refs.input.focus();
     } else if (event.target === outcomeRef.value.$refs.input && deposit.value && status.value !== 'paid'){
+        save();
+    } else if (event.target === rewardRef.value.$refs.input && reward.value && status.value === 'waiting'){
         save();
     }
     else if (event.target === incomeRef.value.$refs.input && income.value && status.value === 'paid'){

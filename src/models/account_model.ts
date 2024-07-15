@@ -1,5 +1,6 @@
 import DepositResponse from '@/dtos/responses/deposit_response'
-import IncomeResponse from '@/dtos/responses/income_response'
+import RewardResponse from '@/dtos/responses/reward_response'
+import WithdrawResponse from '@/dtos/responses/withdraw_response'
 import { Model } from 'pinia-orm'
 
 export default class Account extends Model {
@@ -10,12 +11,14 @@ export default class Account extends Model {
       id: this.number(null),
       name: this.string(''),
       deposits: this.attr(null),
-      incomes: this.attr(null),
+      withdraws: this.attr(null),
+      rewards: this.attr(null)
     }
   }
 
   declare id: number
   declare name: string
   declare deposits: Array<DepositResponse>
-  declare incomes: Array<IncomeResponse>
+  declare withdraws: Array<WithdrawResponse>
+  declare rewards: Array<RewardResponse>
 }

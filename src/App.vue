@@ -27,6 +27,8 @@ body,
   --primary-item-color: #1e1f24;
   --hover-item-color: #28292e;
   --secondary-text-color: #98989d;
+  --purple: #522e91;
+  --hover-purple: #5f45a5;
   font-family:
     Inter,
     Helvetica Rounded,

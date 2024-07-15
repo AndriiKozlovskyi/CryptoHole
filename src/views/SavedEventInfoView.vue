@@ -3,14 +3,14 @@
         <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
             <SavedEventHeader :event="event" @close="close"/>
             <div class="flex flex-row justify-between items-center px-3">
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'paid'">
+                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'monetized'">
                     <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
                 </div>
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'paid'">
+                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'monetized'">
                     <p class="text-white apple-font">Event Inome: {{ calculateIncomeSum() }} $</p>
                 </div>
             </div>
-            <div class="flex flex-row justify-between items-center px-4 w-[12rem] ">
+            <div class="flex flex-row justify-between items-center px-3 w-[12rem] ">
                 <LinkInput v-if="event.link === null" placeholder="Specify event link" v-model="link" @keypress.enter="updateEventLink"/>
                 <a v-else :href="event.link" target="_blank" class="flex flex-row items-center text-blue-300 space-x-1">
                     <i class="pi pi-link text-secondary-text-color"></i>
@@ -73,9 +73,9 @@ const calculateDepositsSum = () => {
 const calculateIncomeSum = () => {
     let incomeGeneral = 0;
     for(let i = 0 ; i < event.value.accounts.length; i ++) {
-        const incomes = event.value.accounts[i].incomes;
-        for(let j = 0; j < incomes.length; j ++) {
-            incomeGeneral += incomes[j].amount;
+        const withdraws = event.value.accounts[i].withdraws;
+        for(let j = 0; j < withdraws.length; j ++) {
+            incomeGeneral += withdraws[j].amount;
         }
     }
     return incomeGeneral;
