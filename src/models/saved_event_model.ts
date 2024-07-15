@@ -10,6 +10,7 @@ export default class SavedEvent extends Model {
       name: this.string(''),
       event: this.number(0),
       status: this.string(''),
+      link: this.string(''),
       accounts: this.attr(Array<Account>),
       orderNumber: this.number(0),
       startDate: this.string(''),
@@ -21,6 +22,7 @@ export default class SavedEvent extends Model {
   declare name: string
   declare event: number
   declare status: string
+  declare link: string
   declare accounts: Array<Account>
   declare orderNumber: number
   declare startDate: string

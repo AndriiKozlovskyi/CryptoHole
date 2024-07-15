@@ -1,0 +1,59 @@
+<template>
+    <td class="px-2 py-2" v-on-click-outside="hideDepositInput" @keyup.enter="newDeposit">
+        <div class="flex flex-col h-full items-start ">
+
+            <div class="flex flex-row space-x-4 items-center" v-if="!showAll">
+                <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalDepositAmount }} $</p>
+                <AccountInput v-if="depositInputVisible" type="number" placeholder="new deposit" v-model="deposit"/>
+                <i class="pi pi-plus text-white" @click.stop="showDepositInput" v-if="!depositInputVisible"/>
+            </div>
+            <table>
+                <tbody v-if="showAll">
+                    <tr class="flex flex-row items-center space-x-3 py-1" v-for="deposit in deposits" :key="deposit.date" >
+                        <td class="apple-font text-secondary-text-color text-[13px]">{{ DateUtils.stringToDate(deposit.date) }}</td>
+                        <td class="text-white">{{ deposit.amount }} $</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>    
+    </td>
+</template>
+
+<script setup lang="ts">
+import { defineProps, defineEmits, ref, computed } from 'vue';
+import DateUtils from '@/utils/date_utils';
+import AccountInput from '@/components/basic_components/input/AccountInput.vue';
+import DepositResponse from '@/dtos/responses/deposit_response';
+import { vOnClickOutside } from '@vueuse/components'
+import DepositRequest from '@/dtos/requests/deposit_request';
+
+const props = defineProps({
+    deposits: Array<DepositResponse>,
+    showAll: Boolean,
+
+});
+
+const emit = defineEmits(['toggleInput', 'updateDeposit', 'newDeposit']);
+
+const totalDepositAmount = computed(() => props.deposits!.reduce((sum, deposit) => sum + (deposit.amount || 0), 0));
+const deposit = ref();
+const depositInputVisible = ref(false);
+
+const showDepositInput = () => {
+    depositInputVisible.value = true;
+};
+
+const hideDepositInput = () => {
+    depositInputVisible.value = false;
+};
+const updateDeposit = () => {
+
+}
+
+const newDeposit = () => {
+    const depositValue: DepositRequest = { amount: deposit.value, date: DateUtils.formatDate(new Date()) }
+    emit('newDeposit', depositValue);
+    hideDepositInput();
+}
+
+</script>

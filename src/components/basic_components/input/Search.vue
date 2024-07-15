@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center bg-primary-item-color rounded-full">
-    <i class="pi pi-search text-white ml-4" />
+  <div class="flex flex-row items-center bg-hover-primary-item-color px-4 rounded-full">
+    <i class="pi pi-search text-white" />
     <MyInput placeholder="Search" />
   </div>
 </template>

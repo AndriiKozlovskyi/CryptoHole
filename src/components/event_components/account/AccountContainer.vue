@@ -5,8 +5,9 @@
         <table>
             <thead class="top-0 bg-primary-item-color sticky w-full">
                 <tr>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'paid' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'paid' || 'waiting' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
                     <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]`">Deposit</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'waiting'">Rewards</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'paid'">Withdraw</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'paid'">Income</th>
                 </tr>
@@ -24,8 +25,8 @@
 </template>
 <script setup lang="ts">
 import { PropType, onMounted, provide, ref } from 'vue';
-import AccountForm from "@/components/event_components/AccountForm.vue";
-import AccountCreationForm from '@/components/event_components/AccountCreationForm.vue';
+import AccountForm from "@/components/event_components/account/AccountForm.vue";
+import AccountCreationForm from '@/components/event_components/account/AccountCreationForm.vue';
 import { vOnClickOutside } from '@vueuse/components'
 import SavedEvent from '@/models/saved_event_model';
 import ContextMenu from 'primevue/contextmenu'

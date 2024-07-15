@@ -43,9 +43,9 @@ const failedEvents = computed(() => events.value.filter((event) => event.status 
 
 const statusContainers = ref([
   { id: 'todo', name: 'TODO', events: todoEvents },
-  { id: 'progress', name: 'IN PROGRESS', events: progressEvents },
-  { id: 'waiting', name: 'WAITING FOR PAYMENT', events: waitingEvents },
-  { id: 'paid', name: 'PAID', events: paidEvents },
+  { id: 'progress', name: 'DEPOSITED', events: progressEvents },
+  { id: 'waiting', name: 'OBTAINED REWARDS', events: waitingEvents },
+  { id: 'paid', name: 'MONETIZED', events: paidEvents },
   { id: 'failed', name: 'FAILED', events: failedEvents }
 ])
 

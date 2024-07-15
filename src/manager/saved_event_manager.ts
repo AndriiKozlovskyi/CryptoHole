@@ -8,7 +8,6 @@ import SavedEventApi from '@/api/saved_event_api'
 import SavedEventRequest from '@/dtos/requests/saved_event_request'
 import EventApi from '@/api/event_api'
 import EventManager from './event_manager'
-import EventRequest from '@/dtos/requests/event_request'
 
 export default class SavedEventManager {
   protected static get repository() {
@@ -48,6 +47,7 @@ export default class SavedEventManager {
   }
 
   static async update(id: number, _savedEvent: SavedEventRequest) {
+    console.log(_savedEvent)
     const event = await SavedEventApi.updateSavedEvent(id, _savedEvent)
     const savedEventRequest: SavedEventRequest = event.data;
     this.repository.where('id', id).update(savedEventRequest)
@@ -56,7 +56,7 @@ export default class SavedEventManager {
   static async loadAll() {
     const response = await SavedEventApi.allSavedEvents()
     const savedEvents = this.getFormatedSavedEvents(response.data)
-
+    console.log(savedEvents)
     this.repository.save(savedEvents)
   }
 
@@ -113,6 +113,7 @@ export default class SavedEventManager {
       id: savedEventResponse.id,
       name: savedEventResponse.name,
       event: savedEventResponse.event,
+      link: savedEventResponse.link,
       status: savedEventResponse.status,
       accounts: AccountManager.getFormattedAccounts(savedEventResponse.accounts),
       orderNumber: savedEventResponse.orderNumber,

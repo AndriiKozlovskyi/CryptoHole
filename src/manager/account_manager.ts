@@ -31,7 +31,6 @@ export default class AccountManager {
   static async loadAll(savedEventId: number) {
     const response = await AccountApi.allAccounts(savedEventId)
     const accounts = this.getFormattedAccounts(response.data)
-
     this.repository.save(accounts)
   }
 
@@ -61,8 +60,8 @@ export default class AccountManager {
     return {
       id: accountResponse.id,
       name: accountResponse.name,
-      outcome: accountResponse.outcome,
-      income: accountResponse.income
+      deposits: accountResponse.deposits,
+      incomes: accountResponse.incomes
     }
   }
 }
