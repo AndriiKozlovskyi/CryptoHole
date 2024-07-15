@@ -17,7 +17,8 @@ import EditingCalendarEventView from '@/views/EditingCalendarEventView.vue'
 import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
 import AdminLayout from '@/views/AdminLayout.vue'
 import AdminView from '@/views/AdminView.vue'
-import CreateProject from '@/components/admin_components/CreateEvent.vue'
+import CreateEvent from '@/components/admin_components/CreateEvent.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -106,9 +107,8 @@ const router = createRouter({
           component: AdminView
         },
         {
-          path: 'create_project',
-          name: 'create_project',
-          component: CreateProject
+          path: 'create_event',
+          component: CreateEvent
         }
         ],
       beforeEnter: async (to) => {
