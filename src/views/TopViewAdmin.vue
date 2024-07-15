@@ -4,7 +4,7 @@
         {{ capitalizedName }}
       </div>
       <div class="">
-        <TabMenu />
+        <TabMenuAdmin />
       </div>
       <div class="row-span-2 text-white">
         <ProfileImage />
@@ -12,7 +12,7 @@
     </div>
   </template>
   <script setup lang="ts">
-  import TabMenu from '@/components/menu/TabMenu.vue'
+  import TabMenuAdmin from '@/components/admin_components/TabMenuAdmin.vue';
   import { computed } from 'vue'
   import { useRoute } from 'vue-router'
   import ProfileImage from '@/components/header/ProfileImage.vue'
