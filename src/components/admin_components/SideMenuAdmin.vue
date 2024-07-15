@@ -12,10 +12,10 @@
         <!-- <MenuItem1 name="Marketplace" path="saved_projects">
           <i class="pi pi-shop" />
         </MenuItem1> -->
-        <MenuItemAdmin name="Guides" path="guides">
+        <MenuItemAdmin name="Guides Management" path="guides">
           <i class="pi pi-book" />
         </MenuItemAdmin>
-        <MenuItemAdmin name="News" path="news">
+        <MenuItemAdmin name="News Management" path="news">
           <i class="pi pi-megaphone" />
         </MenuItemAdmin>
       </div>
