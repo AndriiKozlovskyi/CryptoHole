@@ -101,8 +101,8 @@ const router = createRouter({
         component: AdminLayout,
         children: [
         {
-          path: 'events_management',
-          name: 'events_management',
+          path: 'event_management',
+          name: 'event management',
           component: AdminView
         },
         {
