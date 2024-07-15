@@ -2,7 +2,7 @@
   <div class="flex flex-row justify-center w-full">
     <div class="w-full grid grid-cols-3 gap-10 overflow-y-hidden">
       <EventAdmin v-for="event in events" :event="event" :key="event.id" @deleteEvent="removeEvent(event)" @updateEvent="editEvent(event)"/>
-      <CreateEventButton @click="$router.push('/admin/create_project')"/>
+      <CreateEventButton/>
       </div>
     </div>
 </template>
