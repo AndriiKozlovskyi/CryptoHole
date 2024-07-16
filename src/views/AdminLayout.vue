@@ -13,6 +13,6 @@
 </template>
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import SideMenuAdmin from '@/components/admin_components/SideMenuAdmin.vue';
-import TopViewAdmin from '@/views/TopViewAdmin.vue';
+import SideMenuAdmin from '@/components/admin_components/AdminSideMenu.vue';
+import TopViewAdmin from '@/views/AdminTopView.vue';
 </script>

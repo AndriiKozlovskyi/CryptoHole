@@ -20,8 +20,7 @@ const removeEvent = async (event: Event) => {
 const editEvent = async (event: Event) => {
   const updateEventData = {
     name: event.name,
-    image: event.props.src,
-    expenses: event.expenses,
+    image: event.src,
     tag: event.tags,
   }
   await EventManager.update(event.id, updateEventData)

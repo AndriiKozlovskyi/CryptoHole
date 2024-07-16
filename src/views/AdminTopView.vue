@@ -12,7 +12,7 @@
     </div>
   </template>
   <script setup lang="ts">
-  import TabMenuAdmin from '@/components/admin_components/TabMenuAdmin.vue';
+  import TabMenuAdmin from '@/components/admin_components/AdminTabMenu.vue';
   import { computed } from 'vue'
   import { useRoute } from 'vue-router'
   import ProfileImage from '@/components/header/ProfileImage.vue'
