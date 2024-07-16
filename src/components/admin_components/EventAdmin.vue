@@ -9,7 +9,7 @@
     <div class="h-[10rem] w-full grow relative">
       <img
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
-        :src="event?.src"
+        :src="event?.src" v-if="!isEditing"
       />
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
@@ -28,7 +28,7 @@
         <p class="text-white text-[17px] apple-font" v-if="!isEditing">
           {{ event?.name }}
         </p>
-        <input v-if="isEditing" v-model="event.name" @click.stop="emit('updateEvent')" @keyup.enter="save" type="text" placeholder="Name of the event"/>
+        <MyInput v-if="isEditing" class="w-[13rem] h-[2rem]" v-model="event.name" @click.stop="emit('updateEvent')" @keyup.enter="save" type="text" placeholder="Name of the event"/>
         <div class="h-full flex items-center">
           <i class="pi pi-share-alt text-secondary-text-color" />
         </div>
@@ -58,6 +58,7 @@ import EditForm from './EditForm.vue'
 import EventModule from '@/models/event_model'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
+import MyInput from '../basic_components/input/MyInput.vue'
 
 const router = useRouter()
 const isEditing = ref(false);
@@ -72,6 +73,9 @@ const save = async () => {
     const event  = {
         name: props.event.name,
         src: props.event.src,
+        startDate: props.event.startDate,
+        endDate:props.event.endDate,
+        tags:props.event.tags
     };
     emit('updateEvent', event)
     isEditing.value = false

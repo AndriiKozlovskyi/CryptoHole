@@ -11,6 +11,8 @@ import { computed } from 'vue'
 import EventAdmin from './EventAdmin.vue';
 import EventManager from '@/manager/event_manager';
 import CreateEventButton from './CreateEventButton.vue';
+import type Event from '@/models/event_model'
+import type EventRequest from '@/dtos/requests/event_request';
 
 const events = computed(() => EventManager.all())
 
@@ -18,10 +20,12 @@ const removeEvent = async (event: Event) => {
   await EventManager.deleteEvent(event.id)
 }
 const editEvent = async (event: Event) => {
-  const updateEventData = {
+  const updateEventData: EventRequest = {
     name: event.name,
-    image: event.src,
-    tag: event.tags,
+    src: event.src,
+    tagsIds: event.tags.map(tag => tag.id),
+    startDate: event.startDate,
+    endDate: event.endDate
   }
   await EventManager.update(event.id, updateEventData)
 }
