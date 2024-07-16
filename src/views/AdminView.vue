@@ -4,6 +4,7 @@
         <div class="flex flex-col w-full items-center space-y-6">
           <AdminEventsContainer />
           <HelpButton />
+          <RouterView />
         </div>
       </div>
     </div>
