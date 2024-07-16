@@ -5,10 +5,10 @@
             <div class="flex flex-row justify-between px-3">
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'revenue'">
-                        <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
+                        <p class="text-white apple-font">Total Spent: {{ depositsSum }} $</p>
                     </div>
                     <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'revenue'">
-                        <p class="text-white apple-font">Event Inome: {{ calculateIncomeSum() }} $</p>
+                        <p class="text-white apple-font">Event Inome: {{ clearIncome }} $</p>
                     </div>
                 </div>
                 <div class="flex flex-row justify-between items-center px-3 w-[12rem]">
@@ -66,7 +66,7 @@ const event = computed(() => SavedEventManager.getById(props.id));
 const link = ref()
 const rewardType = ref();
 
-const calculateDepositsSum = () => {
+const depositsSum = computed(() => {
     let depositGeneral = 0;
     for(let i = 0 ; i < event.value.accounts.length; i ++) {
         const deposits = event.value.accounts[i].deposits;
@@ -75,10 +75,9 @@ const calculateDepositsSum = () => {
         }
     }
     return depositGeneral;
-}
+});
 
-
-const calculateIncomeSum = () => {
+const incomesSum = computed(() => {
     let incomeGeneral = 0;
     for(let i = 0 ; i < event.value.accounts.length; i ++) {
         const withdraws = event.value.accounts[i].withdraws;
@@ -87,7 +86,12 @@ const calculateIncomeSum = () => {
         }
     }
     return incomeGeneral;
-}
+});
+
+const clearIncome = computed(() => {
+    return incomesSum.value - depositsSum.value;
+})
+
 
 const isButtonVisible = (event) => {
     if (getStartDate(event) === null && getEndDate(event) === null) {
