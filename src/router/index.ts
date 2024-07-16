@@ -18,6 +18,7 @@ import CreationCalendarEventView from '@/views/CreationCalendarEventView.vue'
 import AdminLayout from '@/views/AdminLayout.vue'
 import AdminView from '@/views/AdminView.vue'
 import CreateEvent from '@/components/admin_components/CreateEvent.vue'
+import AdminEventDescriptionView from '@/views/AdminEventDescriptionView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -109,6 +110,12 @@ const router = createRouter({
         {
           path: 'create_event',
           component: CreateEvent
+        },
+        {
+          path: 'event_management/id:/event_description',
+          name: 'admin_event_description',
+          component: AdminEventDescriptionView,
+          props: true
         }
         ],
       beforeEnter: async (to) => {
