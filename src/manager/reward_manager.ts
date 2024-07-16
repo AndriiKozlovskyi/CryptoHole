@@ -59,7 +59,6 @@ export default class RewardManager {
   private static getFormattedreward(rewardResponse: RewardResponse) {
     return {
       id: rewardResponse.id,
-      token: rewardResponse.token,
       account: rewardResponse.account,
       amount: rewardResponse.amount,
       date: rewardResponse.date,

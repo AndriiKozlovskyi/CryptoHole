@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full items-center flex-row bg-hover-primary-item-color rounded-lg">
+    <div class="flex w-full items-center flex-row">
     <i class="pi pi-link ml-1 text-blue-400 absolute"/>
       <input
         :placeholder="placeholder"
@@ -8,7 +8,7 @@
         @input="$emit('update:modelValue', $event.target.value)"
         :value="modelValue"
         ref="input"
-        class="ml-3 bg-hover-primary-item-color text-[16px] apple-font rounded-lg w-[10rem] text-white px-3 py-1"
+        class="ml-3 bg-transparent text-[16px] apple-font border-b border-white w-[10rem] text-white px-3 py-1"
         @focusout.self="$emit('focusout')"
         @focusin.self="$emit('focusin')"
       />

@@ -1,20 +1,17 @@
 <template>
-    <div class="flex flex-col h-[21.3rem] overflow-y-auto w-full">
+    <div class="flex flex-col w-full h-[21.3rem] overflow-auto">
         <ContextMenu :model="items" ref="contextMenu"/>
 
         <table>
-            <thead class="top-0 bg-primary-item-color sticky w-full">
+            <thead class="top-0 sticky bg-primary-item-color">
                 <tr>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'monetized' || event.status ===  'rewarded' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]`">Deposit</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'rewarded'">
-                        <div class="flex flex-row items-center">
-                            <p>Rewards</p>
-                            <AccountInput placeholder="token"/>
-                        </div>
-                    </th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'monetized'">Withdraw</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'monetized'">Income</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'revenue' || event.status ===  'rewarded' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%] ${event.status ===  'rewarded' ? 'w-[40%]' : 'w-[20%]'}`">Deposit</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'rewarded'">Rewards</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'revenue'">Withdraw</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'revenue'">Income</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2"></th>
+
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +36,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import AccountManager from '@/manager/account_manager';
 import { emitter } from '@/event_bus';
-import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 
 defineProps({
     event: Object as PropType<SavedEvent>,
@@ -71,7 +67,7 @@ onMounted(() => {
 })
 
 const items = ref([
-  { label: 'Delete', icon: 'pi pi-trash', command: async () => confirm1() }
+  { label: 'Delete', icon: 'pi pi-trash', command: async () => confirm1() },
 ])
 
 
@@ -102,3 +98,10 @@ const confirm1 = () => {
 };
 
 </script>
+<style>
+tbody {
+    height: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+</style>

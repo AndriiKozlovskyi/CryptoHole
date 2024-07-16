@@ -2,20 +2,26 @@
     <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center z-[102]">
         <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
             <SavedEventHeader :event="event" @close="close"/>
-            <div class="flex flex-row justify-between items-center px-3">
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'monetized'">
-                    <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
+            <div class="flex flex-row justify-between px-3">
+                <div class="flex flex-row justify-between items-center">
+                    <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'revenue'">
+                        <p class="text-white apple-font">Total Spent: {{ calculateDepositsSum() }} $</p>
+                    </div>
+                    <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'revenue'">
+                        <p class="text-white apple-font">Event Inome: {{ calculateIncomeSum() }} $</p>
+                    </div>
                 </div>
-                <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'monetized'">
-                    <p class="text-white apple-font">Event Inome: {{ calculateIncomeSum() }} $</p>
+                <div class="flex flex-row justify-between items-center px-3 w-[12rem]">
+                    <LinkInput v-if="event.link === null" placeholder="Specify event link" v-model="link" @keypress.enter="updateEventLink"/>
+                    <a v-else :href="event.link" target="_blank" class="flex flex-row items-center text-blue-300 space-x-1">
+                        <i class="pi pi-link text-secondary-text-color"></i>
+                        <p>link to event</p>
+                    </a>
                 </div>
-            </div>
-            <div class="flex flex-row justify-between items-center px-3 w-[12rem] ">
-                <LinkInput v-if="event.link === null" placeholder="Specify event link" v-model="link" @keypress.enter="updateEventLink"/>
-                <a v-else :href="event.link" target="_blank" class="flex flex-row items-center text-blue-300 space-x-1">
-                    <i class="pi pi-link text-secondary-text-color"></i>
-                    <p>link to event</p>
-                </a>
+                <div class="flex flex-row items-center px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'rewarded'">
+                    <AccountInput v-if="event.rewardType === '' || event.rewardType === null" placeholder="Reward Token Name" v-model="rewardType" @keypress.enter="updateEventRewardType"/>
+                    <p class="text-white apple-font" v-else>Reward: {{ event.rewardType }}</p>
+                </div>
             </div>
             <div class="flex flex-row w-full py-10 px-4">
                 <AccountContainer :event="event"/>
@@ -43,6 +49,7 @@ import { useRouter } from 'vue-router';
 import MyButton from '@/components/basic_components/MyButton.vue';
 import LinkInput from '@/components/basic_components/input/LinkInput.vue';
 import DateUtils from '@/utils/date_utils';
+import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 
 const router = useRouter();
 
@@ -57,6 +64,7 @@ const close = () => {
 const event = computed(() => SavedEventManager.getById(props.id));
 
 const link = ref()
+const rewardType = ref();
 
 const calculateDepositsSum = () => {
     let depositGeneral = 0;
@@ -105,6 +113,13 @@ const getEndDate = (event) => {
 const updateEventLink = async () => {
     const _event = event.value;
     _event.link = link.value;
+
+    await SavedEventManager.update(_event.id, _event);
+}
+
+const updateEventRewardType = async () => {
+    const _event = event.value;
+    _event.rewardType = rewardType.value;
 
     await SavedEventManager.update(_event.id, _event);
 }

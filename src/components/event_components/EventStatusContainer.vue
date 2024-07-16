@@ -19,9 +19,11 @@
       <SavedEventCreationForm :status="id" v-if="creationFormVisible" @save="save" v-on-click-outside="hideCreationForm"/>
       <div 
         @click="createProject"
-        class="flex flex-row apple-font hover:bg-[#4619bd] space-x-3 cursor-pointer items-center justify-center w-full h-[2rem] text-center text-white py-1" v-if="hovered">
-        <i class="pi pi-plus"/>
-        <p>create event</p>
+        class="h-[2rem]">
+        <div class="flex flex-row apple-font hover:bg-hover-purple space-x-3 cursor-pointer items-center justify-center w-full text-center text-white py-1" v-if="hovered">
+          <i class="pi pi-plus"/>
+          <p>create event</p>
+        </div>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ export default interface SavedEventResponse {
   accounts: AccountResponse[]
   orderNumber: number
   link: string
+  rewardType: string
   startDate: string
   endDate: string
 }

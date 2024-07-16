@@ -33,7 +33,6 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-
 const currentDate = ref()
 const previousDate = ref<{ date: Date; weekDay: string }>()
 const selectedDate = ref<{ date: Date; weekDay: string }>()

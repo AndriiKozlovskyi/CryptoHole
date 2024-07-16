@@ -184,6 +184,7 @@ const save = async () => {
     startDate: formattedStartDate,
     endDate: formattedEndDate,
     status: event.value.status,
+    rewardType: "",
     orderNumber: event.value.orderNumber,
   });
   emptyForm();

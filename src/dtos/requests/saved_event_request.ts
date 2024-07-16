@@ -4,5 +4,6 @@ export default interface SavedEventRequest {
   orderNumber: number
   link: string
   startDate: string
+  rewardType: string
   endDate: string
 }

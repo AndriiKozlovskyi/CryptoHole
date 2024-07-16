@@ -3,11 +3,12 @@
         <div class="flex flex-col h-full items-start ">
 
             <div class="flex flex-row space-x-2 items-center" v-if="!showAll">
-                <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalDepositAmount }} $</p>
+                <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalDepositAmount }}</p>
                 <AccountInput ref="depositInputRef" v-if="depositInputVisible" type="number" placeholder="new deposit" v-model="deposit"/>
                 <i 
                     class="pi pi-plus px-1 py-1 text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 
-                    @click.stop="showDepositInput" v-if="!depositInputVisible"
+                    @click.stop="showDepositInput"
+                    v-if="!depositInputVisible && hovered"
                     style="font-size: 0.8rem;"
                 />
             </div>
@@ -34,13 +35,18 @@ import DepositRequest from '@/dtos/requests/deposit_request';
 const props = defineProps({
     deposits: Array<DepositResponse>,
     showAll: Boolean,
-
+    hovered: Boolean,
 });
 
 const emit = defineEmits(['toggleInput', 'updateDeposit', 'newDeposit']);
+const totalDepositAmount = computed(() => {
+  if (!props.deposits || props.deposits.length === 0) {
+    return 'no deposits';
+  }
+  return props.deposits.reduce((sum, withdraw) => sum + (withdraw.amount || 0), 0) + " $";
+});
 
-const totalDepositAmount = computed(() => props.deposits?.reduce((sum, deposit) => sum + (deposit.amount || 0), 0));
-const deposit = ref();
+const deposit = ref(null);
 const depositInputVisible = ref(false);
 const depositInputRef = ref(null);
 
@@ -58,7 +64,13 @@ const updateDeposit = () => {
 }
 
 const newDeposit = () => {
-    const depositValue: DepositRequest = { amount: deposit.value, date: DateUtils.formatDate(new Date()) }
+    let amount = null;
+    let date = null;
+    if(deposit.value !== null) {
+        amount = deposit.value
+        date = DateUtils.formatDate(new Date());
+    }
+    const depositValue: DepositRequest = { amount: amount, date: date };
     emit('newDeposit', depositValue);
     hideDepositInput();
 }

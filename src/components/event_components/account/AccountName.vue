@@ -1,32 +1,50 @@
 <template>
-    <td>
-        <div class="flex flex-row space-x-4 items-center">
-            <p v-if="!editing" class="text-secondary-text-color text-[18px] font-apple cursor-pointer hover:text-white px-2 py-2" @click.stop="copy">
+    <td class="px-2 py-2">
+        <div class="flex flex-row items-center space-x-3" v-on-click-outside="stopEditing" @keypress.enter="save">
+            <p v-if="!isEditing" class="text-secondary-text-color text-center text-[18px] font-apple cursor-pointer hover:text-white" @click.stop="copy">
                 {{ name }}
             </p>
-            <AccountInput v-if="editing" v-model="name"/>
+            <i v-if="hovered && !isEditing" class="text-white pi pi-pencil hover:text-secondary-text-color" @click="edit"/>
+            <AccountInput v-if="isEditing" ref="nameRef" v-model="name"/>
         </div>
     </td>
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineProps, defineEmits, ref, nextTick } from 'vue';
 import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
+import { vOnClickOutside } from '@vueuse/components'
 
 const toast = useToast()
 
 const props = defineProps({
     name: String,
-    editing: Boolean,
+    hovered: Boolean
 });
 
-const emit = defineEmits(['edit', 'copy']);
+const emit = defineEmits(['update']);
 
 const name = ref(props.name);
+const nameRef = ref(null);
+const isEditing = ref(false);
 
-const edit = () => emit('edit');
+const edit = async () => {
+    isEditing.value = true;
+    await nextTick();
+    nameRef.value.focus();
+};
+
+const save = () => {
+    emit('update', name.value);
+    stopEditing();
+}
+
+const stopEditing = () => {
+    isEditing.value = false;
+}
+
 const copy = async () => {
     await navigator.clipboard.writeText(props.name!);
     ToastManager.showInfoToast(toast, "address copied")

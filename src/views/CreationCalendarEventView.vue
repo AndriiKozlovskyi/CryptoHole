@@ -160,6 +160,7 @@ const save = async () => {
         0
       )
     ),
+    rewardType: "",
     link: "",
     status: 'todo',
     orderNumber: 1,

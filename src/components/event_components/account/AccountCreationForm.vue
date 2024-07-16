@@ -1,5 +1,5 @@
 <template>
-    <tr class="w-[100%] bg-hover-primary-item-color" @keyup.enter="handleEnter">
+    <tr class="bg-hover-primary-item-color" @keyup.enter="handleEnter">
         <td>   
             <MyInput
             ref="nameOrWalletRef"
@@ -10,7 +10,7 @@
     
         <td >
             <MyInput
-            ref="outcomeRef"
+            ref="depositRef"
             class="w-8"
             v-model="deposit"
             type="number"
@@ -18,7 +18,7 @@
             />
         </td>
 
-        <td v-if="status === 'waiting'" >
+        <td v-if="status === 'rewarded'" >
             <MyInput
             ref="rewardRef"
             class="w-8"
@@ -27,16 +27,16 @@
             placeholder="reward"
             />
         </td>
-        <td v-if="status === 'paid'">        
+        <td v-if="status === 'revenue'">        
             <MyInput
             ref="withdrawRef"
-            class=""
+            class="w-8"
             v-model="withdraw"
             type="number"
             placeholder="withdrawed"
             />
         </td>
-        <td v-if="status === 'paid'">        
+        <td v-if="status === 'revenue'">        
         </td>
     </tr>
 </template>
@@ -53,41 +53,54 @@ const props = defineProps({
 });
 
 const nameOrWallet = ref('');
-const deposit = ref();
-const withdraw = ref();
-const reward = ref();
+const deposit = ref(null);
+const withdraw = ref(null);
+const reward = ref(null);
 
 const nameOrWalletRef = ref(null);
-const outcomeRef = ref(null);
+const depositRef = ref(null);
 const rewardRef = ref(null);
 const withdrawRef = ref(null);
 const event = computed(() =>  SavedEventManager.getById(props.id));
 const status = ref(event.value.status);
 
 const save = async () => {
-const account = {
-    name: nameOrWallet.value,
-    deposits: [{amount: deposit.value, date: DateUtils.formatDate(new Date())}],
-    withdraws: [{amount: withdraw.value, date: DateUtils.formatDate(new Date())}],
+    const deposits = getFinancesInfo(deposit.value);
+    const rewards = getFinancesInfo(reward.value);
+    const withdraws = getFinancesInfo(withdraw.value);
+
+    const account = {
+        name: nameOrWallet.value,
+        deposits: deposits,
+        rewards: rewards,
+        withdraws: withdraws,
+    };
+
+    await AccountManager.createAccount(props.id, account);
+    cleanForm();
 };
-await AccountManager.createAccount(props.id, account);
-cleanForm();
-};
+
+const getFinancesInfo = (value: number | null) => {
+    if (value === null) {
+        return [];
+    }
+    return [{amount: value, date: DateUtils.formatDate(new Date)}];
+}
 
 const handleEnter = async (event) => {
     if (event.target === nameOrWalletRef.value.$refs.input && nameOrWallet.value) {
-        outcomeRef.value.$refs.input.focus();
-    } else if (event.target === outcomeRef.value.$refs.input && deposit.value && status.value === 'paid') {
-        incomeRef.value.$refs.input.focus();
-    } else if (event.target === outcomeRef.value.$refs.input && deposit.value && status.value !== 'paid'){
-        save();
-    } else if (event.target === rewardRef.value.$refs.input && reward.value && status.value === 'waiting'){
+        depositRef.value.$refs.input.focus();
+        return;
+    } else if (event.target === depositRef.value.$refs.input && status.value === 'revenue') {
+        withdrawRef.value.$refs.input.focus();
+        return;
+    } else if (event.target === depositRef.value.$refs.input && status.value === 'rewarded') {
+        rewardRef.value.$refs.input.focus();
+        return;
+    } else {
         save();
     }
-    else if (event.target === incomeRef.value.$refs.input && income.value && status.value === 'paid'){
-        save();
-    }
-};
+}
 
 onMounted(async () => {
     nameOrWalletRef.value.focus();
@@ -96,7 +109,8 @@ onMounted(async () => {
 const cleanForm = () => {
     nameOrWallet.value = null;
     deposit.value = null;
-    income.value = null;
+    withdraw.value = null;
+    reward.value = null;
     nameOrWalletRef.value.focus();
 }
 
