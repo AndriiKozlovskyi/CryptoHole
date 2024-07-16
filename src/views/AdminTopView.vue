@@ -4,7 +4,7 @@
         {{ capitalizedName }}
       </div>
       <div class="">
-        <TabMenuAdmin />
+        <AdminTabMenu />
       </div>
       <div class="row-span-2 text-white">
         <ProfileImage />
@@ -12,15 +12,18 @@
     </div>
   </template>
   <script setup lang="ts">
-  import TabMenuAdmin from '@/components/admin_components/AdminTabMenu.vue';
+  import AdminTabMenu from '@/components/admin_components/AdminTabMenu.vue';
   import { computed } from 'vue'
   import { useRoute } from 'vue-router'
   import ProfileImage from '@/components/header/ProfileImage.vue'
   
-  const router = useRoute()
+  const route = useRoute()
   const capitalizedName = computed(() => {
-    const routeName = router.matched[1].name || ''
-    return routeName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    const routeName = route.matched[0].name || ''
+    if(route.path.includes('admin/event_management')) {
+      return "Event Management"
+    }
+    return routeName.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
   })
   </script>
   
