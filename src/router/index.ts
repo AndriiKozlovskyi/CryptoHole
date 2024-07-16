@@ -86,7 +86,6 @@ const router = createRouter({
           component: EventDescriptionView,
           props: true
         },
-       
       ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
@@ -97,27 +96,31 @@ const router = createRouter({
         await TagManager.loadAll()
       }
     },
-      {
-        path: '/admin',
-        name: 'admin',
-        component: AdminLayout,
-        children: [
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminLayout,
+      children: [
         {
           path: 'event_management',
-          name: 'event management',
-          component: AdminView
+          name: 'event_management',
+          component: AdminView,
+          children: [ 
+            {
+              path: ':id/event_description',
+              name: 'admin_event_description',
+              component: AdminEventDescriptionView,
+              props: true
+            },
+            {
+              path: 'create_event',
+              name: 'create_event',
+              component: CreateEvent
+            },
+          ]
+          
         },
-        {
-          path: 'create_event',
-          component: CreateEvent
-        },
-        {
-          path: 'event_management/id:/event_description',
-          name: 'admin_event_description',
-          component: AdminEventDescriptionView,
-          props: true
-        }
-        ],
+      ],
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }
