@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-screen w-[15rem] bg-[#1c1d20] top-0 items-center justify-between">
+    <div class="flex flex-col h-screen w-[15rem] bg-[#1c1d20] top-0 justify-between">
       <div class="flex flex-col items-center justify-center w-full">
         <img src="/Logo.png" width="100px" height="100px" />
         <p class="text-white font-semibold text-[30px]">WIPE</p>

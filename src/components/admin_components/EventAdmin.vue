@@ -85,7 +85,7 @@ const removeEvent = (event: Event) => {
   ToastManager.showInfoToast(toast, "Event has been successfully deleted")
 }
 const goToAdminEventDescription = () => {
-  router.push({ name: 'event_description', params: { id: event.value.id } })
+  router.push({ name: 'admin_event_description', params: { id: props.event.id } })
 }
 </script>
 <style>
