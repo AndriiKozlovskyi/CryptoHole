@@ -38,6 +38,8 @@
         </td>
         <td v-if="status === 'revenue'">        
         </td>
+        <td>        
+        </td>
     </tr>
 </template>
 

@@ -3,24 +3,21 @@
         <ContextMenu :model="items" ref="contextMenu"/>
 
         <table>
-            <thead class="top-0 sticky bg-primary-item-color">
+            <thead class="top-0 sticky bg-primary-item-color w-full">
                 <tr>
                     <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'revenue' || event.status ===  'rewarded' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
                     <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%] ${event.status ===  'rewarded' ? 'w-[40%]' : 'w-[20%]'}`">Deposit</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'rewarded'">Rewards</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'revenue'">Withdraw</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'revenue'">Income</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2"></th>
-
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2"> 
+                        <i class="text-white pi pi-plus rounded-full bg-purple px-1 py-1 text-center cursor-pointer hover:bg-hover-purple" @click="showCreationForm"/>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <AccountForm v-for="account in event.accounts" :key="account.id" :account="account" :event="event"/>
                 <AccountCreationForm v-if="creationFormVisible" :id="event.id" v-on-click-outside="hideCreationForm"/>
-                <div class="flex flex-row cursor-pointer hover:bg-hover-purple items-center space-x-3 bg-opacity-70 w-full px-4 py-2" @click="showCreationForm">
-                    <i class="text-white pi pi-plus"/>
-                    <p class="text-white apple-font">add account</p>
-                </div>
+                <AccountForm v-for="account in event.accounts" :key="account.id" :account="account" :event="event"/>
             </tbody>
         </table>
     </div>
