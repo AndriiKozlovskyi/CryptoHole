@@ -44,7 +44,7 @@ const props = defineProps({
 const emit = defineEmits(['toggleInput', 'updateDeposit', 'newDeposit']);
 const totalDepositAmount = computed(() => {
   if (!props.deposits || props.deposits.length === 0) {
-    return 'no deposits';
+    return '-';
   }
   return props.deposits.reduce((sum, withdraw) => sum + (withdraw.amount || 0), 0) + " $";
 });

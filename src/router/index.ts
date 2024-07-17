@@ -49,14 +49,6 @@ const router = createRouter({
           path: 'managment',
           name: 'managment',
           component: ManagmentView,
-          children: [
-            {
-              path: ':id/event_info',
-              name: 'event_info',
-              component: SavedEventInfoView,
-              props: true
-            },
-          ]
         },
         {
           path: 'calendar',
@@ -84,6 +76,19 @@ const router = createRouter({
         },
        
       ],
+      beforeEnter: async (to) => {
+        if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
+          return { name: 'login' }
+        }
+        await EventManager.loadAll()
+        await SavedEventManager.loadAll()
+      }
+    },
+    {
+      path: '/:id/event_info',
+      name: 'event_info',
+      component: SavedEventInfoView,
+      props: true,
       beforeEnter: async (to) => {
         if (!(await AuthManager.isTokenValid()) && to.path !== '/auth/login') {
           return { name: 'login' }

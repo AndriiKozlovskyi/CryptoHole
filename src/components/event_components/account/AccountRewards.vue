@@ -45,7 +45,7 @@ const emit = defineEmits(['toggleInput', 'updateReward', 'newReward']);
 
 const totalRewardAmount = computed(() => {
   if (!props.rewards || props.rewards.length === 0) {
-    return 'no rewards';
+    return '-';
   }
   return props.rewards.reduce((sum, withdraw) => sum + (withdraw.amount || 0), 0) + " " + props.rewardType;
 });

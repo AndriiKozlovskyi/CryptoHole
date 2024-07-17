@@ -5,6 +5,7 @@ import Task from '@/models/task_model'
 import TaskApi from '@/api/task_api'
 import TaskResponse from '@/dtos/responses/task_response'
 import TaskRequest from '@/dtos/requests/task_request'
+import SavedEventManager from './saved_event_manager'
 export default class TaskManager {
   protected static get repository() {
     return useRepo(Task, store)
@@ -35,7 +36,7 @@ export default class TaskManager {
   static async createTask(eventId: number, task: TaskRequest) {
     const taskResponse = await TaskApi.createTask(eventId, task)
     const taskResult = this.getFormatedTask(taskResponse.data)
-
+    await SavedEventManager.loadAll();
     this.repository.save(taskResult)
   }
 
@@ -56,7 +57,8 @@ export default class TaskManager {
     return {
       id: taskResponse.id,
       header: taskResponse.header,
-      description: taskResponse.description
+      description: taskResponse.description,
+      completed: taskResponse.completed
     }
   }
 }

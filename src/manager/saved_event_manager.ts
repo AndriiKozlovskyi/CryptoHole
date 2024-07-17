@@ -8,6 +8,7 @@ import SavedEventApi from '@/api/saved_event_api'
 import SavedEventRequest from '@/dtos/requests/saved_event_request'
 import EventApi from '@/api/event_api'
 import EventManager from './event_manager'
+import TaskManager from './task_manager'
 
 export default class SavedEventManager {
   protected static get repository() {
@@ -115,6 +116,7 @@ export default class SavedEventManager {
       status: savedEventResponse.status,
       rewardType: savedEventResponse.rewardType,
       accounts: AccountManager.getFormattedAccounts(savedEventResponse.accounts),
+      tasks: TaskManager.getFormatedTasks(savedEventResponse.tasks),
       orderNumber: savedEventResponse.orderNumber,
       startDate: savedEventResponse.startDate,
       endDate: savedEventResponse.endDate

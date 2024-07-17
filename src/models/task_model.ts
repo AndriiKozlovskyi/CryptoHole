@@ -7,11 +7,13 @@ export default class Task extends Model {
     return {
       id: this.number(null),
       header: this.string(''),
-      description: this.string('')
+      description: this.string(''),
+      completed: this.boolean(false),
     }
   }
 
   declare id: number
   declare header: string
   declare description: string
+  declare completed: boolean
 }

@@ -6,7 +6,6 @@ import EventRequest from '@/dtos/requests/event_request'
 import EventApi from '@/api/event_api'
 import EventResponse from '@/dtos/responses/event_response'
 import UserManager from './user_manager'
-import TaskManager from './task_manager'
 export default class EventManager {
   static get repository() {
     return useRepo(Event, store)
@@ -75,7 +74,6 @@ export default class EventManager {
       tags: TagManager.getFormatedTags(eventResponse.tags),
       participants: UserManager.getFormatedUsers(eventResponse.participants),
       src: eventResponse.src,
-      tasks: TaskManager.getFormatedTasks(eventResponse.tasks),
       saved: eventResponse.saved,
       startDate: eventResponse.startDate,
       endDate: eventResponse.endDate,

@@ -7,13 +7,10 @@
     >
         <AccountName :name="account.name" :hovered="hovered" @update="updateName"/>
         <td class="text-white apple-font">
-                <p class="text-secondary-text-color" v-if="!expand">expand</p>
-                <div class="text-secondary-text-color" v-if="expand">
-                    <p><input type="checkbox"/> Deposit 100$</p>
-                    <p><input type="checkbox"/> Earn 5000 trading volume</p>
-                    <p><input type="checkbox"/> Participate Splash</p>
-                    <p><input type="checkbox"/> Withdraw funds</p>
-                </div>
+            <p class="text-secondary-text-color" v-if="!expand">expand</p>
+            <div class="text-secondary-text-color" v-if="expand">
+                <p v-for="task in tasks" :key="task.id"><input type="checkbox" v-model="task.completed" @input="onCheckboxChange(task)"/> {{ task.header }}</p>
+            </div>
         </td>
         <AccountDeposits :deposits="account?.deposits" @new-deposit="createDeposit" :show-all="expand" :hovered="hovered"/>
         <AccountRewards :rewards="account?.rewards" @new-reward="createReward" :rewardType="event.rewardType" :show-all="expand" :hovered="hovered"/>
@@ -47,6 +44,7 @@ import AccountRewards from "@/components/event_components/account/AccountRewards
 import RewardRequest from '@/dtos/requests/reward_request';
 import RewardManager from '@/manager/reward_manager';
 import AccountManager from '@/manager/account_manager';
+import TaskManager from '@/manager/task_manager';
 
 const props = defineProps({
     account: Object as PropType<Account>,
@@ -59,6 +57,14 @@ const clearIncome = computed(() => totalWithdrawAmount.value - totalDepositAmoun
 
 const deposits = ref(props.account?.deposits);
 const withdraws = ref(props.account?.withdraws)
+const tasks = ref(props.account.tasks);
+
+const onCheckboxChange = (task) => {
+    const _task = task;
+    _task.completed = !task.completed;
+    TaskManager.update(task.id, _task)
+
+}
 
 const totalDepositAmount = computed(() => {
     return deposits.value?.reduce((sum, deposit) => {

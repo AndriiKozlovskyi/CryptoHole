@@ -1,7 +1,8 @@
 <template>
-    <div class="flex flex-col fixed w-full left-0 h-full top-0 items-center justify-center z-[102]">
-        <div class="fixed w-5/6 flex h-full flex-col bg-primary-item-color rounded-md gap-y-3">
-            <SavedEventHeader :event="event" @close="close"/>
+    <div class="fixed flex flex-col w-full h-full bg-primary-item-color items-center justify-center overflow-auto">
+        <SavedEventHeader :event="event" @close="close"/>
+
+        <div class="w-full flex h-full flex-col mt-36 rounded-md gap-y-3">
             <MyButton v-if="event.accounts.length === 0" text="Auto Create Accounts" @on-click="autoCreationFormVisible = true"/>
             <div 
                 class="flex flex-col space-y-10 absolute self-center justify-self-center rounded-md bg-background-color z-[102] px-20 py-5"
@@ -33,14 +34,12 @@
             </div>
             <div class="text-white apple-font p-4">
                 <p class="text-[20px]">TODOLIST</p>
-                <div class="text-secondary-text-color">
-                    <p>- Make a deposit 100$</p>
-                    <p>- Earn 5000 trading volume</p>
-                    <p>- Participate Splash</p>
-                    <p>- Withdraw funds</p>
+                <div class="text-secondary-text-color" @keypress.enter="createTask">
+                    <p v-for="task in event.tasks" :key="task.id">- {{ task.header }}</p>
+                    <AccountInput v-model="todo" placeholder="new task"/>
                 </div>
             </div>
-            <div class="flex flex-row w-full h-[40rem] px-4">
+            <div class="flex flex-row w-full h-[45rem] px-4">
                 <AccountContainer :event="event"/>
             </div>
             <div class="w-full flex flex-row p-4 justify-between">
@@ -52,8 +51,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center bg-black opacity-50 z-[101]">
     </div>
 </template>
 
@@ -69,6 +66,7 @@ import DateUtils from '@/utils/date_utils';
 import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 import AccountManager from '@/manager/account_manager';
 import { vOnClickOutside } from '@vueuse/components'
+import TaskManager from '@/manager/task_manager';
 
 const router = useRouter();
 
@@ -85,7 +83,13 @@ const event = computed(() => SavedEventManager.getById(props.id));
 const link = ref()
 const rewardType = ref();
 const autoCreationFormVisible = ref(false);
+const todo = ref();
 const acconutAmountToCreate = ref(null);
+
+const createTask = async () => {
+    await TaskManager.createTask(event.value.id, { header: todo.value, description: "", completed: false });
+    todo.value = "";
+}
 
 const depositsSum = computed(() => {
     let depositGeneral = 0;
@@ -168,6 +172,4 @@ const createManyAccounts = async (amount: number) => {
         await AccountManager.createAccount(props.id, account);
     }
 }
-
-
 </script>

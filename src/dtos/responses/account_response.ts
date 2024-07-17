@@ -1,5 +1,6 @@
 import DepositResponse from "./deposit_response"
 import RewardResponse from "./reward_response"
+import TaskResponse from "./task_response"
 import WithdrawResponse from "./withdraw_response"
 
 export default interface AccountResponse {
@@ -8,4 +9,5 @@ export default interface AccountResponse {
   deposits: Array<DepositResponse>
   withdraws: Array<WithdrawResponse>
   rewards: Array<RewardResponse>
+  tasks: Array<TaskResponse>
 }

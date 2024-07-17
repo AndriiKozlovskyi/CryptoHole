@@ -41,7 +41,7 @@ const emit = defineEmits(['toggleWithdraw', 'updateWithdraw', 'newWithdraw']);
 
 const totalWithdrawAmount = computed(() => {
   if (!props.withdraws || props.withdraws.length === 0) {
-    return 'no withdraws';
+    return '-';
   }
   return props.withdraws.reduce((sum, withdraw) => sum + (withdraw.amount || 0), 0) + " $";
 });

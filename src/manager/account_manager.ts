@@ -63,6 +63,7 @@ export default class AccountManager {
       deposits: accountResponse.deposits,
       withdraws: accountResponse.withdraws,
       rewards: accountResponse.rewards,
+      tasks: accountResponse.tasks
     }
   }
 }

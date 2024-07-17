@@ -1,5 +1,6 @@
 import { Model } from 'pinia-orm'
 import Account from './account_model'
+import Task from './task_model'
 
 export default class SavedEvent extends Model {
   static entity = 'saved_event'
@@ -12,6 +13,7 @@ export default class SavedEvent extends Model {
       status: this.string(''),
       link: this.string(''),
       accounts: this.attr(Array<Account>),
+      tasks: this.attr(Array<Task>),
       orderNumber: this.number(0),
       rewardType: this.string(''),
       startDate: this.string(''),
@@ -25,6 +27,7 @@ export default class SavedEvent extends Model {
   declare status: string
   declare link: string
   declare accounts: Array<Account>
+  declare tasks: Array<Task>
   declare orderNumber: number
   declare rewardType: string
   declare startDate: string
