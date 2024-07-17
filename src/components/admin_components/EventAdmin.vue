@@ -37,20 +37,15 @@
       <hr class="w-full border-secondary-text-color opacity-25" />
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
-        <div
-          class="h-full flex items-center text-secondary-text-color font-medium text-[14px] space-x-1"
-        >
-          <p>
-            {{ new Date(event.startDate).toLocaleDateString() }} -
-            {{ new Date(event.endDate).toLocaleDateString() }}
-          </p>
+        <div class="flex items-center justify-center z-[1000]">
+           <VueDatePicker v-model="date" range v-if="isEditing" :dark="true" :class="calendar_theme"/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import {PropType, ref } from 'vue'
+import {PropType, ref} from 'vue'
 import { useRouter } from 'vue-router'
 import ParticipantsForm from '@/components/event_components/ParticipantsForm.vue'
 import Tag from '@/components/event_components/Tag.vue'
@@ -60,7 +55,9 @@ import EventModule from '@/models/event_model'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
 import MyInput from '../basic_components/input/MyInput.vue'
+import VueDatePicker from '@vuepic/vue-datepicker';
 
+const date = ref();
 const router = useRouter()
 const isEditing = ref(false);
 const props = defineProps({
@@ -92,6 +89,9 @@ const removeEvent = (event: Event) => {
 const goToAdminEventDescription = () => {
   router.push({ name: 'admin_event_description', params: { id: props.event.id } })
 }
+
+
+
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
@@ -127,5 +127,44 @@ const goToAdminEventDescription = () => {
 .quest-image {
   -webkit-mask-image: linear-gradient(180deg, #000, transparent 99%);
   mask-image: linear-gradient(180deg, #000, transparent 99%);
+}
+
+.calendar_theme {
+    --dp-background-color: #212121;
+    --dp-text-color: #fff;
+    --dp-hover-color: #484848;
+    --dp-hover-text-color: #fff;
+    --dp-hover-icon-color: #959595;
+    --dp-primary-color: #005cb2;
+    --dp-primary-disabled-color: #61a8ea;
+    --dp-primary-text-color: #fff;
+    --dp-secondary-color: #a9a9a9;
+    --dp-border-color: #2d2d2d;
+    --dp-menu-border-color: #2d2d2d;
+    --dp-border-color-hover: #aaaeb7;
+    --dp-border-color-focus: #aaaeb7;
+    --dp-disabled-color: #737373;
+    --dp-disabled-color-text: #d0d0d0;
+    --dp-scroll-bar-background: #212121;
+    --dp-scroll-bar-color: #484848;
+    --dp-success-color: #00701a;
+    --dp-success-color-disabled: #428f59;
+    --dp-icon-color: #959595;
+    --dp-danger-color: #e53935;
+    --dp-marker-color: #e53935;
+    --dp-tooltip-color: #3e3e3e;
+    --dp-highlight-color: rgb(0 92 178 / 20%);
+    --dp-range-between-dates-background-color: var(--dp-hover-color, #484848);
+    --dp-range-between-dates-text-color: var(--dp-hover-text-color, #fff);
+    --dp-range-between-border-color: var(--dp-hover-color, #fff);
+}
+
+.dp__main {
+  position: absolute;
+  z-index: 9999;
+}
+
+.dp__outer_menu_wrap {
+  position: fixed;
 }
 </style>
