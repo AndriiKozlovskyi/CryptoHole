@@ -1,7 +1,7 @@
 <template>
     <td class="px-2 py-2" v-on-click-outside="hideWithdrawInput" @keyup.enter="newWithdraw">
         <div class="flex flex-row space-x-4 items-center" v-if="!showAll">
-            <p v-if="!withdrawInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalWithdrawAmount }}</p>
+            <p v-if="!withdrawInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-secondary-text-color font-apple">{{ totalWithdrawAmount }}</p>
             <AccountInput v-if="withdrawInputVisible" ref="incomeInputRef" type="number" placeholder="new income" v-model="withdraw"/>
             <i 
                 class="pi pi-plus px-1 py-1 text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 

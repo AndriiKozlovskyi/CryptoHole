@@ -2,6 +2,14 @@
     <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center z-[102]">
         <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
             <SavedEventHeader :event="event" @close="close"/>
+            <MyButton v-if="event.accounts.length === 0" text="Auto Create Accounts" @on-click="autoCreationFormVisible = true"/>
+            <div 
+                class="flex flex-col space-y-10 absolute self-center justify-self-center rounded-md bg-background-color z-[102] px-20 py-5"
+                v-if="autoCreationFormVisible"
+                v-on-click-outside="hideAutoCreationForm">
+                <AccountInput v-model="acconutAmountToCreate" placeholder="amount"/>
+                <MyButton @on-click="createManyAccounts(acconutAmountToCreate)" text="create"/>
+            </div>
             <div class="flex flex-row justify-between px-3">
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex flex-row px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status !== 'revenue'">
@@ -50,6 +58,8 @@ import MyButton from '@/components/basic_components/MyButton.vue';
 import LinkInput from '@/components/basic_components/input/LinkInput.vue';
 import DateUtils from '@/utils/date_utils';
 import AccountInput from '@/components/basic_components/input/AccountInput.vue';
+import AccountManager from '@/manager/account_manager';
+import { vOnClickOutside } from '@vueuse/components'
 
 const router = useRouter();
 
@@ -65,6 +75,8 @@ const event = computed(() => SavedEventManager.getById(props.id));
 
 const link = ref()
 const rewardType = ref();
+const autoCreationFormVisible = ref(false);
+const acconutAmountToCreate = ref(null);
 
 const depositsSum = computed(() => {
     let depositGeneral = 0;
@@ -88,10 +100,13 @@ const incomesSum = computed(() => {
     return incomeGeneral;
 });
 
+const hideAutoCreationForm = () => {
+    autoCreationFormVisible.value = false;
+}
+
 const clearIncome = computed(() => {
     return incomesSum.value - depositsSum.value;
 })
-
 
 const isButtonVisible = (event) => {
     if (getStartDate(event) === null && getEndDate(event) === null) {
@@ -131,5 +146,19 @@ const updateEventRewardType = async () => {
 const goToCalendar = () => {
     router.push({name: "edit_calendar_event", params: { id: props.id }})
 }
+
+const createManyAccounts = async (amount: number) => {
+    for (let i = 0; i < amount; i ++) {
+        const account = {
+            name: `acc${i + 1}`,
+            deposits: [],
+            rewards: [],
+            withdraws: [],
+        };
+
+        await AccountManager.createAccount(props.id, account);
+    }
+}
+
 
 </script>

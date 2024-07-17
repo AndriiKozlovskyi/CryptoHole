@@ -3,7 +3,7 @@
         <div class="flex flex-col h-full items-start ">
 
             <div class="flex flex-row space-x-2 items-center" v-if="!showAll">
-                <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ totalDepositAmount }}</p>
+                <p v-if="!depositInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-secondary-text-color font-apple">{{ totalDepositAmount }}</p>
                 <AccountInput ref="depositInputRef" v-if="depositInputVisible" type="number" placeholder="new deposit" v-model="deposit"/>
                 <i 
                     class="pi pi-plus px-1 py-1 text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 
