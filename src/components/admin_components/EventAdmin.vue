@@ -38,7 +38,7 @@
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
         <div class="w-[15rem]">
-          <VueDatePicker v-model="dates" range v-if="!isEditing" :dark="true" :teleport="true"/>
+          <VueDatePicker v-model="dates" range v-if="!isEditing" class="custom_datepicker" position="center" required :esc-close="true" :arrow-navigation="true" :dark="true" :teleport="true"/>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
 import MyInput from '../basic_components/input/MyInput.vue'
 import VueDatePicker from '@vuepic/vue-datepicker';
-const dates=ref()
+import addDays from 'date-fns/addDays';
 
 const router = useRouter()
 const isEditing = ref(false);
@@ -79,7 +79,6 @@ const save = async () => {
     emit('updateEvent', event)
     isEditing.value = false
 };
-
 
 const emit = defineEmits(['deleteEvent','updateEvent'])
 
@@ -104,6 +103,35 @@ const goToAdminEventDescription = () => {
 //   })
 // })
 
+// :markers="markers"
+// const markers = ref([
+//   {
+//     date: addDays(new Date(), 1),
+//     type: 'dot',
+//     tooltip: [{ text: 'Dot with tooltip', color: 'green' }],
+//   },
+//   {
+//     date: addDays(new Date(), 2),
+//     type: 'line',
+//     tooltip: [
+//       { text: 'First tooltip', color: 'blue' },
+//       { text: 'Second tooltip', color: 'yellow' },
+//     ],
+//   },
+//   {
+//     date: addDays(new Date(), 3),
+//     type: 'dot',
+//     color: 'yellow',
+//   },
+// ])
+
+//:highlight="highlightedDates"
+// const date = ref(new Date());
+// const highlightedDates = ref([
+//   addDays(new Date(), 1),
+//   addDays(new Date(), 2),
+//   addDays(new Date(), 3),
+// ])
 
 </script>
 <style>
@@ -141,5 +169,9 @@ const goToAdminEventDescription = () => {
   -webkit-mask-image: linear-gradient(180deg, #000, transparent 99%);
   mask-image: linear-gradient(180deg, #000, transparent 99%);
 }
-
+.custom_datepicker {
+  --dp-border-radius: 10px; 
+  --dp-cell-border-radius: 10px;
+  --dp-common-transition: all 0.1s ease-in; 
+}
 </style>
