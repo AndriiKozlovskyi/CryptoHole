@@ -10,7 +10,7 @@
         <p v-if="identifierEmpty" class="text-red-500 text-[12px] apple-font px-3">
           * Username cannot be empty
         </p>
-        <MyInput
+        <RoundedInput
           v-model="credentials.identifier"
           placeholder="Username or email"
           @focusin="identifierEmpty = false"
@@ -26,7 +26,11 @@
           @focusin="passwordEmpty = false"
         />
       </div>
-      <MyButton class="mt-2 w-1/2" text="Login" @onClick="tryLogin">Login</MyButton>
+      <div class="flex items-center w-full">
+        <input type="checkbox" id="rememberMe" v-model="rememberMe" class="mr-2" />
+        <label for="rememberMe" class="text-secondary-text-color apple-font">Remember Me</label>
+      </div>
+      <MyButton class="w-full" text="Login" @onClick="tryLogin">Login</MyButton>
       <span class="text-[12px] text-center text-white cursor-pointer">
         Don't have an account?
         <a href="/auth/register" class="underline"> Register </a>
@@ -35,11 +39,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import MyInput from '@/components/basic_components/input/MyInput.vue'
+import RoundedInput from '@/components/basic_components/input/RoundedInput.vue'
 import AuthManager from '@/manager/auth_manager'
 import MyButton from '@/components/basic_components/MyButton.vue'
 import PasswordInput from '@/components/basic_components/input/PasswordInput.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
@@ -53,6 +57,7 @@ const credentials = reactive({
 })
 const identifierEmpty = ref(false)
 const passwordEmpty = ref(false)
+const rememberMe = ref(false)
 
 const tryLogin = async () => {
   if (credentials.identifier === '') {
@@ -64,8 +69,23 @@ const tryLogin = async () => {
   if (credentials.identifier === '' || credentials.password === '') {
     return
   }
+  if (rememberMe.value) {
+    localStorage.setItem('credentials', JSON.stringify(credentials))
+  } else {
+    localStorage.removeItem('credentials')
+  }
   await AuthManager.login(credentials.identifier, credentials.password)
   ToastManager.showSuccessToast(toast, 'You have logged in!')
   router.push('/home/events')
 }
+
+onMounted(() => {
+  const savedCredentials = localStorage.getItem('credentials')
+  if (savedCredentials) {
+    const parsedCredentials = JSON.parse(savedCredentials)
+    credentials.identifier = parsedCredentials.identifier
+    credentials.password = parsedCredentials.password
+    rememberMe.value = true
+  }
+})
 </script>

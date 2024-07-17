@@ -10,7 +10,7 @@
         <p v-if="usernameEmpty" class="text-red-500 text-[12px] apple-font px-3">
           * Username cannot be empty
         </p>
-        <MyInput
+        <RoundedInput
           v-model="credentials.username"
           placeholder="Username"
           @focusout="usernameValidate"
@@ -24,14 +24,14 @@
         <p v-if="emailEmpty" class="text-red-500 text-[12px] apple-font px-3">
           * Email cannot be empty
         </p>
-        <MyInput
+        <RoundedInput
           v-model="credentials.email"
           placeholder="Email"
           @focusout="emailValidate"
           @focusin="emailExists = false; emailEmpty = false;"
         >
           <i class="pi pi-exclamation-circle text-red-600 px-3" v-if="!emailValid" />
-        </MyInput>
+        </RoundedInput>
       </div>
       <div class="flex flex-col h-[2.5rem] justify-end">
         <p v-if="passwordEmpty" class="text-red-500 text-[12px] apple-font px-3">
@@ -69,7 +69,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import MyInput from '@/components/basic_components/input/MyInput.vue'
+import RoundedInput from '@/components/basic_components/input/RoundedInput.vue'
 import AuthManager from '@/manager/auth_manager'
 import MyButton from '@/components/basic_components/MyButton.vue'
 import { computed, reactive, ref } from 'vue'
