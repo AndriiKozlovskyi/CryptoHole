@@ -11,7 +11,7 @@
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
         :src="event?.src" v-if="!isEditing"
       />
-      <MyInput v-if="isEditing" class="w-[16rem] h-[2rem] m-auto z-[1]" v-model="event.src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
+      <MyInput v-if="isEditing" class="w-[15.5rem] h-[2rem] m-auto z-[1]" v-model="event.src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
       <div class="flex flex-col space-y-1">
@@ -29,7 +29,7 @@
         <p class="text-white text-[17px] apple-font" v-if="!isEditing">
           {{ event?.name }}
         </p>
-        <MyInput v-if="isEditing" class="w-[14rem] h-[2rem]" v-model="event.name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
+        <MyInput v-if="isEditing" class="w-[13.5rem] h-[2rem] text-center" v-model="event.name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
         <div class="h-full flex items-center">
           <i class="pi pi-share-alt text-secondary-text-color" />
         </div>
@@ -37,15 +37,16 @@
       <hr class="w-full border-secondary-text-color opacity-25" />
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
-        <div class="flex items-center justify-center z-[1000]">
-           <VueDatePicker v-model="date" range v-if="isEditing" :dark="true" :class="calendar_theme"/>
+        <div class="flex items-center justify-center">
+          <VueDatePicker v-model="calendarDates" range v-if="!isEditing" :dark="true" :class="calendar_theme" class="z-[1006]"/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import {PropType, ref} from 'vue'
+import {PropType, ref, onMounted} from 'vue'
+import { emitter } from '@/event_bus'
 import { useRouter } from 'vue-router'
 import ParticipantsForm from '@/components/event_components/ParticipantsForm.vue'
 import Tag from '@/components/event_components/Tag.vue'
@@ -57,7 +58,7 @@ import { useToast } from 'primevue/usetoast'
 import MyInput from '../basic_components/input/MyInput.vue'
 import VueDatePicker from '@vuepic/vue-datepicker';
 
-const date = ref();
+
 const router = useRouter()
 const isEditing = ref(false);
 const props = defineProps({
@@ -90,6 +91,18 @@ const goToAdminEventDescription = () => {
   router.push({ name: 'admin_event_description', params: { id: props.event.id } })
 }
 
+const calendarDates = ref(new Date())
+
+onMounted(() => {
+  if (props.event?.startDate) {
+    calendarDates.value = new Date(props.event.startDate)
+  }
+
+  emitter.on("changeSelectedDate", (date: Date) => {
+    calendarDates.value = date
+    selectedDayNumber.value = date.getDate();
+  })
+})
 
 
 </script>
