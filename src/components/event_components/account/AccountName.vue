@@ -4,7 +4,10 @@
             <p v-if="!isEditing" class="text-secondary-text-color text-center text-[18px] font-apple cursor-pointer hover:text-white" @click.stop="copy">
                 {{ name }}
             </p>
-            <i v-if="hovered && !isEditing" class="text-white pi pi-pencil hover:text-secondary-text-color" @click="edit"/>
+            <div class="w-[0.8rem]">
+                <i v-if="hovered && !isEditing" class="text-white pi pi-pencil cursor-pointer hover:text-secondary-text-color" @click="edit"/>
+            </div>
+
             <AccountInput v-if="isEditing" ref="nameRef" v-model="name"/>
         </div>
     </td>

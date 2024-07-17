@@ -1,20 +1,29 @@
 <template>
     <tr 
-        class="rounded-md border-b border-t hover:bg-hover-primary-item-color cursor-pointer w-full border-secondary-text-color"
+        class="rounded-md border-b border-t hover:bg-hover-primary-item-color w-full border-secondary-text-color"
         @contextmenu.prevent="onEventRightClick($event)"
         @mouseenter="hovered = true"
         @mouseleave="hovered = false"
     >
         <AccountName :name="account.name" :hovered="hovered" @update="updateName"/>
+        <td class="text-white apple-font">
+                <p class="text-secondary-text-color" v-if="!expand">expand</p>
+                <div class="text-secondary-text-color" v-if="expand">
+                    <p><input type="checkbox"/> Deposit 100$</p>
+                    <p><input type="checkbox"/> Earn 5000 trading volume</p>
+                    <p><input type="checkbox"/> Participate Splash</p>
+                    <p><input type="checkbox"/> Withdraw funds</p>
+                </div>
+        </td>
         <AccountDeposits :deposits="account?.deposits" @new-deposit="createDeposit" :show-all="expand" :hovered="hovered"/>
-        <AccountRewards :rewards="account?.rewards" @new-reward="createReward" :rewardType="event.rewardType" :show-all="expand" :hovered="hovered" v-if="event.status === 'rewarded'"/>
-        <AccountWithdraws :withdraws="account?.withdraws" @new-withdraw="createIncome" :show-all="expand" :hovered="hovered" v-if="event.status === 'revenue'"/>
-        <td :class="`px-2 py-2 ${clearIncome < 0 ? 'bg-opacity-15 bg-red-500' : 'bg-opacity-20 bg-green-700'}`" v-if="event.status === 'revenue'">
+        <AccountRewards :rewards="account?.rewards" @new-reward="createReward" :rewardType="event.rewardType" :show-all="expand" :hovered="hovered"/>
+        <AccountWithdraws :withdraws="account?.withdraws" @new-withdraw="createIncome" :show-all="expand" :hovered="hovered"/>
+        <td :class="`px-2 py-2 ${clearIncome < 0 ? 'bg-opacity-15 bg-red-500' : 'bg-opacity-20 bg-green-700'}`">
             <div class="flex flex-row space-x-4 items-center justify-between">
                 <p class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ clearIncome }} $</p>
             </div>
         </td>
-        <div class="flex flex-row items-center justify-end h-[3rem] px-3  text-secondary-text-color" @click="expand = !expand"
+        <div class="flex flex-row items-center cursor-pointer justify-end h-[3rem] px-3  text-secondary-text-color" @click="expand = !expand"
         >
             <i v-if="!expand" class="pi pi-angle-right"/>
             <i v-else class="pi pi-angle-down"/>

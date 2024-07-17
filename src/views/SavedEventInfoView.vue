@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col fixed w-[100%] left-0 h-[100%] top-0 items-center justify-center z-[102]">
-        <div class="fixed w-2/3 flex flex-col bg-primary-item-color rounded-md gap-y-3">
+    <div class="flex flex-col fixed w-full left-0 h-full top-0 items-center justify-center z-[102]">
+        <div class="fixed w-5/6 flex h-full flex-col bg-primary-item-color rounded-md gap-y-3">
             <SavedEventHeader :event="event" @close="close"/>
             <MyButton v-if="event.accounts.length === 0" text="Auto Create Accounts" @on-click="autoCreationFormVisible = true"/>
             <div 
@@ -31,10 +31,19 @@
                     <p class="text-white apple-font" v-else>Reward: {{ event.rewardType }}</p>
                 </div>
             </div>
-            <div class="flex flex-row w-full py-10 px-4">
+            <div class="text-white apple-font p-4">
+                <p class="text-[20px]">TODOLIST</p>
+                <div class="text-secondary-text-color">
+                    <p>- Make a deposit 100$</p>
+                    <p>- Earn 5000 trading volume</p>
+                    <p>- Participate Splash</p>
+                    <p>- Withdraw funds</p>
+                </div>
+            </div>
+            <div class="flex flex-row w-full h-[40rem] px-4">
                 <AccountContainer :event="event"/>
             </div>
-            <div class="w-full m-4 flex flex-row justify-between">
+            <div class="w-full flex flex-row p-4 justify-between">
                 <div class="flex flex-row space-x-3 items-center">
                     <i class="text-white pi pi-clock"/>
                     <MyButton text="Set Date" @on-click="goToCalendar" v-if="isButtonVisible(event)"/>

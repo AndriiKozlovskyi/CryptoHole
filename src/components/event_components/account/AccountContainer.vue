@@ -1,14 +1,15 @@
 <template>
-    <div class="flex flex-col w-full h-[21.3rem] overflow-auto">
+    <div class="flex flex-col w-full overflow-auto">
         <ContextMenu :model="items" ref="contextMenu"/>
         <table>
             <thead class="top-0 sticky bg-primary-item-color w-full">
                 <tr>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 ${event.status === 'revenue' || event.status ===  'rewarded' ? 'w-[40%]' : 'w-[80%]'}`">Name or wallet</th>
-                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%] ${event.status ===  'rewarded' ? 'w-[40%]' : 'w-[20%]'}`">Deposit</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'rewarded'">Rewards</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]" v-if="event.status == 'revenue'">Withdraw</th>
-                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]"  v-if="event.status == 'revenue'">Income</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]`">Name or wallet</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[20%]">TODO</th>
+                    <th :class="`text-white text-start text-[19px] font-apple px-2 py-2 w-[15%]`">Deposit</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[15%]">Rewards</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[15%]">Withdraw</th>
+                    <th class="text-white text-start text-[19px] font-apple px-2 py-2 w-[15%]">Income</th>
                     <th class="text-white text-start text-[19px] font-apple px-2 py-2"> 
                         <i class="text-white pi pi-plus rounded-full bg-purple px-1 py-1 text-center cursor-pointer hover:bg-hover-purple" @click="showCreationForm"/>
                     </th>

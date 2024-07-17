@@ -7,7 +7,7 @@
                 <AccountInput ref="rewardInputRef" v-if="rewardInputVisible" type="number" placeholder="new reward" v-model="reward"/>
                 <div class="w-[1.8rem]">
                     <i 
-                        class="pi pi-plus px-1 py-1 text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 
+                        class="pi pi-plus px-1 py-1 cursor-pointer text-white text-center rounded-full hover:bg-[#5a34c0] bg-[#522e91]" 
                         @click.stop="showRewardInput" 
                         v-if="!rewardInputVisible && hovered"
                         style="font-size: 0.8rem;"
