@@ -27,7 +27,7 @@
                         <p>link to event</p>
                     </a>
                 </div>
-                <div class="flex flex-row items-center px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color" v-if="event.status === 'rewarded'">
+                <div class="flex flex-row items-center px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color">
                     <AccountInput v-if="event.rewardType === '' || event.rewardType === null" placeholder="Reward Token Name" v-model="rewardType" @keypress.enter="updateEventRewardType"/>
                     <p class="text-white apple-font" v-else>Reward: {{ event.rewardType }}</p>
                 </div>
