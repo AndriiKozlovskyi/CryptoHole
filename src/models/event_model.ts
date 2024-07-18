@@ -12,6 +12,7 @@ export default class Event extends Model {
       name: this.string(''),
       tags: this.attr(Array<Tag>),
       participants: this.attr(Array<User>),
+      link: this.string(''),
       src: this.string(''),
       tasks: this.attr(Array<Task>),
       saved: this.boolean(false),
@@ -24,6 +25,7 @@ export default class Event extends Model {
   declare name: string
   declare tags: Array<Tag>
   declare participants: Array<User>
+  declare link: string
   declare src: string
   declare tasks: Array<Task>
   declare saved: boolean

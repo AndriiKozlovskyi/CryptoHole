@@ -1,8 +1,7 @@
 export default interface EventRequest {
   name: string
   tagsIds: number[]
-  expenses: number,
-  participants: number,
+  link: string
   src: string
   startDate: string
   endDate: string

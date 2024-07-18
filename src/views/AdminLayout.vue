@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { RouterView, useRoute } from 'vue-router'
+import { RouterView } from 'vue-router'
 import SideMenuAdmin from '@/components/admin_components/AdminSideMenu.vue';
 import TopViewAdmin from '@/views/AdminTopView.vue';
 </script>

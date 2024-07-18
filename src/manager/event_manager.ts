@@ -57,10 +57,11 @@ export default class EventManager {
     return this.repository.where('name', name).first()
   }
 
-  private static eventResponseToEventRequest(eventResponse: EventResponse): EventRequest {
+  public static eventResponseToEventRequest(eventResponse: EventResponse): EventRequest {
     return {
       name: eventResponse.name,
       tagsIds: TagManager.getTagsIds(eventResponse.tags),
+      link: eventResponse.link,
       src: eventResponse.src,
       startDate: eventResponse.startDate,
       endDate: eventResponse.endDate,
@@ -73,6 +74,7 @@ export default class EventManager {
       name: eventResponse.name,
       tags: TagManager.getFormatedTags(eventResponse.tags),
       participants: UserManager.getFormatedUsers(eventResponse.participants),
+      link: eventResponse.link,
       src: eventResponse.src,
       saved: eventResponse.saved,
       startDate: eventResponse.startDate,

@@ -7,6 +7,7 @@ export default interface EventResponse {
   tags: TagResponse[]
   participants: UserResponse[]
   src: string
+  link: string
   saved: boolean
   startDate: string
   endDate: string

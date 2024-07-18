@@ -11,7 +11,7 @@
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
         :src="event?.src" v-if="!isEditing"
       />
-      <MyInput v-if="isEditing" class="w-[14.5rem] h-[2rem] m-auto z-[1]" v-model="event.src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
+      <MyInput v-if="isEditing" class="w-[14.5rem] h-[2rem] m-auto z-[1]" v-model="src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
       <div class="flex flex-col space-y-1">
@@ -29,7 +29,7 @@
         <p class="text-white text-[17px] apple-font" v-if="!isEditing">
           {{ event?.name }}
         </p>
-        <MyInput v-if="isEditing" class="w-[13.4rem] h-[2rem]" v-model="event.name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
+        <MyInput v-if="isEditing" class="w-[13.4rem] h-[2rem]" v-model="name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
         <div class="h-full flex items-center">
           <i class="pi pi-share-alt text-secondary-text-color" />
         </div>
@@ -38,9 +38,10 @@
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
           <AdminDatePicker
-          v-model="dateRange"
-          :event-id="event.id"
-          @update:model-value="updateDateRange"
+            :start-date="startDate"
+            :end-date="endDate"
+            v-model="dateRange"
+            @update:model-value="updateDateRange"
         />
       </div>
     </div>
@@ -58,6 +59,7 @@ import ToastManager from '@/manager/toaster_manager'
 import { useToast } from 'primevue/usetoast'
 import MyInput from '../basic_components/input/MyInput.vue'
 import AdminDatePicker from '@/components/admin_components/AdminDatePicker.vue'
+import EventManager from '@/manager/event_manager'
 
 const router = useRouter()
 const isEditing = ref(false);
@@ -67,32 +69,44 @@ const props = defineProps({
 
 const hovered = ref(false)
 const toast = useToast();
-
+const dateRange = ref(null);
+const startDate = ref(props.event.startDate);
+const endDate = ref(props.event.endDate);
+const src = ref(props.event.src);
+const name = ref(props.event.name);
 
 const save = async () => {
-    const event  = {
-        name: props.event.name,
-        src: props.event.src,
-        startDate: props.event.startDate,
-        endDate:props.event.endDate,
-        tags:props.event.tags
-    };
-    emit('updateEvent', event)
-    isEditing.value = false
+  const event = props.event;
+
+  event.startDate = startDate.value;
+  event.endDate = endDate.value;
+  event.name = name.value;
+  if (dateRange.value !== null) {
+    event.startDate = dateRange.value[0];
+    event.endDate = dateRange.value[1];
+  }
+
+  event.src = src.value;
+
+  const _eventRequest = EventManager.eventResponseToEventRequest(event);
+
+  emit('updateEvent', _eventRequest);
+  isEditing.value = false
 };
 
 const emit = defineEmits(['deleteEvent','updateEvent'])
 
-const removeEvent = (event: Event) => {
+const removeEvent = async (event) => {
   emit('deleteEvent', event)
+
   ToastManager.showInfoToast(toast, "Event has been successfully deleted")
 }
 const goToAdminEventDescription = () => {
   router.push({ name: 'admin_event_description', params: { id: props.event.id } })
 }
-const updateDateRange = (newRange) => {
+const updateDateRange = async (newRange) => {
   dateRange.value = newRange;
-  emit('updateEvent', { ...props.event, startDate: newRange[0], endDate: newRange[1] });
+  await save()
 }
 
 </script>
