@@ -21,7 +21,7 @@
     <div class="absolute h-[10rem] w-full flex justify-end pr-5 mt-5">
       <div class="flex flex-col justify-between">
         <DeleteForm v-if="hovered" :event="event" @deleteEvent="removeEvent" />
-        <EditForm v-if="hovered" :event="event" @click="isEditing = true"/>
+        <EditForm v-if="hovered" :event="event" @click="isEditing = !isEditing"/>
         </div>
     </div>
     <div class="flex flex-col gap-2 mt-2 px-5">
