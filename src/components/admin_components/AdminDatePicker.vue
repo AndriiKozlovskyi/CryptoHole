@@ -22,13 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import EventManager from '@/manager/event_manager';
 import { emitter } from '@/event_bus';
 
 const props = defineProps<{
-  eventId: string;
+  id: number;
   modelValue: [Date, Date];
 }>();
 
@@ -38,8 +38,11 @@ const emit = defineEmits<{
 
 const dateRange = ref<[Date, Date]>(props.modelValue);
 
-const minDate = new Date();
-const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+const minDate = computed(() => {
+  const currentYear = new Date().getFullYear();
+  return new Date(currentYear, 0, 1); 
+});
+const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5));
 
 const formattedDateRange = computed(() => {
   if (dateRange.value) {
@@ -56,37 +59,18 @@ function formatDateTime(date: Date): string {
 function updateDateRange(newRange: [Date, Date]) {
   dateRange.value = newRange;
   emit('update:modelValue', newRange);
-  emitter.emit('changeSelectedDate', newRange[0]);
+  emitter.emit('adminDateRangeChanged', newRange);
 }
-
-function setDefaultDateRange() {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate());
-  dateRange.value = [today, tomorrow];
-  emit('update:modelValue', dateRange.value);
-}
-
-watch(() => props.eventId, (newEventId) => {
-  const event = EventManager.getById(newEventId);
-  if (event) {
-    dateRange.value = [new Date(event.startDate), new Date(event.endDate)];
-  } else {
-    setDefaultDateRange();
-  }
-}, { immediate: true });
-
-watch(() => props.modelValue, (newValue) => {
-  if (newValue !== dateRange.value) {
-    dateRange.value = newValue;
-  }
-}, { deep: true });
 
 onMounted(() => {
-  if (!dateRange.value[0] || !dateRange.value[1]) {
-    setDefaultDateRange();
-  }
+  emitter.on('calendarDateSelected', (date: Date) => {
+    const endDate = new Date(date);
+    endDate.setDate(endDate.getDate() + 1);
+    dateRange.value = [date, endDate];
+    emit('update:modelValue', dateRange.value);
+  });
 });
+
 </script>
 
 <style scoped>
