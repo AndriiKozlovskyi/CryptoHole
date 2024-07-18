@@ -7,6 +7,7 @@
             placeholder="name or wallet"
             v-model="nameOrWallet"
         /></td>
+        <td></td>
     
         <td >
             <MyInput
@@ -18,7 +19,7 @@
             />
         </td>
 
-        <td v-if="status === 'rewarded'" >
+        <td >
             <MyInput
             ref="rewardRef"
             class="w-8"
@@ -27,7 +28,7 @@
             placeholder="reward"
             />
         </td>
-        <td v-if="status === 'revenue'">        
+        <td>        
             <MyInput
             ref="withdrawRef"
             class="w-8"
@@ -37,6 +38,8 @@
             />
         </td>
         <td v-if="status === 'revenue'">        
+        </td>
+        <td>        
         </td>
         <td>        
         </td>

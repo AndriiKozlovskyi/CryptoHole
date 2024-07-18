@@ -2,10 +2,10 @@
     <div class="fixed flex flex-col w-full h-full bg-primary-item-color items-center justify-center overflow-auto">
         <SavedEventHeader :event="event" @close="close"/>
 
-        <div class="w-full flex h-full flex-col mt-36 rounded-md gap-y-3">
+        <div class="w-full flex h-full flex-col mt-36 gap-y-3">
             <MyButton v-if="event.accounts.length === 0" text="Auto Create Accounts" @on-click="autoCreationFormVisible = true"/>
             <div 
-                class="flex flex-col space-y-10 absolute self-center justify-self-center rounded-md bg-background-color z-[102] px-20 py-5"
+                class="flex flex-col space-y-10 absolute self-center justify-self-center bg-background-color z-[102] px-20 py-5"
                 v-if="autoCreationFormVisible"
                 v-on-click-outside="hideAutoCreationForm">
                 <AccountInput v-model="acconutAmountToCreate" placeholder="amount"/>

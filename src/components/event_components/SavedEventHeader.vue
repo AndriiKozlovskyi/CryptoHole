@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed flex flex-row w-full top-0 p-3 items-center rounded-t-md bg-hover-primary-item-color z-[1000]">
+    <div class="fixed flex flex-row w-full top-0 p-3 items-center bg-hover-primary-item-color z-[1000]">
         <div class="flex flex-row w-1/3 justify-start">
             <div v-if="event.event === null" class="bg-blue-600 rounded-lg px-3 bg-opacity-80">                    
                 <p class="apple-font text-white">Custom</p>

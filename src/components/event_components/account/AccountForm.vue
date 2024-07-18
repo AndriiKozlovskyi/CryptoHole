@@ -7,7 +7,7 @@
     >
         <AccountName :name="account.name" :hovered="hovered" @update="updateName"/>
         <td class="text-white apple-font">
-            <p class="text-secondary-text-color" v-if="!expand">expand</p>
+            <p class="text-secondary-text-color" v-if="!expand">{{getCompletedTasks}}</p>
             <div class="text-secondary-text-color" v-if="expand">
                 <p v-for="task in tasks" :key="task.id"><input type="checkbox" v-model="task.completed" @input="onCheckboxChange(task)"/> {{ task.header }}</p>
             </div>
@@ -65,6 +65,17 @@ const onCheckboxChange = (task) => {
     TaskManager.update(task.id, _task)
 
 }
+
+const getCompletedTasks = computed(() => {
+    let completedCount = 0;
+    for (let i = 0; i < tasks.value.length; i ++) {
+        if (tasks.value[i].completed) {
+            completedCount ++;
+        }
+    }
+
+    return `${completedCount}/${tasks.value.length}`
+})
 
 const totalDepositAmount = computed(() => {
     return deposits.value?.reduce((sum, deposit) => {
