@@ -16,10 +16,21 @@
             </div>
             <table>
                 <tbody v-if="show">
-                    <tr class="flex flex-row items-center space-x-3 py-1" v-for="_finance in finances" :key="_finance.date" >
-                        <FinanceDateForm :finance="_finance" @update="updateFinance"/>
-                        <FinanceAmountForm :finance="_finance" @update="updateFinance"/>
-                        <i class="pi pi-trash text-secondary-text-color cursor-pointer hover:text-white" style="font-size: 0.9rem" @click="deleteEntity(_finance.id)"/>
+                    <tr 
+                        class="flex flex-row items-center space-x-3 py-1" 
+                        v-for="_finance in finances" :key="_finance.date" 
+                    >
+                        <div class="px-2 rounded-md flex flex-row items-center" :class="`${deleteHovered ? 'bg-[#464852]' : ''}`">
+                            <FinanceDateForm :finance="_finance" @update="updateFinance"/>
+                            <FinanceAmountForm :finance="_finance" @update="updateFinance"/>
+                        </div>
+                        <i 
+                            class="pi pi-trash text-secondary-text-color cursor-pointer hover:text-white" 
+                            style="font-size: 0.9rem" 
+                            @mouseenter="deleteHovered = true"
+                            @mouseleave="deleteHovered = false"
+                            @click="deleteEntity(_finance.id)"
+                        />
                     </tr>
                 </tbody>
             </table>
@@ -59,6 +70,8 @@ const editingFinance = ref(null);
 const finance = ref(null);
 const financeInputVisible = ref(false);
 const financeInputRef = ref(null);
+
+const deleteHovered = ref(false);
 
 const showFinanceInput = async () => {
     financeInputVisible.value = true;
