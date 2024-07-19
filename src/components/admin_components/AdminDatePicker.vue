@@ -9,6 +9,7 @@
       :teleport="true"
       :esc-close="true"
       :arrow-navigation="true"
+      :enable-time-picker="false"
       @update:modelValue="updateDateRange"
     >
       <template #trigger>
@@ -29,7 +30,7 @@ import DateUtils from '@/utils/date_utils';
 const props = defineProps({
   modelValue: Array<Date>,
   startDate: String,
-  endEnd: String,
+  endDate: String,
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -40,14 +41,16 @@ const minDate = computed(() => {
   const currentYear = new Date().getFullYear();
   return new Date(currentYear, 0, 1); 
 });
+
 const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5));
 
 const formattedDateRange = computed(() => {
-  if (props.startDate === null || props.endEnd === null) {
-    return `${DateUtils.formatDate(dateRange.value[0])} - ${DateUtils.formatDate(dateRange.value[1])}`;
+  if (dateRange.value && dateRange.value[0] && dateRange.value[1]) {
+    return `${dateRange.value[0].toLocaleDateString()} - ${dateRange.value[1].toLocaleDateString()}`
   }
   return 'Select date range';
 });
+
 
 function updateDateRange(newRange: [Date, Date]) {
   const range = [];
