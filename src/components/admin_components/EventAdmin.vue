@@ -37,10 +37,10 @@
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
           <AdminDatePicker
-          v-if="isEditing"
             :start-date="new Date(startDate)"
             :end-date="new Date(endDate)"
             v-model="dateRange"
+            :is-editing="isEditing"
             @update:model-value="updateDateRange"
         />
       </div>

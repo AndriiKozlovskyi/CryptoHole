@@ -1,24 +1,31 @@
 <template>
   <div class="h-full flex items-center justify-center text-secondary-text-color font-medium text-[14px] space-x-1">
-    <VueDatePicker
-      v-model="dateRange"
-      range
-      :min-date="minDate"
-      :max-date="maxDate"
-      :dark="true"
-      :teleport="true"
-      :esc-close="true"
-      :arrow-navigation="true"
-      :enable-time-picker="false"
-      @update:modelValue="updateDateRange"
-    >
-      <template #trigger>
-        <div class="cursor-pointer">
-          <span class="mr-2">{{ formattedDateRange }}</span>
-          <i class="pi pi-calendar"></i>
-        </div>
-      </template>
-    </VueDatePicker>
+    <template v-if="isEditing">
+      <VueDatePicker
+        v-model="dateRange"
+        range
+        :min-date="minDate"
+        :max-date="maxDate"
+        :dark="true"
+        :teleport="true"
+        :esc-close="true"
+        :arrow-navigation="true"
+        :enable-time-picker="false"
+        @update:modelValue="updateDateRange"
+      >
+        <template #trigger>
+          <div class="cursor-pointer">
+            <span class="mr-2">{{ formattedDateRange }}</span>
+            <i class="pi pi-calendar"></i>
+          </div>
+        </template>
+      </VueDatePicker>
+    </template>
+    <template v-else>
+      <div class="cursor-default">
+        <span class="mr-2">{{ formattedDateRange }}</span>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -31,6 +38,7 @@ const props = defineProps({
   modelValue: Array<Date>,
   startDate: Date,
   endDate: Date,
+  isEditing: Boolean
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -43,7 +51,6 @@ const minDate = computed(() => {
 });
 
 const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5));
-
 
 const formattedDateRange = computed(() => {
   if (dateRange.value && dateRange.value[0] && dateRange.value[1]) {
