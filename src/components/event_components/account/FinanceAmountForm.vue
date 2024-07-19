@@ -1,7 +1,7 @@
 <template>
     <td @click="showEditField" v-on-click-outside="hideEditingField" @keypress.enter="update">
-        <p v-if="!isEditing" class="text-white hover:bg-[#464852] px-1 rounded-md">{{ finance.amount }}</p>
-        <AccountInput v-else v-model="finance.amount"/>
+        <p v-if="!isEditing" class="text-white hover:bg-[#464852] px-1 rounded-md">{{ amount }}</p>
+        <AccountInput v-else v-model="amount"/>
     </td>
 </template>
 
@@ -18,7 +18,7 @@ const emit = defineEmits(['update']);
 
 const isEditing = ref(false);
 
-const finance = ref(props.finance);
+const amount = ref(props.finance.amount);
 
 const showEditField = () => {
     isEditing.value = true;
@@ -29,7 +29,9 @@ const hideEditingField = () => {
 }
 
 const update = () => {
-    emit('update', finance.value);
+    const _finance = props.finance;
+    _finance.amount = amount.value;
+    emit('update', _finance);
     hideEditingField();
 }
 

@@ -23,7 +23,7 @@ export default class DepositManager {
   static async update(id: number, object: any) {
     const rest = _.omit(object, ['id'])
     const deposit = await DepositApi.updateDeposit(id, rest)
-    await DepositManager.loadAll(id);
+    await DepositManager.loadAll(deposit.data.account);
     const depositRequest: DepositRequest = deposit.data;
     this.repository.where('id', id).update(depositRequest)
   }

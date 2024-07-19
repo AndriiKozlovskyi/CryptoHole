@@ -27,9 +27,17 @@
                         <p>link to event</p>
                     </a>
                 </div>
-                <div class="flex flex-row items-center px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color">
-                    <AccountInput v-if="event.rewardType === '' || event.rewardType === null" placeholder="Reward Token Name" v-model="rewardType" @keypress.enter="updateEventRewardType"/>
-                    <p class="text-white apple-font" v-else>Reward: {{ event.rewardType }}</p>
+                <div class="flex flex-row items-center">
+                    <AccountInput 
+                        v-if="event.rewardType === '' || event.rewardType === null || isRewardTypeEditing" 
+                        placeholder="Reward Token Name" 
+                        v-model="rewardType" 
+                        @keypress.enter="updateEventRewardType"
+                        v-on-click-outside="hideRewardTypeInput"
+                    />
+                    <p class="text-white apple-font px-3 py-1 rounded-lg space-x-3 bg-hover-primary-item-color hover:bg-[#464852]" v-else @click="showRewardTypeInput">
+                        Reward: {{ event.rewardType }}
+                    </p>
                 </div>
             </div>
             <div class="text-white apple-font p-4">
@@ -80,11 +88,20 @@ const close = () => {
 
 const event = computed(() => SavedEventManager.getById(props.id));
 
-const link = ref()
-const rewardType = ref();
+const link = ref(event.value.link)
+const rewardType = ref(event.value.rewardType);
 const autoCreationFormVisible = ref(false);
 const todo = ref();
 const acconutAmountToCreate = ref(null);
+const isRewardTypeEditing = ref(false);
+
+const showRewardTypeInput = () => {
+    isRewardTypeEditing.value = true;
+}
+
+const hideRewardTypeInput = () => {
+    isRewardTypeEditing.value = false;
+}
 
 const createTask = async () => {
     await TaskManager.createTask(event.value.id, { header: todo.value, description: "", completed: false });

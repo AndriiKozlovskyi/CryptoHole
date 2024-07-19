@@ -23,7 +23,7 @@ export default class WithdrawManager {
   static async update(id: number, object: any) {
     const rest = _.omit(object, ['id'])
     const withdraw = await WithdrawApi.updateWithdraw(id, rest)
-    await WithdrawManager.loadAll(id);
+    await WithdrawManager.loadAll(withdraw.data.account);
     const withdrawRequest: WithdrawRequest = withdraw.data;
     this.repository.where('id', id).update(withdrawRequest)
   }

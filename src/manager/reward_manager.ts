@@ -23,7 +23,7 @@ export default class RewardManager {
   static async update(id: number, object: any) {
     const rest = _.omit(object, ['id'])
     const reward = await RewardApi.updateReward(id, rest)
-    await RewardManager.loadAll(id);
+    await RewardManager.loadAll(reward.data.account);
     const rewardRequest: RewardRequest = reward.data;
     this.repository.where('id', id).update(rewardRequest)
   }

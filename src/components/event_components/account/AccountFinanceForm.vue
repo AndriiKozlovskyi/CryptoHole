@@ -14,12 +14,11 @@
                     />
                 </div>
             </div>
-
             <table>
                 <tbody v-if="show">
                     <tr class="flex flex-row items-center space-x-3 py-1" v-for="_finance in finances" :key="_finance.date" >
-                        <td class="apple-font text-secondary-text-color text-[13px]">{{ DateUtils.stringToDate(_finance.date) }}</td>
-                        <FinanceInfo :finance="_finance" @update="updateFinance"/>
+                        <FinanceDateForm :finance="_finance" @update="updateFinance"/>
+                        <FinanceAmountForm :finance="_finance" @update="updateFinance"/>
                         <i class="pi pi-trash text-secondary-text-color cursor-pointer hover:text-white" style="font-size: 0.9rem" @click="deleteEntity(_finance.id)"/>
                     </tr>
                 </tbody>
@@ -33,8 +32,9 @@ import { defineProps, defineEmits, ref, computed, nextTick } from 'vue';
 import DateUtils from '@/utils/date_utils';
 import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 import { vOnClickOutside } from '@vueuse/components'
-import FinanceInfo from './FinanceInfo.vue'
-;
+import FinanceAmountForm from './FinanceAmountForm.vue';
+import FinanceDateForm from './FinanceDateForm.vue';
+
 const props = defineProps({
     finances: Array<any>,
     show: Boolean,
@@ -71,10 +71,8 @@ const hideFinanceInput = () => {
     editingFinance.value = null;
 };
 
-
-const updateFinance = (_finance) => {
-    emit('update', _finance);
-    console.log(_finance.amount)
+const updateFinance = (upatedFinance) => {
+    emit('update', upatedFinance);
     hideFinanceInput();
 }
 
@@ -94,3 +92,8 @@ const deleteEntity = (value) => {
     emit('delete', value);
 }
 </script>
+<style scoped>
+td {
+  vertical-align: top;
+}
+</style>

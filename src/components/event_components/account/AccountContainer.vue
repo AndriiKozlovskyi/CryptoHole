@@ -42,7 +42,8 @@ defineEmits(['close', 'showCreation']);
 
 const accounts = computed(() => {
     const _accounts = props.event.accounts;
-    const sorted = _accounts.sort((a, b) => a.name.localeCompare(b.name));
+    const sorted = _accounts.sort((a, b) => a.id - b.id);
+
     return sorted;
 });
 

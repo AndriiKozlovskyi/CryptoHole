@@ -128,6 +128,7 @@ const createReward = async (value: RewardRequest) => {
 }
 
 const updateDeposit = async (value) => {
+    console.log(value)
     await DepositManager.update(value.id, value);
 }
 
