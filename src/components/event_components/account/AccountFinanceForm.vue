@@ -92,8 +92,3 @@ const deleteEntity = (value) => {
     emit('delete', value);
 }
 </script>
-<style scoped>
-td {
-  vertical-align: top;
-}
-</style>

@@ -164,3 +164,8 @@ const onEventRightClick = (event) => {
 }
 
 </script>
+<style scoped>
+td {
+  vertical-align: top;
+}
+</style>
