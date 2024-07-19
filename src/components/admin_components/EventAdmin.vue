@@ -1,5 +1,4 @@
 <template>
-  <Toast />
   <div
     class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card rounded-lg group overflow-hidden basis-full h-[17.875rem] w-full flex-col tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
@@ -92,15 +91,14 @@ const save = async () => {
   const _eventRequest = EventManager.eventResponseToEventRequest(event);
 
   emit('updateEvent', _eventRequest);
-  ToastManager.showInfoToast(toast, "Event has been successfully edited")
   isEditing.value = false
+  ToastManager.showInfoToast(toast, "Event has been successfully edited")
 };
 
 const emit = defineEmits(['deleteEvent','updateEvent'])
 
 const removeEvent = async (event) => {
   emit('deleteEvent', event)
-
   ToastManager.showInfoToast(toast, "Event has been successfully deleted")
 }
 const goToAdminEventDescription = () => {
