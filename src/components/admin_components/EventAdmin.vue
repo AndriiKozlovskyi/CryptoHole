@@ -92,6 +92,7 @@ const save = async () => {
   const _eventRequest = EventManager.eventResponseToEventRequest(event);
 
   emit('updateEvent', _eventRequest);
+  ToastManager.showInfoToast(toast, "Event has been successfully edited")
   isEditing.value = false
 };
 
