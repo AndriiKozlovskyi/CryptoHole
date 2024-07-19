@@ -12,9 +12,35 @@
                 <p v-for="task in tasks" :key="task.id"><input type="checkbox" v-model="task.completed" @input="onCheckboxChange(task)"/> {{ task.header }}</p>
             </div>
         </td>
-        <AccountDeposits :deposits="account?.deposits" @new-deposit="createDeposit" :show-all="expand" :hovered="hovered"/>
-        <AccountRewards :rewards="account?.rewards" @new-reward="createReward" :rewardType="event.rewardType" :show-all="expand" :hovered="hovered"/>
-        <AccountWithdraws :withdraws="account?.withdraws" @new-withdraw="createIncome" :show-all="expand" :hovered="hovered"/>
+ 
+        <!-- Deposit -->
+        <AccountFinanceForm 
+            :finances="account?.deposits" 
+            @new="createDeposit" 
+            @update="updateDeposit"
+            @delete="deleteDeposit" 
+            :show="expand" 
+            :hovered="hovered"
+        />
+        <!-- Reward -->
+        <AccountFinanceForm 
+            :finances="account?.rewards" 
+            @new="createReward" 
+            @update="updateReward"
+            @delete="deleteReward" 
+            :rewardType="event.rewardType" 
+            :show="expand" 
+            :hovered="hovered"
+        />
+        <!-- Withdraw -->
+        <AccountFinanceForm 
+            :finances="account?.withdraws" 
+            @new="createWithdraw" 
+            @update="updateWithdraw"
+            @delete="deleteWithdraw"
+            :show="expand" 
+            :hovered="hovered"
+        />
         <td :class="`px-2 py-2 ${clearIncome < 0 ? 'bg-opacity-15 bg-red-500' : 'bg-opacity-20 bg-green-700'}`">
             <div class="flex flex-row space-x-4 items-center justify-between">
                 <p class="text-[16px] px-2 py-1 rounded-lg text-white font-apple">{{ clearIncome }} $</p>
@@ -34,17 +60,15 @@ import Account from '@/models/account_model';
 import SavedEvent from '@/models/saved_event_model';
 import { emitter } from '@/event_bus';
 import AccountName from "@/components/event_components/account/AccountName.vue";
-import AccountDeposits from "@/components/event_components/account/AccountDeposits.vue";
-import AccountWithdraws from "@/components/event_components/account/AccountWithdraws.vue";
 import DepositRequest from '@/dtos/requests/deposit_request';
 import DepositManager from '@/manager/deposit_manager';
 import WithdrawRequest from '@/dtos/requests/withdraw_request';
 import WithdrawManager from '@/manager/withdraw_manager';
-import AccountRewards from "@/components/event_components/account/AccountRewards.vue";
 import RewardRequest from '@/dtos/requests/reward_request';
 import RewardManager from '@/manager/reward_manager';
 import AccountManager from '@/manager/account_manager';
 import TaskManager from '@/manager/task_manager';
+import AccountFinanceForm from './AccountFinanceForm.vue';
 
 const props = defineProps({
     account: Object as PropType<Account>,
@@ -95,13 +119,37 @@ const createDeposit = async (value: DepositRequest) => {
     await DepositManager.createDeposit(props.account.id, value);
 }
 
-const createIncome = async (value: WithdrawRequest) => {
+const createWithdraw = async (value: WithdrawRequest) => {
     await WithdrawManager.createIncome(props.account.id, value);
 }
 
 const createReward = async (value: RewardRequest) => {
     await RewardManager.createReward(props.account.id, value);
 }
+
+const updateDeposit = async (value) => {
+    await DepositManager.update(value.id, value);
+}
+
+const updateWithdraw = async (value) => {
+    await WithdrawManager.update(value.id, value);
+}
+
+const updateReward = async (value) => {
+    await RewardManager.update(value.id, value);
+}
+const deleteDeposit = async (value) => {
+    await DepositManager.deleteDeposit(value);
+}
+
+const deleteWithdraw = async (value) => {
+    await WithdrawManager.deleteWithdraw(value);
+}
+
+const deleteReward = async (value) => {
+    await RewardManager.deleteReward(value);
+}
+
 
 const updateName = async (name: string) => {
     const _account = props.account;

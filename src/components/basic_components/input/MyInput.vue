@@ -15,7 +15,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 defineEmits(['update:modelValue', 'focusout', 'focusin'])
 
@@ -41,6 +41,10 @@ defineExpose({
     input.value.focus();
   }
 });
+
+onMounted(() => {
+  input.value.focus();
+})
 </script>
 <style module>
 .myinput {
