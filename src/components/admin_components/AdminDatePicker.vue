@@ -29,13 +29,13 @@ import DateUtils from '@/utils/date_utils';
 
 const props = defineProps({
   modelValue: Array<Date>,
-  startDate: String,
-  endDate: String,
+  startDate: Date,
+  endDate: Date,
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const dateRange = ref(props.modelValue);
+const dateRange = ref([props.startDate, props.endDate]);
 
 const minDate = computed(() => {
   const currentYear = new Date().getFullYear();
@@ -44,13 +44,13 @@ const minDate = computed(() => {
 
 const maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 5));
 
+
 const formattedDateRange = computed(() => {
   if (dateRange.value && dateRange.value[0] && dateRange.value[1]) {
     return `${dateRange.value[0].toLocaleDateString()} - ${dateRange.value[1].toLocaleDateString()}`
-  }
-  return 'Select date range';
+  } 
+  return 'Select date'
 });
-
 
 function updateDateRange(newRange: [Date, Date]) {
   const range = [];
@@ -58,7 +58,6 @@ function updateDateRange(newRange: [Date, Date]) {
   range[1] = DateUtils.formatDate(newRange[1])
   emit('update:modelValue', range);
 }
-
 </script>
 
 <style scoped>

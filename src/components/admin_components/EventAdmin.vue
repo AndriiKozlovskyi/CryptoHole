@@ -38,8 +38,9 @@
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
         <ParticipantsForm :participants="event?.participants.length" />
           <AdminDatePicker
-            :start-date="startDate"
-            :end-date="endDate"
+          v-if="isEditing"
+            :start-date="new Date(startDate)"
+            :end-date="new Date(endDate)"
             v-model="dateRange"
             @update:model-value="updateDateRange"
         />
@@ -77,10 +78,10 @@ const name = ref(props.event.name);
 
 const save = async () => {
   const event = props.event;
-
   event.startDate = startDate.value;
   event.endDate = endDate.value;
   event.name = name.value;
+  
   if (dateRange.value !== null) {
     event.startDate = dateRange.value[0];
     event.endDate = dateRange.value[1];
