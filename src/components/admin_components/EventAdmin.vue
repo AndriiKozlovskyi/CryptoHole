@@ -4,14 +4,14 @@
     class="relative flex bg-primary-item-color hover:bg-hover-primary-item-color h-portrait-card rounded-lg group overflow-hidden basis-full h-[17.875rem] w-full flex-col tracking-tight cursor-pointer transition-[transform] active:scale-[0.99] group"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
-    @click="!isEditing && goToAdminEventDescription"
+    @click="handleClick"
   >
     <div class="h-[10rem] w-full grow relative flex">
       <img
         class="h-[100%] w-full rounded-t-lg object-cover opacity-[0.85] transition-all group-hover:scale-[1.02] group-hover:opacity-95"
         :src="event?.src" v-if="!isEditing"
       />
-      <MyInput v-if="isEditing" class="w-[14.5rem] h-[2rem] m-auto z-[1]" v-model="src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
+      <MyInput v-if="isEditing" class="w-[14.6rem] h-[2rem] m-auto z-[1]" v-model="src" @keyup.enter="save" type="url" pattern="https://.*" placeholder="Image of the event, ex: 'https://'"/>
     </div>
     <div class="absolute w-full flex flex-row items-start justify-between p-5">
       <div class="flex flex-col space-y-1">
@@ -29,7 +29,7 @@
         <p class="text-white text-[17px] apple-font" v-if="!isEditing">
           {{ event?.name }}
         </p>
-        <MyInput v-if="isEditing" class="w-[13.4rem] h-[2rem]" v-model="name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
+        <MyInput v-if="isEditing" class="w-[13.3rem] h-[2rem]" v-model="name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
         <div class="h-full flex items-center">
           <i class="pi pi-share-alt text-secondary-text-color" />
         </div>
@@ -109,6 +109,11 @@ const updateDateRange = async (newRange) => {
   await save()
 }
 
+const handleClick = () => {
+  if(!isEditing.value) {
+    goToAdminEventDescription()
+  }
+}
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
