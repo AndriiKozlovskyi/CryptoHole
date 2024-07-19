@@ -106,7 +106,6 @@ const goToAdminEventDescription = () => {
 }
 const updateDateRange = async (newRange) => {
   dateRange.value = newRange;
-  await save()
 }
 
 const handleClick = () => {
