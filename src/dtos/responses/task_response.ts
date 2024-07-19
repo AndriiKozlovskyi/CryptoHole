@@ -3,4 +3,5 @@ export default interface TaskResponse {
   header: string
   description: string
   completed: boolean
+  account: string | null
 }

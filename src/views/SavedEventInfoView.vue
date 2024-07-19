@@ -40,13 +40,7 @@
                     </p>
                 </div>
             </div>
-            <div class="text-white apple-font p-4">
-                <p class="text-[20px]">TODOLIST</p>
-                <div class="text-secondary-text-color" @keypress.enter="createTask">
-                    <p v-for="task in event.tasks" :key="task.id">- {{ task.header }}</p>
-                    <AccountInput v-model="todo" placeholder="new task"/>
-                </div>
-            </div>
+            <TodoDisplay :event="event"/>
             <div class="flex flex-row w-full h-[45rem] px-4">
                 <AccountContainer :event="event"/>
             </div>
@@ -75,6 +69,7 @@ import AccountInput from '@/components/basic_components/input/AccountInput.vue';
 import AccountManager from '@/manager/account_manager';
 import { vOnClickOutside } from '@vueuse/components'
 import TaskManager from '@/manager/task_manager';
+import TodoDisplay from '@/components/managment_components/TodoDisplay.vue';
 
 const router = useRouter();
 

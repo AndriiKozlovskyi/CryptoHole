@@ -1,6 +1,6 @@
 <template>
     <td class="px-2 py-2" v-on-click-outside="hideFinanceInput">
-        <div class="flex flex-col h-full items-start ">
+        <div class="flex flex-col h-full items-start">
 
             <div class="flex flex-row space-x-2 items-center" v-if="!show">
                 <p v-if="!financeInputVisible" class="text-[16px] px-2 py-1 rounded-lg text-secondary-text-color font-apple">{{ totalFinancesAmount }}</p>

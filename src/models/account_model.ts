@@ -1,9 +1,8 @@
-import DepositResponse from '@/dtos/responses/deposit_response'
-import RewardResponse from '@/dtos/responses/reward_response'
-import WithdrawResponse from '@/dtos/responses/withdraw_response'
 import { Model } from 'pinia-orm'
 import Task from './task_model'
-import TaskResponse from '@/dtos/responses/task_response'
+import Deposit from './deposit_model'
+import Withdraw from './withdraw_model'
+import Reward from './reward_model'
 
 export default class Account extends Model {
   static entity = 'account'
@@ -15,14 +14,14 @@ export default class Account extends Model {
       deposits: this.attr(null),
       withdraws: this.attr(null),
       rewards: this.attr(null),
-      tasks: this.attr(Array<Task>),
+      tasks: this.attr(null),
     }
   }
 
   declare id: number
   declare name: string
-  declare deposits: Array<DepositResponse>
-  declare withdraws: Array<WithdrawResponse>
-  declare rewards: Array<RewardResponse>
-  declare tasks: Array<TaskResponse>
+  declare deposits: Array<Deposit>
+  declare withdraws: Array<Withdraw>
+  declare rewards: Array<Reward>
+  declare tasks: Array<Task>
 }

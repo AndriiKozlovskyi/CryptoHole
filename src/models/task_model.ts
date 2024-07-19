@@ -9,6 +9,7 @@ export default class Task extends Model {
       header: this.string(''),
       description: this.string(''),
       completed: this.boolean(false),
+      account: this.string('')
     }
   }
 
@@ -16,4 +17,5 @@ export default class Task extends Model {
   declare header: string
   declare description: string
   declare completed: boolean
+  declare account: string
 }
