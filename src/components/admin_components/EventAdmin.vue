@@ -29,9 +29,6 @@
           {{ event?.name }}
         </p>
         <MyInput v-if="isEditing" class="w-[13.3rem] h-[2rem]" v-model="name" @keyup.enter="save" type="text" placeholder="Name of the event, ex: 'Drift'"/>
-        <div class="h-full flex items-center">
-          <i class="pi pi-share-alt text-secondary-text-color" />
-        </div>
       </div>
       <hr class="w-full border-secondary-text-color opacity-25" />
       <div class="flex flex-row justify-between w-full mb-3 rounded-full">
