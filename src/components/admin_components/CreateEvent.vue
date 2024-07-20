@@ -13,6 +13,7 @@
             :start-date="startDate"
             :end-date="endDate"
             v-model="dateRange"
+            :is-editing="true"
             @update:model-value="updateDateRange"
         />
       <div class="flex flex-row justify-between w-full">
