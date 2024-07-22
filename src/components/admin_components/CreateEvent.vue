@@ -6,6 +6,7 @@
         <h1 class="text-white text-2xl font-semibold apple-font">Create an event</h1>
       </div>
       <MyInput class="w-[20rem] h-[2.5rem] rounded-md" placeholder="Name" type="text" v-model="name" />
+      <CreateTagButton />
       <MultiSelect v-model="tag" :options="tags" optionLabel="name" filter placeholder="Select Tags" :maxSelectedLabels="3" class="text-white bg-primary-item-color w-full" />
       <MyInput class="w-[20rem] h-[2.5rem] rounded-md" placeholder="Image Link" type="text" v-model="image" />
       <MyInput class="w-[20rem] h-[2.5rem] rounded-md" placeholder="Event Link" type="text" v-model="link" />
@@ -35,6 +36,7 @@ import EventManager from '@/manager/event_manager';
 import TagManager from '@/manager/tag_manager';
 import EventRequest from '@/dtos/requests/event_request';
 import AdminDatePicker from '@/components/admin_components/AdminDatePicker.vue'
+import CreateTagButton from '@/components/admin_components/CreateTagButton.vue'
 
 const router = useRouter();
 const toast = useToast();
